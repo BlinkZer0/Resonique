@@ -53,9 +53,21 @@ public:
     }
     void setPredelay (double ms) { preLen = clampT ((int) (ms * 1e-3 * fs), 1, (int) pre.size() - 2); }
 
-    // Stereo in -> stereo out (wet only)
+    // Stereo in -> stereo out (wet only). After a few seconds of silence at the input the tail
+    // has gone and the network sleeps (zeros out) until the next input sample.
     void processChunk (int n, const float* inL, const float* inR, float* outL, float* outR)
     {
+        bool input = false;
+        for (int i = 0; i < n; ++i) if (inL[i] != 0.0f || inR[i] != 0.0f) { input = true; break; }
+        if (input) silentSamples = 0;
+        else silentSamples += n;
+        if (silentSamples > (int) (6.0 * fs))
+        {
+            if (! sleeping) { reset(); sleeping = true; }
+            for (int i = 0; i < n; ++i) outL[i] = outR[i] = 0;
+            return;
+        }
+        sleeping = false;
         for (int i = 0; i < n; ++i)
         {
             // predelay on the mono-ish send
@@ -138,5 +150,7 @@ private:
     float fb[L] {}, outGain[L] {}, lp[L] {};
     float lpCoef = 0.3f;
     int writePos = 0, preWrite = 0, preLen = 1, apPos = 0;
+    int silentSamples = 0;
+    bool sleeping = false;
 };
 } // namespace resonique

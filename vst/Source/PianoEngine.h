@@ -45,6 +45,9 @@ public:
         voices.freeAll();
         std::memset (zoneAccel, 0, sizeof (zoneAccel));
         bendRatio = 1.0;
+        chunkPos = 0;
+        fading = false;
+        panicRequested = false;
         if (tables != nullptr && std::abs (tables->sampleRate - fs) < 0.5) { board.adopt (tables->board); symp.adopt (*tables); }
         applyLiveParams (true);
     }
@@ -176,15 +179,22 @@ public:
 
     // ---- rendering -------------------------------------------------------------
     // sendL/sendR (optional) receive the reverb send for an external convolution reverb.
+    // Chunks of kChunk samples run at a fixed phase whatever the block size: a call renders the
+    // rest of the current chunk, then whole chunks, then the start of the next one, so the
+    // control-rate work happens every 32 samples and the output does not depend on how the
+    // host slices time.
     void render (float* L, float* R, int n, float* sendL = nullptr, float* sendR = nullptr)
     {
         int pos = 0;
         while (pos < n)
         {
-            const int c = std::min (kChunk, n - pos);
-            processChunk (c, L + pos, R != nullptr ? R + pos : nullptr,
-                          sendL != nullptr ? sendL + pos : nullptr, sendR != nullptr ? sendR + pos : nullptr);
+            if (chunkPos == 0) beginChunk();
+            const int c = std::min (kChunk - chunkPos, n - pos);
+            processSamples (c, L + pos, R != nullptr ? R + pos : nullptr,
+                            sendL != nullptr ? sendL + pos : nullptr, sendR != nullptr ? sendR + pos : nullptr);
+            chunkPos += c;
             pos += c;
+            if (chunkPos >= kChunk) { endChunk(); chunkPos = 0; }
         }
     }
 
@@ -245,16 +255,16 @@ private:
         outputGain = kOutputScale * (float) ((tables != nullptr ? tables->outputGain : 1.0) * dbToGain (params[presetGain]));
     }
 
-    void processChunk (int n, float* L, float* R, float* sendL, float* sendR)
+    // Chunk-rate work at the start of each 32-sample chunk
+    void beginChunk()
     {
         applyLiveParams (false);
-        float zoneForce[kNumZones][kChunk];
         std::memset (zoneForce, 0, sizeof (zoneForce));
-        float directL[kChunk], directR[kChunk], boardL[kChunk], boardR[kChunk], outF[kCoupleStep];
         std::memset (directL, 0, sizeof (directL));
         std::memset (directR, 0, sizeof (directR));
+        fading = panicRequested;
 
-        // pedals -> dampers (chunk rate)
+        // pedals -> dampers
         const double lift = pedals.lift;
         symp.updateDampers (lift);
         for (auto& v : voices.voices)
@@ -268,12 +278,19 @@ private:
                 noises.trigger (NoiseType::Damper, v.zone, v.pan, level, clampT (v.bridgeForceAtDamping / 4.0, 0.0, 1.0), 0.5);
             }
         }
+        renderer.beginChunk();
+    }
 
+    // n samples of the current chunk, starting at chunkPos
+    void processSamples (int n, float* L, float* R, float* sendL, float* sendR)
+    {
+        float outF[kCoupleStep];
         // coupling steps: voices and the bank write forces, the board answers with accelerations
-        for (int pos = 0; pos < n; pos += kCoupleStep)
+        const bool anyVoices = voices.activeCount() > 0;
+        for (int pos = chunkPos; pos < chunkPos + n; pos += kCoupleStep)
         {
-            const int c = std::min (kCoupleStep, n - pos);
-            for (auto& v : voices.voices)
+            const int c = std::min (kCoupleStep, chunkPos + n - pos);
+            if (anyVoices) for (auto& v : voices.voices)
             {
                 if (! v.inUse) continue;
                 v.processSamples (c, zoneAccel[v.zone], sympGain, outF);
@@ -294,7 +311,45 @@ private:
             board.processSamples (c, zoneForce, boardL + pos, boardR + pos, zoneAccel, pos);
         }
 
-        // chunk-rate bookkeeping
+        float sl[kChunk], sr[kChunk];
+        float* outR = R != nullptr ? R : sr;   // mono host: render to a scratch right channel
+        renderer.processSamples (n, boardL + chunkPos, boardR + chunkPos, directL + chunkPos, directR + chunkPos, outputGain, L, outR,
+                                 sendL != nullptr ? sendL : sl, sendR != nullptr ? sendR : sr);
+        if (R == nullptr) for (int i = 0; i < n; ++i) L[i] = 0.5f * (L[i] + outR[i]);
+
+        if (fading)   // a panic: fade this chunk out, the reset follows at its end
+        {
+            for (int i = 0; i < n; ++i)
+            {
+                const float g = 1.0f - (float) (chunkPos + i + 1) / (float) kChunk;
+                L[i] *= g;
+                if (R != nullptr) R[i] *= g;
+                if (sendL != nullptr) sendL[i] *= g;
+                if (sendR != nullptr) sendR[i] *= g;
+            }
+        }
+
+        float pk = peak;
+        bool finite = true;
+        for (int i = 0; i < n; ++i)
+        {
+            const float a = std::max (std::abs (L[i]), R != nullptr ? std::abs (R[i]) : 0.0f);
+            if (a > pk) pk = a;
+            if (! std::isfinite (a)) finite = false;
+        }
+        peak = pk;
+        if (! finite)
+        {
+            for (int i = 0; i < n; ++i) { L[i] = 0; if (R != nullptr) R[i] = 0; }
+            peak = 0;
+            panicRequested = true;
+            fading = true;
+        }
+    }
+
+    // Chunk-rate work at the end of each chunk
+    void endChunk()
+    {
         for (auto& v : voices.voices)
         {
             if (! v.inUse) continue;
@@ -307,39 +362,7 @@ private:
         }
         symp.endChunk();
         board.endChunk();
-
-        float sl[kChunk], sr[kChunk];
-        float* outR = R != nullptr ? R : sr;   // mono host: render to a scratch right channel
-        renderer.processChunk (n, boardL, boardR, directL, directR, outputGain, L, outR,
-                               sendL != nullptr ? sendL : sl, sendR != nullptr ? sendR : sr);
-        if (R == nullptr) for (int i = 0; i < n; ++i) L[i] = 0.5f * (L[i] + outR[i]);
-
-        if (panicRequested)
-        {
-            for (int i = 0; i < n; ++i)
-            {
-                const float g = 1.0f - (float) (i + 1) / (float) n;
-                L[i] *= g;
-                if (R != nullptr) R[i] *= g;
-                if (sendL != nullptr) sendL[i] *= g;
-                if (sendR != nullptr) sendR[i] *= g;
-            }
-            panicNow();
-        }
-
-        float pk = peak;
-        for (int i = 0; i < n; ++i)
-        {
-            const float a = std::max (std::abs (L[i]), R != nullptr ? std::abs (R[i]) : 0.0f);
-            if (a > pk) pk = a;
-        }
-        peak = pk;
-        if (! std::isfinite (pk))
-        {
-            for (int i = 0; i < n; ++i) { L[i] = 0; if (R != nullptr) R[i] = 0; }
-            peak = 0;
-            panicNow();
-        }
+        if (fading) { panicNow(); fading = false; }
     }
 
     double fs = 48000;
@@ -356,6 +379,9 @@ private:
     float sympGain = 1.0f, micSpreadNow = 0.6f, micPosShift = 0.0f, outputGain = kOutputScale;
     double bendRatio = 1.0;
     float peak = 0;
-    bool panicRequested = false;
+    bool panicRequested = false, fading = false;
+    int chunkPos = 0;                                  // samples of the current chunk already rendered
+    float zoneForce[kNumZones][kChunk] {};             // the chunk's buses (persist across render() calls)
+    float directL[kChunk] {}, directR[kChunk] {}, boardL[kChunk] {}, boardR[kChunk] {};
 };
 } // namespace resonique

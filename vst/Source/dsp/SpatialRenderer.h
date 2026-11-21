@@ -88,10 +88,10 @@ public:
     }
     bool usesExternalReverb() const { return reverbType >= 4; }
 
-    // All inputs are chunk buffers of n samples. sendL/sendR receive the reverb send
-    // (pre-reverb mix) so the host layer can run a convolution reverb instead.
-    void processChunk (int n, const float* boardL, const float* boardR, const float* directL, const float* directR,
-                       float outputScale, float* outL, float* outR, float* sendL, float* sendR)
+    // Once per kChunk samples: advances the smoothers and sets up the per-sample gain ramps.
+    // Every gain ramps linearly across the chunk from its previous value: a per-chunk staircase would
+    // modulate the signal at the chunk rate and smear broadband sidebands over the spectrum.
+    void beginChunk()
     {
         const double master = masterSm.advance();
         const double mix = mixSm.advance();
@@ -99,20 +99,34 @@ public:
         const double hf = hfSm.advance();
         const double er = erSm.advance();
         const double dist = distSm.advance();
-
         // distance: direct level falls, the room grows
         const double directGain = clampT (1.0 / std::sqrt (std::max (0.3, dist)), 0.28, 1.6);
         const double roomGain = clampT (0.35 + 0.3 * dist, 0.3, 2.0);
         const double hfGain = hf * directGain * 0.65 * kDirectScale;   // bridge force (N) -> board-velocity units (m/s)
         const double sideGain = width * 1.6;
-        const float flipL = mics.flip ? 1.0f : 0.0f;
-
-        // every gain ramps linearly across the chunk from its previous value: a per-chunk staircase
-        // would modulate the signal at the chunk rate and smear broadband sidebands over the spectrum
         if (! gainsPrimed) { gDirect = directGain; gHf = hfGain; gSide = sideGain; gEr = er * roomGain * 0.5; gRoom = roomGain; gMaster = master; gMix = mix; gainsPrimed = true; }
-        const float invN = 1.0f / (float) n;
-        const float dDirect = (float) (directGain - gDirect) * invN, dHf = (float) (hfGain - gHf) * invN, dSide = (float) (sideGain - gSide) * invN;
-        const float dEr = (float) (er * roomGain * 0.5 - gEr) * invN, dRoom = (float) (roomGain - gRoom) * invN;
+        const float invN = 1.0f / (float) kChunk;
+        dDirect = (float) (directGain - gDirect) * invN; dHf = (float) (hfGain - gHf) * invN; dSide = (float) (sideGain - gSide) * invN;
+        dEr = (float) (er * roomGain * 0.5 - gEr) * invN; dRoom = (float) (roomGain - gRoom) * invN;
+        dMaster = (float) (master - gMaster) * invN; dMix = (float) (mix - gMix) * invN;
+        tDirect = directGain; tHf = hfGain; tSide = sideGain; tEr = er * roomGain * 0.5; tRoom = roomGain; tMaster = master; tMix = mix;
+        rampPos = 0;
+    }
+
+    // Whole-chunk convenience (tests): a chunk of n <= kChunk samples
+    void processChunk (int n, const float* boardL, const float* boardR, const float* directL, const float* directR,
+                       float outputScale, float* outL, float* outR, float* sendL, float* sendR)
+    {
+        beginChunk();
+        processSamples (n, boardL, boardR, directL, directR, outputScale, outL, outR, sendL, sendR);
+    }
+
+    // c samples of the current chunk (after beginChunk()). sendL/sendR receive the reverb send
+    // (pre-reverb mix) so the host layer can run a convolution reverb instead.
+    void processSamples (int n, const float* boardL, const float* boardR, const float* directL, const float* directR,
+                         float outputScale, float* outL, float* outR, float* sendL, float* sendR)
+    {
+        const float flipL = mics.flip ? 1.0f : 0.0f;
         float gd = (float) gDirect, gh = (float) gHf, gs = (float) gSide, ge = (float) gEr, gr = (float) gRoom;
 
         float dry[2][kChunk];
@@ -145,7 +159,7 @@ public:
             sendL[i] = l * gr;
             sendR[i] = r * gr;
         }
-        gDirect = directGain; gHf = hfGain; gSide = sideGain; gEr = er * roomGain * 0.5; gRoom = roomGain;
+        gDirect = gd; gHf = gh; gSide = gs; gEr = ge; gRoom = gr;
 
         float wet[2][kChunk];
         if (! usesExternalReverb())
@@ -153,7 +167,6 @@ public:
         else
             for (int i = 0; i < n; ++i) wet[0][i] = wet[1][i] = 0;
 
-        const float dMaster = (float) (master - gMaster) * invN, dMix = (float) (mix - gMix) * invN;
         float gm = (float) gMaster, gx = (float) gMix;
         for (int i = 0; i < n; ++i)
         {
@@ -168,7 +181,13 @@ public:
             outL[i] = softClip (l);
             outR[i] = softClip (r);
         }
-        gMaster = master; gMix = mix;
+        gMaster = gm; gMix = gx;
+        rampPos += n;
+        if (rampPos >= kChunk)   // the ramp has landed: snap to the targets so rounding never drifts
+        {
+            gDirect = tDirect; gHf = tHf; gSide = tSide; gEr = tEr; gRoom = tRoom; gMaster = tMaster; gMix = tMix;
+            dDirect = dHf = dSide = dEr = dRoom = dMaster = dMix = 0;
+        }
     }
 
     // External (convolution) reverb returns here: mixes wet into the already-rendered output.
@@ -202,6 +221,9 @@ private:
     DcBlocker dcL, dcR;
     Smoother masterSm, mixSm, widthSm, hfSm, erSm, distSm;
     bool micsPrimed = false, gainsPrimed = false;
-    double gDirect = 1, gHf = 0, gSide = 1, gEr = 0, gRoom = 1, gMaster = 0.8, gMix = 0;
+    double gDirect = 1, gHf = 0, gSide = 1, gEr = 0, gRoom = 1, gMaster = 0.8, gMix = 0;    // current (ramping) gains
+    double tDirect = 1, tHf = 0, tSide = 1, tEr = 0, tRoom = 1, tMaster = 0.8, tMix = 0;    // this chunk's targets
+    float dDirect = 0, dHf = 0, dSide = 0, dEr = 0, dRoom = 0, dMaster = 0, dMix = 0;       // per-sample increments
+    int rampPos = 0;
 };
 } // namespace resonique

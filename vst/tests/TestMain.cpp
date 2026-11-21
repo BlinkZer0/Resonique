@@ -8,6 +8,7 @@
 //   ResoniqueTests --host-check <path to Resonique.vst3>
 #include <juce_core/juce_core.h>
 #include <juce_events/juce_events.h>
+#include <juce_audio_basics/juce_audio_basics.h>
 #include <cstdio>
 
 int failures = 0;
@@ -24,10 +25,15 @@ int runCompare (const juce::String& folder, int instrumentIndex, const juce::Str
 int runProbeVoice (int note, int vel);
 int runProbeStability();
 int runInstrumentTable (bool check);
+int runRobustnessTests();
 
 int main (int argc, char** argv)
 {
     juce::ScopedJuceInitialiser_GUI init;
+    std::setvbuf (stdout, nullptr, _IONBF, 0);   // keep the output ordered with a crash, and visible through a pipe
+    // the plugin renders with flush-to-zero (juce::ScopedNoDenormals in processBlock); the tests must too,
+    // or filters decaying into denormals after silence make the idle-cost measurement meaningless
+    juce::FloatVectorOperations::disableDenormalisedNumberSupport (true);
     juce::StringArray args;
     for (int i = 1; i < argc; ++i) args.add (argv[i]);
 
@@ -68,6 +74,7 @@ int main (int argc, char** argv)
     if (all || args.contains ("--acoustic")) { std::printf ("== Acoustic tests ==\n"); runAcousticTests(); }
     if (all || args.contains ("--presets")) { std::printf ("== Preset tests ==\n"); runPresetTests(); }
     if (all || args.contains ("--instruments-check")) { std::printf ("== Instrument library ==\n"); runInstrumentTable (true); }
+    if (all || args.contains ("--robustness")) { std::printf ("== Robustness ==\n"); runRobustnessTests(); }
 
     std::printf (failures == 0 ? "\nALL TESTS PASSED\n" : "\n%d FAILURE(S)\n", failures);
     return failures == 0 ? 0 : 1;

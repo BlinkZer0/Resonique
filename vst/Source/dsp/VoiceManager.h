@@ -29,9 +29,7 @@ public:
     PianoVoice* allocate (int midiNote)
     {
         int best = -1;
-        int used = 0;
-        for (int i = 0; i < kMaxVoices; ++i) used += voices[(size_t) i].inUse ? 1 : 0;
-        if (used < polyphony)
+        if (numActive < polyphony)
             for (int i = 0; i < kMaxVoices; ++i)
                 if (! voices[(size_t) i].inUse) { best = i; break; }
         if (best < 0)
@@ -48,12 +46,14 @@ public:
         }
         auto& v = voices[(size_t) best];
         if (v.inUse && v.note >= 0 && v.note < 128 && noteToVoice[(size_t) v.note] == best) noteToVoice[(size_t) v.note] = -1;
+        if (! v.inUse) ++numActive;
         noteToVoice[(size_t) clampT (midiNote, 0, 127)] = best;
         return &v;
     }
 
     void free (PianoVoice& v)
     {
+        if (v.inUse) --numActive;
         v.inUse = false;
         v.keyDown = false;
         v.sostenuto = false;
@@ -63,12 +63,13 @@ public:
 
     void freeAll() { for (auto& v : voices) if (v.inUse) free (v); }
 
-    int activeCount() const { int c = 0; for (const auto& v : voices) c += v.inUse ? 1 : 0; return c; }
+    int activeCount() const { return numActive; }
 
     PianoVoice voices[kMaxVoices];
 
 private:
     int noteToVoice[128];
     int polyphony = 64;
+    int numActive = 0;
 };
 } // namespace resonique

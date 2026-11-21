@@ -75,6 +75,7 @@ quiet-first stealing; right-click on any control for the DAW's automation menu.
 | Sample rates 44.1 / 48 / 88.2 / 96 / 192 kHz | same pitch within 0.01 %, same level within 0.2 dB, same spectral centroid within 3 % |
 | CPU (48 kHz, Release, vectorised modal loops) | 16 voices 7 % · 32 voices + pedal 11 % · 64 + pedal 20 % · 88 + pedal 25 % of one core; tables rebuild in 2.6 ms |
 | Host check | loads like a DAW, 48 + MIDI parameters, programs, state round trip |
+| Real-time safety | zero heap allocations while rendering (counted); output bit-identical for block sizes 1 to 2048; table swaps and every live parameter swept while playing stay click-free; 5000-note MIDI flood bounded; idle cost after the notes die 2.4 % of a core |
 
 The comparison (`ResoniqueTests --compare`, [docs/ACOUSTICS.md §10](docs/ACOUSTICS.md)) is against one piano in
 one room through one microphone; the references are not bundled. What is **not** claimed: the instrument has not
@@ -110,6 +111,9 @@ measurements per phase in [docs/PLAN.md](docs/PLAN.md).
 - Phase 10: the nine derived instruments re-expressed relative to the calibrated grand (felt as force at a
   reference compression, losses and bridge loss as factors), a per-instrument metrics table and test
   (contact, inharmonicity, decay, brightness, level at C2 / C4 / C6), level trims per instrument.
+- Phase 11: robustness suite (allocation counting, block-size invariance, sample-rate change, table swaps,
+  parameter sweeps, MIDI floods, idle cost); the engine's control chunks keep a fixed phase across host
+  blocks, the soundboard and the reverb sleep when rung down.
 - Known limitations: Windows only; the voicing is physically derived, not yet calibrated against recordings; the
   88-voice worst case costs about a third of a core; no web / Android build yet (the DSP core is JUCE-free, so one
   can be added the Eight Ball way).

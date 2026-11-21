@@ -27,6 +27,7 @@ public:
         std::memset (p, 0, sizeof (p));
         std::memset (q, 0, sizeof (q));
         for (auto& v : zoneVelPrev) v = 0;
+        asleep = true;
     }
 
     // Copies a table's coefficients; the modal state keeps ringing.
@@ -62,6 +63,18 @@ public:
         {
             for (int i = 0; i < c; ++i) { outL[i] = outR[i] = 0; for (int z = 0; z < kNumZones; ++z) zoneAccel[z][i] = 0; }
             return;
+        }
+        if (asleep)   // nothing ringing: stay silent until a force arrives (idle plugins cost nothing)
+        {
+            bool input = false;
+            for (int z = 0; z < kNumZones && ! input; ++z)
+                for (int i = 0; i < c; ++i) if (zoneForce[z][pos + i] != 0.0f) { input = true; break; }
+            if (! input)
+            {
+                for (int i = 0; i < c; ++i) { outL[i] = outR[i] = 0; for (int z = 0; z < kNumZones; ++z) zoneAccel[z][i] = 0; }
+                return;
+            }
+            asleep = false;
         }
         const float fsF = (float) fs;
         float* __restrict pp = p;
@@ -108,6 +121,7 @@ public:
     {
         // safety: a modal bank cannot blow up on its own, but guard against bad input
         if (! std::isfinite (p[0]) || ! std::isfinite (q[0]) || std::abs (q[0]) > 1e6f) reset();
+        if (! asleep && energy() < 1e-22f) { reset(); asleep = true; }   // rung down: sleep until the next force
     }
 
     float energy() const
@@ -144,7 +158,7 @@ private:
     double fs = 48000;
     double resonance = 0.5;
     float gain = 1.0f;
-    bool haveTable = false;
+    bool haveTable = false, asleep = true;
     SoundboardTable table;
     float p[M] {};
     float q[M] {};
