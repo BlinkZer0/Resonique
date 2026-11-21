@@ -141,6 +141,8 @@
     renderPresetName();
     renderBrowser();
     engine.loadPreset(p.id);
+    // phone landscape: back to the controls once a preset is picked
+    if (document.body.classList.contains('compact') && !document.body.classList.contains('portrait')) document.body.classList.remove('browse-open');
   }
   function stepPreset(dir) {
     const list = visiblePresets().length && !search ? visiblePresets() : presetList;
@@ -597,14 +599,61 @@
   });
 
   // --------------------------------------------------------- fit window ----
+  // Desktop / plugin: the fixed-size panel is scaled to fit the window.
+  // Touch screens where that would make it too small (phones, the Android app) switch to
+  // "compact": the panel fills the screen width and the page scrolls, with the keyboard
+  // pinned to the bottom. Landscape lays the panels out two across on a 900 px design
+  // width with 37 keys; portrait stacks them in one 480 px column with 25 keys. The web
+  // host can force a layout (window.__rqLayout) for screenshots and tests.
   const synth = $('.synth');
+  const coarse = window.matchMedia ? window.matchMedia('(pointer: coarse)') : null;
+  let lastLayout = '';
+  let octaveBase = 48;   // the first key shown on phones (C3)
+  function layoutKeys(layout) {
+    if (layout === 'desktop') { piano.setKeys(88, 21); return; }
+    const n = layout === 'portrait' ? 25 : 37;
+    octaveBase = clamp(octaveBase, 24, 108 - n + 1);
+    octaveBase -= (octaveBase - 24) % 12;   // whole octaves from C1
+    piano.setKeys(n, octaveBase);
+    $('#octave-readout').textContent = `${midiNoteName(octaveBase)} – ${midiNoteName(octaveBase + n - 1)}`;
+    piano.svg.setAttribute('preserveAspectRatio', 'none');
+  }
+  function shiftOctave(dir) {
+    if (lastLayout === 'desktop' || !lastLayout) return;
+    octaveBase += 12 * dir;
+    layoutKeys(lastLayout);
+  }
+  $('#oct-down').addEventListener('click', () => shiftOctave(-1));
+  $('#oct-up').addEventListener('click', () => shiftOctave(1));
   function fit() {
-    const vw = window.innerWidth, vh = window.innerHeight;
+    // the screen, not the layout viewport: mobile browsers widen innerWidth to fit content that
+    // overflows, which would feed back into the zoom
+    const vv = window.visualViewport;
+    const body = document.body;
+    const vw = vv ? Math.min(window.innerWidth, Math.round(vv.width * vv.scale)) : window.innerWidth;
+    const vh = vv ? Math.min(window.innerHeight, Math.round(vv.height * vv.scale)) : window.innerHeight;
+    body.classList.remove('compact', 'portrait');
+    synth.style.zoom = '';
+    synth.style.transform = '';
     const w = synth.offsetWidth + 20, h = synth.offsetHeight + 30;
     const s = Math.min(vw / w, vh / h);
-    synth.style.transform = `translateX(-50%) scale(${s})`;
+    const forced = window.__rqLayout;
+    const compact = forced ? forced !== 'desktop' : !!(coarse && coarse.matches) && (vh > vw || s < 0.8);
+    const portrait = forced ? forced === 'portrait' : compact && vh > vw;
+    const layout = compact ? (portrait ? 'portrait' : 'landscape') : 'desktop';
+    if (layout !== lastLayout) { lastLayout = layout; layoutKeys(layout); }
+    if (!compact) { synth.style.transform = `translateX(-50%) scale(${s})`; return; }
+    body.classList.add('compact');
+    body.classList.toggle('portrait', portrait);
+    synth.style.zoom = String(Math.min(1.5, vw / (synth.offsetWidth + 8)));
   }
+  if (coarse && coarse.addEventListener) coarse.addEventListener('change', fit);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
   window.addEventListener('resize', fit);
+  // phones: the preset browser folds away; tap the preset name to open it
+  $('.pd-text').addEventListener('click', () => {
+    if (document.body.classList.contains('compact')) { document.body.classList.toggle('browse-open'); fit(); }
+  });
 
   // Right-click on any control = the host's parameter menu; Shift+right-click keeps the browser menu (DevTools)
   document.addEventListener('contextmenu', (e) => {

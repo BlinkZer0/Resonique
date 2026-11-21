@@ -391,6 +391,17 @@ button { font-family: inherit; color: inherit; }
 .pedal-btn.on .pedal-label { color: var(--brass); }
 .piano { flex: 1; min-width: 0; }
 .piano-svg { display: block; width: 100%; height: auto; touch-action: none; cursor: pointer; }
+/* octave buttons: phones only (compact layout) */
+.octave-ctl { display: none; }
+.oct-buttons { display: flex; gap: 6px; }
+.oct-buttons button {
+  width: 34px; height: 30px; padding: 0;
+  background: #16141a; border: 1px solid #2c2730; border-radius: 6px;
+  font-size: 16px; font-weight: 700; color: var(--ivory); cursor: pointer;
+}
+.oct-buttons button:hover { border-color: var(--accent-dim); }
+.oct-buttons button:active { transform: translateY(1px); }
+.oct-readout { font-family: var(--mono); font-size: 10px; color: var(--muted); white-space: nowrap; }
 .felt { fill: #6a1f1a; }
 .wkey { fill: #0d0c0e; stroke: #34303a; stroke-width: 1; transition: fill 40ms; }
 .wkey:hover { fill: #18161a; }
@@ -461,6 +472,61 @@ body.plugin .synth {
   transform-origin: top center;
   transform: translateX(-50%);
 }
+
+/* ====================================================== compact (phones) ===
+   Touch screens too small for the scaled panel (app.js fit()): the panel is zoomed to
+   the screen width, the page scrolls and the keyboard stays pinned to the bottom.
+   Landscape: 900 px design width, panels two across. Portrait: one 480 px column. */
+body.plugin.compact { height: 100vh; height: 100dvh; overflow-x: hidden; overflow-y: auto; overscroll-behavior: none; }
+body.plugin.compact .synth {
+  position: relative; top: auto; left: auto; transform: none;
+  width: 900px; margin: 0 auto; padding: 10px 10px 0; gap: 10px;
+  border-radius: 0; border-left: 0; border-right: 0; box-shadow: none;
+}
+body.plugin.compact .row { grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); }
+body.plugin.compact .col { display: contents; }
+body.plugin.compact .page:not(.active) { display: none; }
+body.plugin.compact .page-tabs { overflow-x: auto; scrollbar-width: none; }
+body.plugin.compact .page-tabs::-webkit-scrollbar { display: none; }
+body.plugin.compact .page-hint, body.plugin.compact .kbd-hint, body.plugin.compact .brand-sub { display: none; }
+body.plugin.compact .statusbar { padding-bottom: 4px; }
+body.plugin.compact .knob-svg { cursor: default; }
+/* the preset browser folds away (tap the preset name: app.js) */
+body.plugin.compact:not(.browse-open) .browser { display: none; }
+body.plugin.compact .pd-text { cursor: pointer; }
+body.plugin.compact .pd-name::after { content: ' \25BE'; color: var(--muted); font-size: 0.8em; }
+body.plugin.compact.browse-open .pd-name::after { content: ' \25B4'; }
+body.plugin.compact .preset-grid { height: 132px; }
+/* the keyboard: pinned to the bottom of the screen, with the octave buttons */
+body.plugin.compact .keybed {
+  position: sticky; bottom: 0; z-index: 3; margin: 0 -10px; border-radius: 10px 10px 0 0; padding: 8px 10px;
+  box-shadow: inset 0 4px 14px rgba(0, 0, 0, 0.9), 0 -10px 24px rgba(0, 0, 0, 0.75);
+}
+body.plugin.compact .octave-ctl { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 80px; flex: none; }
+body.plugin.compact .pedals { width: 84px; }
+body.plugin.compact .pedal-btn { padding: 5px 6px; }
+/* landscape: short, wide keys so the panels above keep some room */
+body.plugin.compact:not(.portrait) .piano-svg { height: 124px; }
+body.plugin.compact:not(.portrait) .preset-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* portrait: one column */
+body.plugin.compact.portrait .synth { width: 480px; }
+body.plugin.compact.portrait .topbar { gap: 8px 10px; }
+body.plugin.compact.portrait .patch-display { flex-basis: 100%; order: 3; min-width: 0; }
+body.plugin.compact.portrait .preset-actions { margin-left: auto; }
+body.plugin.compact.portrait .top-controls { order: 4; flex-basis: 100%; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+body.plugin.compact.portrait .preset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+body.plugin.compact.portrait #preset-search { width: 130px; }
+body.plugin.compact.portrait .page-tabs { flex-wrap: wrap; overflow-x: visible; row-gap: 2px; }
+body.plugin.compact.portrait .page-tab { padding: 7px 9px 6px; letter-spacing: 0.08em; }
+body.plugin.compact.portrait .knob { width: 58px; }
+/* keyboard: pedals and octave buttons in a row on top of full-width keys */
+body.plugin.compact.portrait .keybed { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px 8px; }
+body.plugin.compact.portrait .pedals { grid-row: 1; grid-column: 1; flex-direction: row; width: auto; justify-content: flex-start; }
+body.plugin.compact.portrait .octave-ctl { grid-row: 1; grid-column: 2; flex-direction: row; width: auto; gap: 8px; }
+body.plugin.compact.portrait .oct-buttons button { width: 44px; }
+body.plugin.compact.portrait .piano { grid-row: 2; grid-column: 1 / -1; }
+body.plugin.compact.portrait .piano-svg { height: 150px; }
 
 </style>
 </head>
@@ -553,6 +619,14 @@ body.plugin .synth {
     <section class="keybed">
       <div class="pedals" id="pedals">
         <span class="kbd-hint">Keys A–' play · Z / X octave</span>
+      </div>
+      <!-- phones (compact layout) show part of the keyboard: shift it by octaves -->
+      <div class="octave-ctl" id="octave-ctl">
+        <div class="oct-buttons">
+          <button id="oct-down" type="button" aria-label="Octave down">&#8722;</button>
+          <button id="oct-up" type="button" aria-label="Octave up">+</button>
+        </div>
+        <span id="octave-readout" class="oct-readout"></span>
       </div>
       <div id="piano" class="piano"></div>
     </section>
@@ -4281,6 +4355,17 @@ const FACTORY_JSON = {
 (function () {
   'use strict';
 
+  // Where the page runs: the Android app (android/, which injects window.AndroidMidi and
+  // window.AndroidFiles before this script) or a browser. Query options:
+  //   ?layout=portrait|landscape|desktop   force the phone layout (screenshots, tests)
+  //   ?screenshot=<page>                   no start overlay, lively fake state, that page open
+  //   ?selftest                            play a note and report (tests/run-web-check.ps1)
+  const query = new URLSearchParams(location.search);
+  const androidApp = !!window.AndroidMidi;
+  if (query.get('layout')) window.__rqLayout = query.get('layout');
+  const screenshotPage = query.get('screenshot');
+  if (screenshotPage) { try { localStorage.setItem('resonique.page', screenshotPage); } catch (e) { /* ignore */ } }
+
   // ---------------------------------------------------------- the bridge ---
   const listeners = {};
   const handlers = {};
@@ -4666,7 +4751,9 @@ const FACTORY_JSON = {
   handlers.setFavourite = ({ id, on }) => { if (on) favorites.add(id); else favorites.delete(id); store.set('resonique.favorites', JSON.stringify(Array.from(favorites))); sendPresetList(); };
   handlers.initPreset = () => { applyValues({}, null); current = { id: '', name: 'Init', category: 'User', description: 'Every parameter at its default' }; sendPreset(); };
   handlers.factoryReset = () => { favorites = new Set(); store.set('resonique.favorites', '[]'); loadById('factory:0'); message('Factory defaults restored (your saved presets are untouched)'); sendPresetList(); };
-  handlers.openPresetFolder = () => message('Presets are stored in this browser. Use EXPORT to write a .rqpreset file.');
+  handlers.openPresetFolder = () => message(androidApp
+    ? 'SAVE keeps presets in the app (they are part of your phone backup); EXPORT writes a .rqpreset file, IMPORT opens one from your phone or a cloud drive.'
+    : 'Presets are stored in this browser. Use EXPORT to write a .rqpreset file.');
   // import / export: the same .rqpreset files as the plugin
   function pickFile(accept, onText) {
     const input = document.createElement('input');
@@ -4692,10 +4779,16 @@ const FACTORY_JSON = {
   handlers.exportPreset = () => {
     const name = current.name && current.name !== '—' ? current.name : 'Resonique preset';
     const j = presetJson(name, current.category || 'User');
-    const blob = new Blob([JSON.stringify(j, null, 1)], { type: 'application/json' });
+    const text = JSON.stringify(j, null, 1);
+    const fileName = `${name.replace(/[\\/:*?"<>|]+/g, '_')}.rqpreset`;
+    if (window.AndroidFiles) {   // the Android app: a "save as" dialog (WebView cannot download a blob)
+      window.AndroidFiles.saveTextFile(fileName, 'application/json', text);
+      return;
+    }
+    const blob = new Blob([text], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `${name.replace(/[\\/:*?"<>|]+/g, '_')}.rqpreset`;
+    a.download = fileName;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
     message(`Exported ${a.download}`);
@@ -4793,12 +4886,33 @@ const FACTORY_JSON = {
     overlay.innerHTML = `<div class="rq-card"><button class="rq-power" type="button" aria-label="Start audio"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg></button><p class="rq-title">Resonique</p><p class="rq-sub">A physically modelled piano running in your browser. Click to start the audio, then play with a MIDI keyboard, the keys, or A–' on the computer keyboard.</p></div>`;
     document.body.appendChild(overlay);
     const btn = overlay.querySelector('button');
-    btn.addEventListener('click', async () => {
+    const start = async () => {
       btn.disabled = true;
       try { await audio.start(); overlay.classList.add('hidden'); }
-      catch (e) { console.error(e); overlay.querySelector('.rq-sub').textContent = `Could not start the audio: ${e && e.message ? e.message : e}`; btn.disabled = false; }
-    });
+      catch (e) { console.error(e); overlay.classList.remove('hidden'); overlay.querySelector('.rq-sub').textContent = `Could not start the audio: ${e && e.message ? e.message : e}`; btn.disabled = false; }
+    };
+    btn.addEventListener('click', start);
+    // the Android app allows audio without a gesture (and screenshots want the panel): no overlay
+    if (androidApp || screenshotPage) overlay.classList.add('hidden');
+    if (androidApp) start();
   }
+
+  // The Android app calls these when it leaves / returns to the screen: no hanging notes, no
+  // audio running in the background.
+  window.__rqWebHost = {
+    get audioMode() { return audio.mode; }, get running() { return audio.running; },
+    get time() { return audio.ctx ? audio.ctx.currentTime : -1; },   // advances only while the device renders audio
+    suspend() {
+      audio.post({ type: 'panic' });
+      toUi('notes', { on: [], off: Array.from({ length: 88 }, (_, i) => 21 + i) });
+      if (audio.ctx && audio.ctx.state === 'running') audio.ctx.suspend().then(sendConfig).catch(() => {});
+    },
+    resume() {
+      if (audio.ctx && audio.ctx.state === 'suspended') audio.ctx.resume().then(sendConfig).catch(() => {});
+    },
+    // the Android app: a file written by AndroidFiles.saveTextFile
+    saved(name) { message(name ? `Exported ${name}` : 'Export cancelled'); },
+  };
 
   function sendConfig() {
     const ctx = audio.ctx;
@@ -4817,7 +4931,12 @@ const FACTORY_JSON = {
     sendPreset();
     sendTuning();
     toUi('ir', { name: '' });
-    if (/[?&]selftest\b/.test(location.search)) selfTest();
+    if (query.has('selftest')) selfTest();
+    if (screenshotPage) {   // a playing instrument for the store screenshots
+      toUi('config', { sampleRate: 48000, blockSize: 128, wrapper: 'Web', voices: NUM_VOICES, version: RESONIQUE_VERSION, audio: 'AudioWorklet · 48.0 kHz', running: true });
+      toUi('stats', { voices: 7, partials: 486, peak: 0.42, sustain: 1, sostenuto: false, soft: 0, cpu: 0.11, building: false, sampleRate: 48000 });
+      toUi('notes', { on: [48, 55, 60, 64, 67], off: [] });
+    }
   };
 
   // ?selftest: starts the audio without a click (needs a browser that allows it, e.g. headless Edge
@@ -5171,7 +5290,18 @@ class Piano {
     this.pointers = new Map();   // pointerId -> note
     this.keys = [];
     this.WW = whiteWidth; this.WH = whiteHeight; this.showLabels = labels;
+    this.container = container;
     this.build(container);
+  }
+
+  // Phones show fewer, wider keys from a chosen octave (app.js fit()). Held keys are released first.
+  setKeys(numKeys, baseNote) {
+    if (numKeys === this.numKeys && baseNote === this.base) return;
+    for (const [, note] of this.pointers) if (note !== null && note !== undefined) this.onNoteOff(note);
+    this.pointers.clear();
+    this.numKeys = numKeys;
+    this.base = baseNote;
+    this.build(this.container);
   }
 
   build(container) {
@@ -5656,6 +5786,8 @@ class DetuneEditor {
     renderPresetName();
     renderBrowser();
     engine.loadPreset(p.id);
+    // phone landscape: back to the controls once a preset is picked
+    if (document.body.classList.contains('compact') && !document.body.classList.contains('portrait')) document.body.classList.remove('browse-open');
   }
   function stepPreset(dir) {
     const list = visiblePresets().length && !search ? visiblePresets() : presetList;
@@ -6112,14 +6244,61 @@ class DetuneEditor {
   });
 
   // --------------------------------------------------------- fit window ----
+  // Desktop / plugin: the fixed-size panel is scaled to fit the window.
+  // Touch screens where that would make it too small (phones, the Android app) switch to
+  // "compact": the panel fills the screen width and the page scrolls, with the keyboard
+  // pinned to the bottom. Landscape lays the panels out two across on a 900 px design
+  // width with 37 keys; portrait stacks them in one 480 px column with 25 keys. The web
+  // host can force a layout (window.__rqLayout) for screenshots and tests.
   const synth = $('.synth');
+  const coarse = window.matchMedia ? window.matchMedia('(pointer: coarse)') : null;
+  let lastLayout = '';
+  let octaveBase = 48;   // the first key shown on phones (C3)
+  function layoutKeys(layout) {
+    if (layout === 'desktop') { piano.setKeys(88, 21); return; }
+    const n = layout === 'portrait' ? 25 : 37;
+    octaveBase = clamp(octaveBase, 24, 108 - n + 1);
+    octaveBase -= (octaveBase - 24) % 12;   // whole octaves from C1
+    piano.setKeys(n, octaveBase);
+    $('#octave-readout').textContent = `${midiNoteName(octaveBase)} – ${midiNoteName(octaveBase + n - 1)}`;
+    piano.svg.setAttribute('preserveAspectRatio', 'none');
+  }
+  function shiftOctave(dir) {
+    if (lastLayout === 'desktop' || !lastLayout) return;
+    octaveBase += 12 * dir;
+    layoutKeys(lastLayout);
+  }
+  $('#oct-down').addEventListener('click', () => shiftOctave(-1));
+  $('#oct-up').addEventListener('click', () => shiftOctave(1));
   function fit() {
-    const vw = window.innerWidth, vh = window.innerHeight;
+    // the screen, not the layout viewport: mobile browsers widen innerWidth to fit content that
+    // overflows, which would feed back into the zoom
+    const vv = window.visualViewport;
+    const body = document.body;
+    const vw = vv ? Math.min(window.innerWidth, Math.round(vv.width * vv.scale)) : window.innerWidth;
+    const vh = vv ? Math.min(window.innerHeight, Math.round(vv.height * vv.scale)) : window.innerHeight;
+    body.classList.remove('compact', 'portrait');
+    synth.style.zoom = '';
+    synth.style.transform = '';
     const w = synth.offsetWidth + 20, h = synth.offsetHeight + 30;
     const s = Math.min(vw / w, vh / h);
-    synth.style.transform = `translateX(-50%) scale(${s})`;
+    const forced = window.__rqLayout;
+    const compact = forced ? forced !== 'desktop' : !!(coarse && coarse.matches) && (vh > vw || s < 0.8);
+    const portrait = forced ? forced === 'portrait' : compact && vh > vw;
+    const layout = compact ? (portrait ? 'portrait' : 'landscape') : 'desktop';
+    if (layout !== lastLayout) { lastLayout = layout; layoutKeys(layout); }
+    if (!compact) { synth.style.transform = `translateX(-50%) scale(${s})`; return; }
+    body.classList.add('compact');
+    body.classList.toggle('portrait', portrait);
+    synth.style.zoom = String(Math.min(1.5, vw / (synth.offsetWidth + 8)));
   }
+  if (coarse && coarse.addEventListener) coarse.addEventListener('change', fit);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
   window.addEventListener('resize', fit);
+  // phones: the preset browser folds away; tap the preset name to open it
+  $('.pd-text').addEventListener('click', () => {
+    if (document.body.classList.contains('compact')) { document.body.classList.toggle('browse-open'); fit(); }
+  });
 
   // Right-click on any control = the host's parameter menu; Shift+right-click keeps the browser menu (DevTools)
   document.addEventListener('contextmenu', (e) => {

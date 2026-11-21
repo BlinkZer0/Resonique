@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A grand piano seen from above: the straight spine on the left, the bentside sweeping
+     round to the keyboard at the front, an ivory keyboard with its black keys, a brass rim
+     and the red felt. Adaptive icon: 108 dp canvas, artwork inside the central 66 dp safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- shadow under the case -->
+    <path android:fillColor="#55000000"
+        android:pathData="M30,82 L30,34 Q30,26 38,26 L46,26 C66,26 84,42 84,60 L84,82 Z" />
+    <!-- the case (ebony) with a brass rim -->
+    <path android:fillColor="#2A2530" android:strokeColor="#C9A35B" android:strokeWidth="2.4"
+        android:pathData="M28,80 L28,32 Q28,24 36,24 L44,24 C64,24 82,40 82,58 L82,80 Z" />
+    <!-- the open lid's edge: a lighter sweep inside the bentside -->
+    <path android:fillColor="#00000000" android:strokeColor="#4A4350" android:strokeWidth="2"
+        android:pathData="M34,30 L44,30 C60,30 76,44 76,58 L76,66" />
+    <!-- strings hint: three faint lines along the spine -->
+    <path android:fillColor="#00000000" android:strokeColor="#3C3642" android:strokeWidth="1.2"
+        android:pathData="M36,38 L36,62 M41,36 L41,62 M46,36 L46,62" />
+    <!-- the felt (fall board) -->
+    <path android:fillColor="#B9463D"
+        android:pathData="M28,66 L82,66 L82,69 L28,69 Z" />
+    <!-- the keyboard -->
+    <path android:fillColor="#EFE6D2"
+        android:pathData="M28,69 L82,69 L82,80 L28,80 Z" />
+    <!-- black keys -->
+    <path android:fillColor="#15131A"
+        android:pathData="M32.5,69 h2.6 v6.5 h-2.6 Z M37,69 h2.6 v6.5 h-2.6 Z M44.5,69 h2.6 v6.5 h-2.6 Z M49,69 h2.6 v6.5 h-2.6 Z M53.5,69 h2.6 v6.5 h-2.6 Z M61,69 h2.6 v6.5 h-2.6 Z M65.5,69 h2.6 v6.5 h-2.6 Z M73,69 h2.6 v6.5 h-2.6 Z M77.5,69 h2.6 v6.5 h-2.6 Z" />
+    <!-- key gaps -->
+    <path android:fillColor="#00000000" android:strokeColor="#C9BBA5" android:strokeWidth="0.6"
+        android:pathData="M34.4,75.5 V80 M38.9,75.5 V80 M43.1,69 V80 M46.4,75.5 V80 M50.9,75.5 V80 M55.4,75.5 V80 M59.6,69 V80 M62.9,75.5 V80 M67.4,75.5 V80 M71.6,69 V80 M74.9,75.5 V80 M79.4,75.5 V80" />
+</vector>

@@ -383,6 +383,17 @@ button { font-family: inherit; color: inherit; }
 .pedal-btn.on .pedal-label { color: var(--brass); }
 .piano { flex: 1; min-width: 0; }
 .piano-svg { display: block; width: 100%; height: auto; touch-action: none; cursor: pointer; }
+/* octave buttons: phones only (compact layout) */
+.octave-ctl { display: none; }
+.oct-buttons { display: flex; gap: 6px; }
+.oct-buttons button {
+  width: 34px; height: 30px; padding: 0;
+  background: #16141a; border: 1px solid #2c2730; border-radius: 6px;
+  font-size: 16px; font-weight: 700; color: var(--ivory); cursor: pointer;
+}
+.oct-buttons button:hover { border-color: var(--accent-dim); }
+.oct-buttons button:active { transform: translateY(1px); }
+.oct-readout { font-family: var(--mono); font-size: 10px; color: var(--muted); white-space: nowrap; }
 .felt { fill: #6a1f1a; }
 .wkey { fill: #0d0c0e; stroke: #34303a; stroke-width: 1; transition: fill 40ms; }
 .wkey:hover { fill: #18161a; }
@@ -453,3 +464,58 @@ body.plugin .synth {
   transform-origin: top center;
   transform: translateX(-50%);
 }
+
+/* ====================================================== compact (phones) ===
+   Touch screens too small for the scaled panel (app.js fit()): the panel is zoomed to
+   the screen width, the page scrolls and the keyboard stays pinned to the bottom.
+   Landscape: 900 px design width, panels two across. Portrait: one 480 px column. */
+body.plugin.compact { height: 100vh; height: 100dvh; overflow-x: hidden; overflow-y: auto; overscroll-behavior: none; }
+body.plugin.compact .synth {
+  position: relative; top: auto; left: auto; transform: none;
+  width: 900px; margin: 0 auto; padding: 10px 10px 0; gap: 10px;
+  border-radius: 0; border-left: 0; border-right: 0; box-shadow: none;
+}
+body.plugin.compact .row { grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); }
+body.plugin.compact .col { display: contents; }
+body.plugin.compact .page:not(.active) { display: none; }
+body.plugin.compact .page-tabs { overflow-x: auto; scrollbar-width: none; }
+body.plugin.compact .page-tabs::-webkit-scrollbar { display: none; }
+body.plugin.compact .page-hint, body.plugin.compact .kbd-hint, body.plugin.compact .brand-sub { display: none; }
+body.plugin.compact .statusbar { padding-bottom: 4px; }
+body.plugin.compact .knob-svg { cursor: default; }
+/* the preset browser folds away (tap the preset name: app.js) */
+body.plugin.compact:not(.browse-open) .browser { display: none; }
+body.plugin.compact .pd-text { cursor: pointer; }
+body.plugin.compact .pd-name::after { content: ' \25BE'; color: var(--muted); font-size: 0.8em; }
+body.plugin.compact.browse-open .pd-name::after { content: ' \25B4'; }
+body.plugin.compact .preset-grid { height: 132px; }
+/* the keyboard: pinned to the bottom of the screen, with the octave buttons */
+body.plugin.compact .keybed {
+  position: sticky; bottom: 0; z-index: 3; margin: 0 -10px; border-radius: 10px 10px 0 0; padding: 8px 10px;
+  box-shadow: inset 0 4px 14px rgba(0, 0, 0, 0.9), 0 -10px 24px rgba(0, 0, 0, 0.75);
+}
+body.plugin.compact .octave-ctl { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 80px; flex: none; }
+body.plugin.compact .pedals { width: 84px; }
+body.plugin.compact .pedal-btn { padding: 5px 6px; }
+/* landscape: short, wide keys so the panels above keep some room */
+body.plugin.compact:not(.portrait) .piano-svg { height: 124px; }
+body.plugin.compact:not(.portrait) .preset-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* portrait: one column */
+body.plugin.compact.portrait .synth { width: 480px; }
+body.plugin.compact.portrait .topbar { gap: 8px 10px; }
+body.plugin.compact.portrait .patch-display { flex-basis: 100%; order: 3; min-width: 0; }
+body.plugin.compact.portrait .preset-actions { margin-left: auto; }
+body.plugin.compact.portrait .top-controls { order: 4; flex-basis: 100%; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+body.plugin.compact.portrait .preset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+body.plugin.compact.portrait #preset-search { width: 130px; }
+body.plugin.compact.portrait .page-tabs { flex-wrap: wrap; overflow-x: visible; row-gap: 2px; }
+body.plugin.compact.portrait .page-tab { padding: 7px 9px 6px; letter-spacing: 0.08em; }
+body.plugin.compact.portrait .knob { width: 58px; }
+/* keyboard: pedals and octave buttons in a row on top of full-width keys */
+body.plugin.compact.portrait .keybed { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px 8px; }
+body.plugin.compact.portrait .pedals { grid-row: 1; grid-column: 1; flex-direction: row; width: auto; justify-content: flex-start; }
+body.plugin.compact.portrait .octave-ctl { grid-row: 1; grid-column: 2; flex-direction: row; width: auto; gap: 8px; }
+body.plugin.compact.portrait .oct-buttons button { width: 44px; }
+body.plugin.compact.portrait .piano { grid-row: 2; grid-column: 1 / -1; }
+body.plugin.compact.portrait .piano-svg { height: 150px; }

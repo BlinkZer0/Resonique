@@ -21,6 +21,15 @@ vst/
   tests/
 ```
 
+**Android (the Brass Knuckles way):** `android/` is a Gradle project (AGP 8.13, Gradle 8.14, API 36, minSdk 26,
+no permissions, no native code) whose `bundleWebApp` task copies `web/index.html` into the assets with
+`android-midi.js` (the Web MIDI shim over `MidiBridge.java`) injected into `<head>`; `MainActivity` serves it from
+`appassets.androidplatform.net`, hands file pickers and the save dialog (`window.AndroidFiles`) to the page and calls
+`window.__rqWebHost.suspend/resume` when it leaves / returns to the screen. The phone layout is in the shared UI
+(`body.compact`, `body.portrait` in `style.css`; `fit()` in `app.js`; `window.__rqLayout` forces it for screenshots).
+Signing: `upload-key.jks` + `keystore.properties`, git-ignored. Store kit in `android/store/`, policy pages in
+`docs/privacy.html` and `docs/terms.html`.
+
 **Web build (the Eight Ball way):** `vst/webhost/wasm-engine.cpp` (flat C API `rq_*` over the unchanged engine),
 `vst/webhost/web-host.js` (the bridge stand-in: `window.__JUCE__.backend` with exactly `PluginEditor`'s events,
 AudioWorklet + main-thread table builder, Web MIDI, localStorage presets), `vst/webhost/build-web.ps1` (em++ →

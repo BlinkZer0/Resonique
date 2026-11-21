@@ -21,7 +21,18 @@ class Piano {
     this.pointers = new Map();   // pointerId -> note
     this.keys = [];
     this.WW = whiteWidth; this.WH = whiteHeight; this.showLabels = labels;
+    this.container = container;
     this.build(container);
+  }
+
+  // Phones show fewer, wider keys from a chosen octave (app.js fit()). Held keys are released first.
+  setKeys(numKeys, baseNote) {
+    if (numKeys === this.numKeys && baseNote === this.base) return;
+    for (const [, note] of this.pointers) if (note !== null && note !== undefined) this.onNoteOff(note);
+    this.pointers.clear();
+    this.numKeys = numKeys;
+    this.base = baseNote;
+    this.build(this.container);
   }
 
   build(container) {

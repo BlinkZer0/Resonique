@@ -16,6 +16,17 @@
 (function () {
   'use strict';
 
+  // Where the page runs: the Android app (android/, which injects window.AndroidMidi and
+  // window.AndroidFiles before this script) or a browser. Query options:
+  //   ?layout=portrait|landscape|desktop   force the phone layout (screenshots, tests)
+  //   ?screenshot=<page>                   no start overlay, lively fake state, that page open
+  //   ?selftest                            play a note and report (tests/run-web-check.ps1)
+  const query = new URLSearchParams(location.search);
+  const androidApp = !!window.AndroidMidi;
+  if (query.get('layout')) window.__rqLayout = query.get('layout');
+  const screenshotPage = query.get('screenshot');
+  if (screenshotPage) { try { localStorage.setItem('resonique.page', screenshotPage); } catch (e) { /* ignore */ } }
+
   // ---------------------------------------------------------- the bridge ---
   const listeners = {};
   const handlers = {};
@@ -401,7 +412,9 @@
   handlers.setFavourite = ({ id, on }) => { if (on) favorites.add(id); else favorites.delete(id); store.set('resonique.favorites', JSON.stringify(Array.from(favorites))); sendPresetList(); };
   handlers.initPreset = () => { applyValues({}, null); current = { id: '', name: 'Init', category: 'User', description: 'Every parameter at its default' }; sendPreset(); };
   handlers.factoryReset = () => { favorites = new Set(); store.set('resonique.favorites', '[]'); loadById('factory:0'); message('Factory defaults restored (your saved presets are untouched)'); sendPresetList(); };
-  handlers.openPresetFolder = () => message('Presets are stored in this browser. Use EXPORT to write a .rqpreset file.');
+  handlers.openPresetFolder = () => message(androidApp
+    ? 'SAVE keeps presets in the app (they are part of your phone backup); EXPORT writes a .rqpreset file, IMPORT opens one from your phone or a cloud drive.'
+    : 'Presets are stored in this browser. Use EXPORT to write a .rqpreset file.');
   // import / export: the same .rqpreset files as the plugin
   function pickFile(accept, onText) {
     const input = document.createElement('input');
@@ -427,10 +440,16 @@
   handlers.exportPreset = () => {
     const name = current.name && current.name !== '—' ? current.name : 'Resonique preset';
     const j = presetJson(name, current.category || 'User');
-    const blob = new Blob([JSON.stringify(j, null, 1)], { type: 'application/json' });
+    const text = JSON.stringify(j, null, 1);
+    const fileName = `${name.replace(/[\\/:*?"<>|]+/g, '_')}.rqpreset`;
+    if (window.AndroidFiles) {   // the Android app: a "save as" dialog (WebView cannot download a blob)
+      window.AndroidFiles.saveTextFile(fileName, 'application/json', text);
+      return;
+    }
+    const blob = new Blob([text], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `${name.replace(/[\\/:*?"<>|]+/g, '_')}.rqpreset`;
+    a.download = fileName;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
     message(`Exported ${a.download}`);
@@ -528,12 +547,33 @@
     overlay.innerHTML = `<div class="rq-card"><button class="rq-power" type="button" aria-label="Start audio"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg></button><p class="rq-title">Resonique</p><p class="rq-sub">A physically modelled piano running in your browser. Click to start the audio, then play with a MIDI keyboard, the keys, or A–' on the computer keyboard.</p></div>`;
     document.body.appendChild(overlay);
     const btn = overlay.querySelector('button');
-    btn.addEventListener('click', async () => {
+    const start = async () => {
       btn.disabled = true;
       try { await audio.start(); overlay.classList.add('hidden'); }
-      catch (e) { console.error(e); overlay.querySelector('.rq-sub').textContent = `Could not start the audio: ${e && e.message ? e.message : e}`; btn.disabled = false; }
-    });
+      catch (e) { console.error(e); overlay.classList.remove('hidden'); overlay.querySelector('.rq-sub').textContent = `Could not start the audio: ${e && e.message ? e.message : e}`; btn.disabled = false; }
+    };
+    btn.addEventListener('click', start);
+    // the Android app allows audio without a gesture (and screenshots want the panel): no overlay
+    if (androidApp || screenshotPage) overlay.classList.add('hidden');
+    if (androidApp) start();
   }
+
+  // The Android app calls these when it leaves / returns to the screen: no hanging notes, no
+  // audio running in the background.
+  window.__rqWebHost = {
+    get audioMode() { return audio.mode; }, get running() { return audio.running; },
+    get time() { return audio.ctx ? audio.ctx.currentTime : -1; },   // advances only while the device renders audio
+    suspend() {
+      audio.post({ type: 'panic' });
+      toUi('notes', { on: [], off: Array.from({ length: 88 }, (_, i) => 21 + i) });
+      if (audio.ctx && audio.ctx.state === 'running') audio.ctx.suspend().then(sendConfig).catch(() => {});
+    },
+    resume() {
+      if (audio.ctx && audio.ctx.state === 'suspended') audio.ctx.resume().then(sendConfig).catch(() => {});
+    },
+    // the Android app: a file written by AndroidFiles.saveTextFile
+    saved(name) { message(name ? `Exported ${name}` : 'Export cancelled'); },
+  };
 
   function sendConfig() {
     const ctx = audio.ctx;
@@ -552,7 +592,12 @@
     sendPreset();
     sendTuning();
     toUi('ir', { name: '' });
-    if (/[?&]selftest\b/.test(location.search)) selfTest();
+    if (query.has('selftest')) selfTest();
+    if (screenshotPage) {   // a playing instrument for the store screenshots
+      toUi('config', { sampleRate: 48000, blockSize: 128, wrapper: 'Web', voices: NUM_VOICES, version: RESONIQUE_VERSION, audio: 'AudioWorklet · 48.0 kHz', running: true });
+      toUi('stats', { voices: 7, partials: 486, peak: 0.42, sustain: 1, sostenuto: false, soft: 0, cpu: 0.11, building: false, sampleRate: 48000 });
+      toUi('notes', { on: [48, 55, 60, 64, 67], off: [] });
+    }
   };
 
   // ?selftest: starts the audio without a click (needs a browser that allows it, e.g. headless Edge
