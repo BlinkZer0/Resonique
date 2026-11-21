@@ -14,7 +14,7 @@ namespace resonique
 struct ModelBuilder
 {
     static constexpr double kSteelE = 2.0e11;     // Young's modulus of piano wire (Pa)
-    static constexpr double kTableModalWeight = 0.35;
+    static constexpr double kTableModalWeight = 0.15;
 
     // The frequency ceiling for partials: below Nyquist with margin, and nothing above 20 kHz.
     static double partialLimit (double fs) { return std::min (0.45 * fs, 20000.0); }

@@ -72,16 +72,24 @@ void decayTests()
     }
     std::printf ("\n");
 
-    // how much of the decay the local bridge takes (diagnostic)
+    // how much of the decay the local bridge and the board feedback take (diagnostic)
+    for (int n : { 36, 60 })
     {
-        std::printf ("     C4 T60 vs bridge coupling:");
+        std::printf ("     %s T60: bridge coupling 0/0.5/1:", n == 36 ? "C2" : "C4");
         for (float c : { 0.0f, 0.5f, 1.0f })
         {
             Patch p; p.set ("bridgeCoupling", c);
-            auto m = render (p, 4.0, { on (0.0, 60, 90) }).mono();
-            std::printf ("  %.1f: %.1f s", c, t60At (m, noteFrequency (60, p.tuning), 0.3, 4.0));
+            auto m = render (p, 5.0, { on (0.0, n, 90) }).mono();
+            std::printf (" %.1f", t60At (m, noteFrequency (n, p.tuning), 0.3, 5.0));
         }
-        std::printf ("\n");
+        std::printf (" s; string resonance 0/1:");
+        for (float c : { 0.0f, 1.0f })
+        {
+            Patch p; p.set ("stringResonance", c);
+            auto m = render (p, 5.0, { on (0.0, n, 90) }).mono();
+            std::printf (" %.1f", t60At (m, noteFrequency (n, p.tuning), 0.3, 5.0));
+        }
+        std::printf (" s\n");
     }
 
     // the String Decay parameter scales it

@@ -207,8 +207,10 @@ public:
             {
                 const auto& st = strings[s];
                 const int lim = std::min (kCouplePartials, st.active);
+                const float* __restrict bw = st.bridgeW;
+                const float* __restrict p = st.p;
                 float acc = 0.0f;
-                for (int k = 0; k < lim; ++k) acc += st.bridgeW[k] * st.p[k];
+                for (int k = 0; k < lim; ++k) acc += bw[k] * p[k];
                 Fb += acc + st.staticK * bridge.u;
             }
             // exact solution of m dv/dt = -F - r v over one sample with F held constant
@@ -226,11 +228,15 @@ public:
                 for (int s = 0; s < numStrings; ++s)
                 {
                     const auto& st = strings[s];
+                    const float* __restrict hs = st.hammerShape;
+                    const float* __restrict p = st.p;
+                    const float* __restrict q = st.q;
+                    const float* __restrict om = st.omega;
                     float a0 = 0.0f, a1 = 0.0f;
                     for (int k = 0; k < st.active; ++k)
                     {
-                        a0 += st.hammerShape[k] * st.p[k];
-                        a1 += st.hammerShape[k] * st.q[k] * st.omega[k];
+                        a0 += hs[k] * p[k];
+                        a1 += hs[k] * q[k] * om[k];
                     }
                     y[s] = a0; yd[s] = a1;
                 }
@@ -255,40 +261,48 @@ public:
                 hammer.endSample (contact);
             }
 
-            // ---- strings: inject, rotate, sum, damp
+            // ---- strings: inject, rotate, sum, damp (restrict pointers so the loops vectorise)
             float out = 0.0f;
             for (int s = 0; s < numStrings; ++s)
             {
                 auto& st = strings[s];
                 const int a = st.active;
                 const int lim = std::min (kCouplePartials, a);
-                for (int k = 0; k < lim; ++k) st.q[k] += st.coupleInj[k] * aTotal;
+                float* __restrict p = st.p;
+                float* __restrict q = st.q;
+                const float* __restrict rc = st.rc;
+                const float* __restrict rs = st.rs;
+                const float* __restrict bw = st.bridgeW;
+                const float* __restrict ci = st.coupleInj;
+                for (int k = 0; k < lim; ++k) q[k] += ci[k] * aTotal;
                 if (hammerForce[s] > 0.0f)
                 {
                     const float f = hammerForce[s];
-                    for (int k = 0; k < a; ++k) st.q[k] += st.hammerInj[k] * f;
+                    const float* __restrict hi = st.hammerInj;
+                    for (int k = 0; k < a; ++k) q[k] += hi[k] * f;
                 }
                 float acc = 0.0f;
                 if (damping)
                 {
+                    const float* __restrict dm = st.damp;
                     for (int k = 0; k < a; ++k)
                     {
-                        const float pk = st.p[k], qk = st.q[k], c = st.rc[k], sn = st.rs[k], d = st.damp[k];
+                        const float pk = p[k], qk = q[k], c = rc[k], sn = rs[k], d = dm[k];
                         const float np = (c * pk + sn * qk) * d;
-                        st.q[k] = (c * qk - sn * pk) * d;
-                        st.p[k] = np;
-                        acc += st.bridgeW[k] * np;
+                        q[k] = (c * qk - sn * pk) * d;
+                        p[k] = np;
+                        acc += bw[k] * np;
                     }
                 }
                 else
                 {
                     for (int k = 0; k < a; ++k)
                     {
-                        const float pk = st.p[k], qk = st.q[k], c = st.rc[k], sn = st.rs[k];
+                        const float pk = p[k], qk = q[k], c = rc[k], sn = rs[k];
                         const float np = c * pk + sn * qk;
-                        st.q[k] = c * qk - sn * pk;
-                        st.p[k] = np;
-                        acc += st.bridgeW[k] * np;
+                        q[k] = c * qk - sn * pk;
+                        p[k] = np;
+                        acc += bw[k] * np;
                     }
                 }
                 out += acc;

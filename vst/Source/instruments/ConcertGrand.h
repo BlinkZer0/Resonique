@@ -24,7 +24,7 @@ inline InstrumentModel concertGrandModel()
     // steel core (bass strings are copper-wound on a thinner core; stiffness comes from the core)
     m.coreDiameterMm = { { 21, 1.45 }, { 33, 1.25 }, { 45, 1.10 }, { 60, 1.05 }, { 84, 0.95 }, { 108, 0.80 } };
     m.inharmonicityScale = { { 21, 1.0 }, { 108, 1.0 } };
-    m.lossBase   = { { 21, 0.10 }, { 60, 0.12 }, { 96, 0.2 }, { 108, 0.4 } };
+    m.lossBase   = { { 21, 0.07 }, { 60, 0.10 }, { 96, 0.2 }, { 108, 0.4 } };
     m.lossLinear = { { 21, 0.5 }, { 60, 0.6 }, { 96, 0.5 }, { 108, 0.4 } };
     m.lossQuad   = { { 21, 0.10 }, { 60, 0.12 }, { 108, 0.12 } };
     m.boardLossScale = 1.0;
@@ -47,7 +47,7 @@ inline InstrumentModel concertGrandModel()
     m.damperDropMs = 25.0;
 
     m.bridgeMassKg = 0.05;
-    m.bridgeResistance = 4000.0;
+    m.bridgeResistance = 5500.0;
     m.bridgeAdmittanceScale = { { 21, 0.8 }, { 60, 1.0 }, { 108, 1.3 } };
 
     m.boardFirstModeHz = 48.0;
@@ -55,7 +55,7 @@ inline InstrumentModel concertGrandModel()
     m.boardQLow = 32.0;
     m.boardQHigh = 18.0;
     m.boardModalMassKg = 1.6;
-    m.boardAdmittanceBg = 3.5e-4;
+    m.boardAdmittanceBg = 2.8e-4;
     m.boardRadiationCornerHz = 500.0;
     m.boardHfLevel = 1.0;
     m.boardSympathetic = 1.0;

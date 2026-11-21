@@ -64,14 +64,14 @@ quiet-first stealing; right-click on any control for the DAW's automation menu.
 |---|---|
 | Fundamental tuning, A0..A7 | within 1.2 cents of the target on every tested key |
 | First eight partials of C4 | within 0.4 % of the stiff-string formula |
-| Decay (T60 of the fundamental) | C2 5.7 s · C4 5.6 s · C6 2.2 s · E7 0.9 s (table values 13 / 9 / 2.6 / 1.4 s before the bridge and board take their share) |
+| Decay (T60 of the fundamental) | C2 6.8 s · C4 6.4 s · C6 2.6 s · E7 1.0 s (the bridge and the board feedback take their share of the table's 13 / 9 / 2.6 / 1.4 s) |
 | Hammer contact | 5.5 ms at C1, 2.1 ms at C4, 0.6 ms at G#7 at velocity 64; shorter at 120 |
 | Velocity 20 → 127 at C4 | level −46 → −21 dBFS (25 dB), spectral centroid 860 → 1590 Hz, both monotonic |
 | Sympathetic resonance | C4 with the pedal down makes the C3 copy ring 40× more than C#3 |
 | Pedal, 1.1 s after release | up −138 dB · half −74 dB · down −46 dB |
 | Coupled-network stability | 88 keys at ff with every coupling at maximum: −155 dB 11 s later |
-| Sample rates 44.1 / 48 / 88.2 / 96 / 192 kHz | same pitch within 0.03 %, same level within 0.4 dB |
-| CPU (48 kHz, Release) | 16 voices 11 % · 32 voices + pedal 16 % · 64 + pedal 26 % · 88 + pedal 56 % of one core; tables rebuild in 2.6 ms |
+| Sample rates 44.1 / 48 / 88.2 / 96 / 192 kHz | same pitch within 0.03 %, same level within 0.5 dB, same spectral centroid within 0.5 % |
+| CPU (48 kHz, Release, vectorised modal loops) | 16 voices 6 % · 32 voices + pedal 10 % · 64 + pedal 17 % · 88 + pedal 36 % of one core; tables rebuild in 2.7 ms |
 | Host check | loads like a DAW, 48 + MIDI parameters, programs, state round trip |
 
 What is **not** claimed: no comparison against measured piano recordings has been run (none with a redistributable
@@ -99,9 +99,11 @@ measurements per phase in [docs/PLAN.md](docs/PLAN.md).
 - Phases 1–7: the JUCE/CMake project, the modal string engine with inharmonicity and losses, the nonlinear hammer,
   unisons with bridge coupling, the modal soundboard with sympathetic resonance and pedals, ten instruments, tuning,
   the five-page family console, 190 presets, the tests and the packaging.
+- Phase 8: the modal loops vectorise (about 40 % less CPU per partial), decay recalibrated against the live
+  coupling, sample-rate-independent measurements.
 - Known limitations: Windows only; the voicing is physically derived, not yet calibrated against recordings; the
-  88-voice worst case costs about half a core; no web / Android build yet (the DSP core is JUCE-free, so one can be
-  added the Eight Ball way).
+  88-voice worst case costs about a third of a core; no web / Android build yet (the DSP core is JUCE-free, so one
+  can be added the Eight Ball way).
 
 ## Repository layout
 

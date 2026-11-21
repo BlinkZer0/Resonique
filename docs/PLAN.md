@@ -16,8 +16,19 @@ phased roadmap. This file tracks what each phase delivered and what was measured
 | **5 Instruments and tuning** | Ten instrument models (string scaling, hammers, dampers, boards, unison and partial irregularities), equal + 7 temperaments, Scala import, concert pitch, Railsback stretch, per-note detune, mic perspectives, early reflections, FDN reverb + impulse-response convolution. |
 | **6 Interface and presets** | Five pages (MAIN, PHYSICAL MODEL, MICROPHONES, PERFORMANCE, TUNING) with the partial-series, felt-curve, velocity-curve, mic-diagram and detune editors; preset browser with search, favourites, categories, import / export, init, factory reset; 190 recipe-generated, level-matched presets with distinctness checks. |
 | **7 Optimisation and release** | Benchmark, `--render` diagnostics, host check, UI screenshot tests, Standalone smoke test, packaging script, documentation. |
+| **8 Optimisation and calibration** | MSVC's vectoriser report showed none of the modal loops vectorised (it could not prove the member arrays distinct); `__restrict` pointers on the string, sympathetic-bank and soundboard loops now vectorise all twelve partial-level loops: per-partial cost down ~40 % (16 voices 10.4 → 6.2 %, 64 voices 24.1 → 17.5 % of a core while carrying 20 % more live partials). Decay recalibrated: the table's modal-admittance share lowered to 0.15 (the live board feedback supplies the rest), background admittance 2.8e-4, bridge resistance 5500 N·s/m, bass internal loss 0.07 /s: C2 6.8 s, C4 6.4 s, C6 2.6 s, E7 1.0 s. Spectral-centroid measurement capped at 20 kHz so sample rates compare (1006–1011 Hz at every rate). Presets re-level-matched. |
 
-## Measurements (build of 2026-11-21, 48 kHz unless noted)
+## Measurements (phase 8 build of 2026-11-21, 48 kHz unless noted)
+
+Headline numbers after phase 8 (the detailed list below is the phase 7 record; what changed is listed here):
+- T60 of the fundamental on the output: C2 6.8 s, C4 6.4 s, C6 2.6 s, E7 1.0 s. C2 with bridge coupling
+  0 / 0.5 / 1: 8.6 / 6.9 / 5.8 s; with string resonance 0 / 1: 9.9 / 4.7 s. C4: 7.3 / 6.3 / 5.9 s and 6.2 / 5.8 s.
+- Velocity 20 → 127 at C4: −45.5 → −20.6 dBFS, centroid 854 → 1575 Hz.
+- Sample rates 44.1 → 192 kHz on D4: level −22.4 … −22.9 dB, centroid 1006 … 1011 Hz.
+- Stress: −41 / −80 / −134 / −141 dB at 3 / 5 / 8 / 11 s. Full coupling E3: −28 / −46 / −70 dB.
+- Benchmark (one core): 16 voices 6.2 %, 32 + pedal 9.9 %, 64 17.5 %, 64 + pedal 17.3 %, 88 + pedal 36.0 %
+  (9845 partials), 0 voices + pedal (bank + board + reverb) 6.1 %; tables 2.7 ms.
+- Renders at velocity 90: C1 −12.2, C2 −11.8, C3 −12.4, C4 −13.9, C5 −13.9, C6 −13.6, C7 −9.3, C8 −13.1 dBFS.
 
 **Tables (`--dsp`)**
 
@@ -74,7 +85,7 @@ during playback, state round trip (50 parameters restored, 0 differ).
 
 - Voice the instrument by ear and against reference material (none with a redistributable licence is bundled);
   the per-key level curve, losses and felt law are first physical estimates.
-- CPU: the 88-voice worst case is 56 % of a core; explicit SIMD for the modal loops and a coarser coupling step
-  when the pedal is up would roughly halve it.
+- CPU: the 88-voice worst case is 36 % of a core after phase 8; AVX2 (with runtime dispatch) and a coarser coupling
+  step when the pedal is up would bring it down further.
 - A web / Android build the Eight Ball way (the core is JUCE-free).
 - Aftertouch is accepted and ignored (nothing physical for it to do on a piano).

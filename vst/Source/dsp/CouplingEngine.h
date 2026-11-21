@@ -105,6 +105,13 @@ public:
         if (! haveTable) return;
         if (asleep && ! undamped) return;
         asleep = false;
+        float* __restrict pp = p;
+        float* __restrict qq = q;
+        const float* __restrict crc = rc;
+        const float* __restrict crs = rs;
+        const float* __restrict cinj = inj;
+        const float* __restrict cout = outW;
+        const float* __restrict cd = damp;
         for (int i = 0; i < c; ++i)
         {
             for (int z = 0; z < kNumZones; ++z)
@@ -112,19 +119,19 @@ public:
                 const float a = zoneAccel[z][i] * sympGain;
                 if (a == 0.0f) continue;
                 const int from = zoneStart[z], to = zoneStart[z + 1];
-                for (int j = from; j < to; ++j) q[j] += inj[j] * a;
+                for (int j = from; j < to; ++j) qq[j] += cinj[j] * a;
             }
             for (int j = 0; j < N; ++j)
             {
-                const float pj = p[j], qj = q[j], cc = rc[j], s = rs[j], d = damp[j];
-                p[j] = (cc * pj + s * qj) * d;
-                q[j] = (cc * qj - s * pj) * d;
+                const float pj = pp[j], qj = qq[j], cc = crc[j], s = crs[j], d = cd[j];
+                pp[j] = (cc * pj + s * qj) * d;
+                qq[j] = (cc * qj - s * pj) * d;
             }
             for (int z = 0; z < kNumZones; ++z)
             {
                 const int from = zoneStart[z], to = zoneStart[z + 1];
                 float f = 0;
-                for (int j = from; j < to; ++j) f += outW[j] * p[j];
+                for (int j = from; j < to; ++j) f += cout[j] * pp[j];
                 zoneForce[z][pos + i] += f;
             }
         }

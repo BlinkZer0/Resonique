@@ -15,7 +15,8 @@ int runBench()
         std::printf ("table build: %.1f ms (all 88 notes, %d soundboard modes)\n", ms, kSoundboardModes);
     }
     struct Case { const char* name; int voices; bool pedal; };
-    const Case cases[] = { { "16 voices", 16, false }, { "32 voices, pedal", 32, true }, { "64 voices, pedal", 64, true }, { "128 voices, pedal", 128, true } };
+    const Case cases[] = { { "16 voices", 16, false }, { "32 voices, pedal", 32, true }, { "64 voices", 64, false }, { "64 voices, pedal", 64, true },
+                           { "88 voices, pedal", 128, true }, { "0 voices, pedal", 0, true } };
     for (const auto& c : cases)
     {
         Patch p; p.set ("polyphony", 128).set ("reverbMix", 0.2f).set ("noiseMaster", 0.5f).set ("micPerspective", 0);
