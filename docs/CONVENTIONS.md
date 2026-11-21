@@ -21,8 +21,13 @@ vst/
   tests/
 ```
 
-**Resonique:** there is no web build yet (`web/`, `webhost/`); the DSP core is JUCE-free so one can be added the
-Eight Ball way (WebAssembly) later.
+**Web build (the Eight Ball way):** `vst/webhost/wasm-engine.cpp` (flat C API `rq_*` over the unchanged engine),
+`vst/webhost/web-host.js` (the bridge stand-in: `window.__JUCE__.backend` with exactly `PluginEditor`'s events,
+AudioWorklet + main-thread table builder, Web MIDI, localStorage presets), `vst/webhost/build-web.ps1` (em++ →
+one self-contained `web/index.html`, copied to `docs/index.html`), `start.bat` / `serve.ps1` (local HTTP), and
+`vst/tests/run-web-check.ps1` (Node engine test, screenshot, DOM checks, a note through the AudioWorklet in headless
+Edge). The engine source must stay buildable with `-fno-exceptions -fno-rtti` (no `try`, no `std::stoi`): the
+Scala parser uses `strtod` with end-pointer checks.
 
 ## 2. Build system
 

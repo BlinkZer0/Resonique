@@ -4,6 +4,7 @@
 //  concert pitch, stretch (Railsback-style) and per-note detune.
 //  Everything here runs off the audio thread (it feeds the note tables).
 // ============================================================================
+#include <cstdlib>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -44,6 +45,15 @@ struct ScalaScale
     std::vector<double> cents;   // size N >= 1, cents[N-1] = period
     bool valid() const { return ! cents.empty(); }
 
+    // a whole token as a number (no exceptions: the same source builds without them for the web)
+    static bool parseNumber (const std::string& tok, double& value)
+    {
+        if (tok.empty()) return false;
+        char* end = nullptr;
+        value = std::strtod (tok.c_str(), &end);
+        return end != nullptr && *end == '\0' && end != tok.c_str();
+    }
+
     // Parses .scl text. Returns false and leaves the scale empty on error.
     static bool parse (const std::string& text, ScalaScale& out, std::string& error)
     {
@@ -63,32 +73,31 @@ struct ScalaScale
             line = line.substr (first);
             if (stage == 1)
             {
-                try { expected = std::stoi (line); } catch (...) { error = "Bad note count"; out = {}; return false; }
-                if (expected < 0 || expected > 4096) { error = "Bad note count"; out = {}; return false; }
+                double n = 0;
+                const std::string tok = line.substr (0, line.find_first_of (" \t"));
+                if (! parseNumber (tok, n) || n < 0 || n > 4096 || n != std::floor (n)) { error = "Bad note count"; out = {}; return false; }
+                expected = (int) n;
                 stage = 2;
                 continue;
             }
             // a pitch: "cents" (contains '.'), "n/d" ratio, or integer ratio
             std::string tok = line.substr (0, line.find_first_of (" \t"));
             double c = 0;
-            try
+            bool ok = true;
+            if (tok.find ('.') != std::string::npos) ok = parseNumber (tok, c);
+            else if (tok.find ('/') != std::string::npos)
             {
-                if (tok.find ('.') != std::string::npos) c = std::stod (tok);
-                else if (tok.find ('/') != std::string::npos)
-                {
-                    const double n = std::stod (tok.substr (0, tok.find ('/')));
-                    const double d = std::stod (tok.substr (tok.find ('/') + 1));
-                    if (n <= 0 || d <= 0) throw 0;
-                    c = 1200.0 * std::log2 (n / d);
-                }
-                else
-                {
-                    const double n = std::stod (tok);
-                    if (n <= 0) throw 0;
-                    c = 1200.0 * std::log2 (n);
-                }
+                double n = 0, d = 0;
+                ok = parseNumber (tok.substr (0, tok.find ('/')), n) && parseNumber (tok.substr (tok.find ('/') + 1), d) && n > 0 && d > 0;
+                if (ok) c = 1200.0 * std::log2 (n / d);
             }
-            catch (...) { error = "Bad pitch: " + tok; out = {}; return false; }
+            else
+            {
+                double n = 0;
+                ok = parseNumber (tok, n) && n > 0;
+                if (ok) c = 1200.0 * std::log2 (n);
+            }
+            if (! ok) { error = "Bad pitch: " + tok; out = {}; return false; }
             degrees.push_back (c);
             if ((int) degrees.size() == expected) break;
         }

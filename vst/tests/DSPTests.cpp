@@ -182,6 +182,20 @@ void modelBuilderTests()
         CHECK (b.numPartials >= a.numPartials);
     }
 
+    // the tuning parameters reach the tables: concert pitch, temperament, root, stretch
+    {
+        Patch q; q.v[concertPitch] = 442.0f;
+        auto tq = ModelBuilder::build (q.v, q.tuning, 48000.0, 20);
+        CHECKF (std::abs (tq->notes[69 - kFirstNote].f0 - 442.0) < 1e-3, "concert pitch parameter: A4 = %.3f", tq->notes[69 - kFirstNote].f0);
+        Patch w; w.v[temperament] = (float) Temperament::Werckmeister; w.v[temperamentRoot] = 0;
+        auto tw = ModelBuilder::build (w.v, w.tuning, 48000.0, 21);
+        CHECK (tw->notes[64 - kFirstNote].f0 < 329.6);                  // E flatter than equal temperament
+        CHECK (std::abs (tw->notes[60 - kFirstNote].f0 - 261.6256) < 1e-3);
+        Patch s; s.v[stretch] = 1.0f;
+        auto ts = ModelBuilder::build (s.v, s.tuning, 48000.0, 22);
+        CHECK (ts->notes[0].f0 < 27.5 && ts->notes[kNumNotes - 1].f0 > 4186.0);
+    }
+
     // every instrument builds and differs from the concert grand
     const auto& ref = t->notes[60 - kFirstNote];
     for (int inst = 1; inst < kNumInstruments; ++inst)

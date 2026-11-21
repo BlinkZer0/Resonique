@@ -189,6 +189,7 @@ struct DcBlocker
 {
     float x1 = 0, y1 = 0, r = 0.995f;
     void prepare (double fs) { r = (float) std::exp (-kTwoPi * 10.0 / fs); }
+    void reset() { x1 = y1 = 0; }
     inline float process (float x) { const float y = x - x1 + r * y1; x1 = x; y1 = flushDenormal (y); return y; }
 };
 

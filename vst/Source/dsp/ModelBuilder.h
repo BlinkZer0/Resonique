@@ -181,8 +181,21 @@ struct ModelBuilder
         }
     }
 
-    static std::unique_ptr<InstrumentTables> build (const ParamValues& v, const TuningSettings& tuning, double fs, uint32_t buildId = 0)
+    // The tuning parameters (temperament, root, concert pitch, stretch) come from the parameter values;
+    // the per-note detune and the Scala scale from `tuningState`.
+    static TuningSettings tuningFor (const ParamValues& v, const TuningSettings& tuningState)
     {
+        TuningSettings t = tuningState;
+        t.temperament = (Temperament) clampT ((int) std::lround (v[temperament]), 0, (int) Temperament::Custom);
+        t.root = clampT ((int) std::lround (v[temperamentRoot]), 0, 11);
+        t.concertPitch = clampT ((double) v[concertPitch], 380.0, 500.0);
+        t.stretch = clampT ((double) v[stretch], 0.0, 1.0);
+        return t;
+    }
+
+    static std::unique_ptr<InstrumentTables> build (const ParamValues& v, const TuningSettings& tuningState, double fs, uint32_t buildId = 0)
+    {
+        const TuningSettings tuning = tuningFor (v, tuningState);
         auto t = std::make_unique<InstrumentTables>();
         t->sampleRate = fs;
         t->instrumentIndex = clampT ((int) std::lround (v[instrument]), 0, kNumInstruments - 1);

@@ -585,10 +585,11 @@
   });
 
   let connectedOnce = false;
-  engine.on('config', ({ sampleRate, blockSize, wrapper, version }) => {
+  engine.on('config', ({ sampleRate, blockSize, wrapper, version, audio, running }) => {
     const sr = sampleRate > 0 ? `${(sampleRate / 1000).toFixed(1)} kHz · ${blockSize} smp` : 'not playing yet';
-    $('#audio-info').textContent = `${wrapper} · ${sr}`;
-    $('#audio-led').classList.add('on');
+    $('#audio-info').textContent = audio || `${wrapper} · ${sr}`;
+    $('#audio-led').classList.toggle('on', running !== false);
+    document.body.classList.toggle('web', wrapper === 'Web');
     if (version) $('#brand-sub').textContent = `PHYSICAL PIANO · v${version}`;
     if (!connectedOnce) logMidi('Connected — play your MIDI controller, the keys, or A–\' on the computer keyboard (space = sustain)');
     connectedOnce = true;

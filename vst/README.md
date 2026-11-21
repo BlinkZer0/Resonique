@@ -108,6 +108,7 @@ cd %LOCALAPPDATA%\ResoniqueVST\build\ResoniqueTests_artefacts\Release
 | `ResoniqueTests.exe --probe-stability` | the 88-key stress scenario under every coupling / resonance / decay extreme |
 | `ResoniqueTests.exe --instruments` | contact time, inharmonicity, decay, centroid and level at C2 / C4 / C6 for every instrument (the default run also checks them) |
 | `powershell -File tests\check-params.ps1` | the C++ parameter table against `ui/js/params.js` |
+| `powershell -File tests\run-web-check.ps1` | the web build: `web-check.js` runs the wasm engine in Node (notes, pedal, panic, tuning, Scala, speed), a headless-Edge screenshot and DOM checks, then `web-audio-check.js` plays a note through the AudioWorklet over HTTP (DevTools protocol) |
 
 ## Layout
 
@@ -128,7 +129,8 @@ ui/               index.html, css/style.css, js/{params, engine-juce, knob, cont
 presets/          make_presets.py -> factory_presets.json
 resources/icon.png
 tests/            TestMain, TestRender.h, DSPTests, AcousticTests, PerformanceTests, PresetTests, HostCheck,
-                  EngineTools, check-params.ps1
+                  EngineTools, check-params.ps1, web-check.js, web-audio-check.js, run-web-check.ps1
+webhost/          wasm-engine.cpp (flat C API over the engine), web-host.js (bridge stand-in), build-web.ps1
 ```
 
 ### Bridge events

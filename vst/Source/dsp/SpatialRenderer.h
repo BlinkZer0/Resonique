@@ -50,7 +50,17 @@ public:
         gainsPrimed = false;
     }
 
-    void reset() { reverb.reset(); std::fill (erBufL.begin(), erBufL.end(), 0.0f); std::fill (erBufR.begin(), erBufR.end(), 0.0f); }
+    // Everything that holds signal: the room, the early reflections and the filters (a filter left
+    // ringing after a panic would re-excite the freshly cleared reverb with a faint click).
+    void reset()
+    {
+        reverb.reset();
+        std::fill (erBufL.begin(), erBufL.end(), 0.0f);
+        std::fill (erBufR.begin(), erBufR.end(), 0.0f);
+        for (auto* f : { &hpL, &hpR, &bassL, &bassR, &trebL, &trebR, &airL, &airR }) f->reset();
+        dcL.reset();
+        dcR.reset();
+    }
     void setMaster (double g, bool snap) { masterSm.target = g; if (snap) masterSm.reset (g); }
 
     void setMics (const MicSettings& m)
