@@ -63,9 +63,11 @@ set(RESONIQUE_KERNEL_SOURCES
     Source/dsp/Kernels_avx2.cpp)
 if(MSVC)
     set_source_files_properties(Source/dsp/Kernels_avx2.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX2")
-else()
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|i[3-6]86")
     set_source_files_properties(Source/dsp/Kernels_avx2.cpp PROPERTIES COMPILE_OPTIONS "-mavx2;-mfma")
 endif()
+# On other architectures (arm64 Android, where VST gHost builds the plugin natively) Kernels_avx2.cpp
+# is a second baseline build; cpuSupportsAvx2() is false there, so it is never selected.
 
 set(RESONIQUE_PLUGIN_SOURCES
     Source/PluginProcessor.cpp
