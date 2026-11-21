@@ -104,6 +104,8 @@ cd %LOCALAPPDATA%\ResoniqueVST\build\ResoniqueTests_artefacts\Release
 | `ResoniqueTests.exe --host-check <Resonique.vst3>` | loads the built plugin like a DAW: scan, parameters, sound, automation, state round trip, programs |
 | `ResoniqueTests.exe --compare <folder> [--instrument N] [--out file.csv] [--set id=value] [--set bands=1]` | measures reference recordings of single notes (files named like `Piano.ff.C4.aiff`) and renders of the same notes: inharmonicity, partial levels, decay, centroid, band shares; see docs/ACOUSTICS.md §10 |
 | `ResoniqueTests.exe --probe-voice <note> [vel]` | the raw bridge force of one voice without board or renderer (band shares, steps, contact time) |
+| `ResoniqueTests.exe --probe-stability` | the 88-key stress scenario under every coupling / resonance / decay extreme |
+| `ResoniqueTests.exe --instruments` | contact time, inharmonicity, decay, centroid and level at C2 / C4 / C6 for every instrument (the default run also checks them) |
 | `powershell -File tests\check-params.ps1` | the C++ parameter table against `ui/js/params.js` |
 
 ## Layout

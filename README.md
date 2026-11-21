@@ -107,6 +107,9 @@ measurements per phase in [docs/PLAN.md](docs/PLAN.md).
 - Phase 9: calibrated against openly licensed reference recordings (decay, brightness, inharmonicity, partial
   balance); a renderer defect that brightened every note by 10 dB fixed; the soundboard exchange runs every
   sample so the coupled network settles at every setting.
+- Phase 10: the nine derived instruments re-expressed relative to the calibrated grand (felt as force at a
+  reference compression, losses and bridge loss as factors), a per-instrument metrics table and test
+  (contact, inharmonicity, decay, brightness, level at C2 / C4 / C6), level trims per instrument.
 - Known limitations: Windows only; the voicing is physically derived, not yet calibrated against recordings; the
   88-voice worst case costs about a third of a core; no web / Android build yet (the DSP core is JUCE-free, so one
   can be added the Eight Ball way).

@@ -23,6 +23,7 @@ int runHostCheck (const juce::String& path);
 int runCompare (const juce::String& folder, int instrumentIndex, const juce::String& csvOut, const juce::StringArray& overrides);
 int runProbeVoice (int note, int vel);
 int runProbeStability();
+int runInstrumentTable (bool check);
 
 int main (int argc, char** argv)
 {
@@ -39,6 +40,7 @@ int main (int argc, char** argv)
         return runRender (i + 1 < args.size() ? args[i + 1] : juce::String ("renders"));
     }
     if (args.contains ("--probe-stability")) return runProbeStability();
+    if (args.contains ("--instruments")) return runInstrumentTable (false);
     if (args.contains ("--probe-voice"))
     {
         const int i = args.indexOf ("--probe-voice");
@@ -65,6 +67,7 @@ int main (int argc, char** argv)
     if (all || args.contains ("--dsp")) { std::printf ("== DSP tests ==\n"); runDspTests(); }
     if (all || args.contains ("--acoustic")) { std::printf ("== Acoustic tests ==\n"); runAcousticTests(); }
     if (all || args.contains ("--presets")) { std::printf ("== Preset tests ==\n"); runPresetTests(); }
+    if (all || args.contains ("--instruments-check")) { std::printf ("== Instrument library ==\n"); runInstrumentTable (true); }
 
     std::printf (failures == 0 ? "\nALL TESTS PASSED\n" : "\n%d FAILURE(S)\n", failures);
     return failures == 0 ? 0 : 1;

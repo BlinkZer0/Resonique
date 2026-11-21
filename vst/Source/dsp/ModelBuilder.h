@@ -78,7 +78,7 @@ struct ModelBuilder
         nt.numStrings = stringsForNote (m, midiNote);
         nt.f0 = noteFrequency (midiNote, tuning);
         nt.pan = clampT ((note - 60.0) / 36.0, -1.0, 1.0);
-        nt.gain = (float) dbToGain (m.levelDb.n > 0 ? m.levelDb.at (note) : 0.0);
+        nt.gain = (float) dbToGain ((m.levelDb.n > 0 ? m.levelDb.at (note) : 0.0) + (m.levelTrimDb.n > 0 ? m.levelTrimDb.at (note) : 0.0));
 
         const double L = m.lengthM.atLog (note);
         const double T = m.tensionN.at (note);

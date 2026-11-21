@@ -68,10 +68,44 @@ struct InstrumentModel
     double outputGain = 1.0;           // x calibration gain
     double noiseLevel = 1.0;           // x mechanical noise
     NoteCurve levelDb;                 // per-key level balance across the compass (dB)
+    NoteCurve levelTrimDb;             // a derived instrument's correction on top (dB), from tests/InstrumentTests.cpp
 };
 
 inline int stringsForNote (const InstrumentModel& m, int midiNote)
 {
     return midiNote <= m.singleUpTo ? 1 : (midiNote <= m.doubleUpTo ? 2 : 3);
+}
+
+// Derived instruments change the base's curves by factors / offsets, so a recalibration of the
+// concert grand carries through the whole library.
+inline NoteCurve scaledCurve (const NoteCurve& c, double factor)
+{
+    NoteCurve r = c;
+    for (int i = 0; i < r.n; ++i) r.pts[(size_t) i].value *= factor;
+    return r;
+}
+inline NoteCurve offsetCurve (const NoteCurve& c, double offset)
+{
+    NoteCurve r = c;
+    for (int i = 0; i < r.n; ++i) r.pts[(size_t) i].value += offset;
+    return r;
+}
+// Changes a felt law by a force factor at 0.5 mm compression and an exponent offset, keeping the two
+// independent (a raw exponent change at fixed K would also move the force by (0.5 mm)^dp).
+inline void voiceFelt (InstrumentModel& m, double forceFactor, double exponentOffset)
+{
+    m.feltK = scaledCurve (m.feltK, forceFactor * std::pow (0.5e-3, -exponentOffset));
+    m.feltP = offsetCurve (m.feltP, exponentOffset);
+}
+// Tilts a curve: factor `lo` at A0 rising to `hi` at C8 (geometric in between)
+inline NoteCurve tiltedCurve (const NoteCurve& c, double lo, double hi)
+{
+    NoteCurve r = c;
+    for (int i = 0; i < r.n; ++i)
+    {
+        const double t = clampT ((r.pts[(size_t) i].note - 21.0) / 87.0, 0.0, 1.0);
+        r.pts[(size_t) i].value *= lo * std::pow (hi / lo, t);
+    }
+    return r;
 }
 } // namespace resonique

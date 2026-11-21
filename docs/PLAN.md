@@ -20,6 +20,23 @@ phased roadmap. This file tracks what each phase delivered and what was measured
 
 | **9 Calibration against reference recordings** | `ResoniqueTests --compare` (features of reference notes vs renders, `--set` overrides, band shares, `--probe-voice`). Against 16 mf / ff notes of the University of Iowa piano: decay recalibrated (losses, background admittance 1.0e-4, bridge resistance 12 000); a renderer defect found and fixed (whole-filter assignment copied the left channel's state into the right every block: a 1/f click train that made every note 10 dB too bright); treble inharmonicity lowered to the measured 1.5–5e-3; fourth-order radiation roll-off below 150 Hz; softer treble felt. The lower losses exposed that the soundboard → string exchange every 8 samples could pump near-lossless strings (String Decay ×4 with the pedal never settled): the exchange now runs every sample, which settles every combination of maximum coupling, resonance, board Q and decay (`--probe-stability`), for about 4 % more CPU; String Decay also scales the local bridge loss. Mean differences against the references: centroid 2.6 dB, B 5.5 dB, partials 2 / 3 7.3 / 8.2 dB, decay at 1 / 2 s 3.9 / 6.2 dB. See ACOUSTICS.md §10. |
 
+| **10 Instrument library** | The nine derived pianos are re-expressed relative to the recalibrated base: geometry (lengths, tensions, cores, strike points, hammer masses, dampers, boards) stays absolute, felt (`voiceFelt`: force at 0.5 mm × factor, exponent offset), losses and bridge loss are factors on the base, so a recalibration of the concert grand carries through. `tests/InstrumentTests.cpp` (`--instruments`, and part of the default run) measures contact time, inharmonicity, broadband decay, centroid and level at C2 / C4 / C6 for every instrument, checks each against sane ranges and against the base (at least two metrics must differ), and per-instrument level trims keep every instrument within a few dB of the grand. |
+
+## Instrument metrics (phase 10, velocity 76)
+
+| Instrument | C2: contact ms · B · T60 s · centroid Hz | C4 | C6 |
+|---|---|---|---|
+| Concert Grand | 3.6 · 1.2e-4 · 12.0 · 412 | 2.0 · 3.9e-4 · 12.4 · 767 | 1.19 · 2.5e-3 · 6.6 · 1319 |
+| Studio Grand | 3.4 · 2.6e-4 · 9.3 · 434 | 1.9 · 4.9e-4 · 11.2 · 727 | 1.10 · 2.9e-3 · 5.3 · 1425 |
+| Upright | 3.7 · 6.8e-4 · 10.8 · 423 | 1.9 · 8.2e-4 · 10.7 · 556 | 1.19 · 4.8e-3 · 2.5 · 1539 |
+| Vintage Upright | 3.9 · 6.8e-4 · 14.9 · 337 | 2.1 · 8.2e-4 · 11.2 · 615 | 1.38 · 4.8e-3 · 2.0 · 1524 |
+| Bright Pop Grand | 3.1 · 1.2e-4 · 8.7 · 539 | 1.8 · 3.9e-4 · 10.8 · 947 | 1.02 · 2.5e-3 · 4.5 · 2121 |
+| Dark Jazz Grand | 3.9 · 1.2e-4 · 8.8 · 381 | 2.2 · 3.9e-4 · 13.2 · 759 | 1.35 · 2.5e-3 · 2.7 · 1351 |
+| Felt Piano | 5.3 · 1.2e-4 · 7.9 · 248 | 2.9 · 3.9e-4 · 9.0 · 476 | 2.31 · 2.5e-3 · 3.0 · 874 |
+| Prepared Piano | 3.4 · 2.4e-4 · 11.1 · 540 | 1.9 · 7.0e-4 · 8.2 · 775 | 1.12 · 4.0e-3 · 2.8 · 1847 |
+| Honky-Tonk | 3.6 · 6.8e-4 · 12.3 · 450 | 1.9 · 8.2e-4 · 8.8 · 921 | 1.12 · 4.8e-3 · 3.0 · 1980 |
+| Experimental Grand | 5.3 · 8.5e-6 · 33.3 · 492 | 3.7 · 3.3e-5 · 18.5 · 856 | 1.69 · 2.5e-4 · 4.6 · 1110 |
+
 ## Measurements (phase 9 build of 2026-11-21, 48 kHz unless noted)
 
 Headline numbers after phase 9:
