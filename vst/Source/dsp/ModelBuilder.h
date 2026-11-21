@@ -14,7 +14,7 @@ namespace resonique
 struct ModelBuilder
 {
     static constexpr double kSteelE = 2.0e11;     // Young's modulus of piano wire (Pa)
-    static constexpr double kTableModalWeight = 0.15;
+    static constexpr double kTableModalWeight = 0.08;
 
     // The frequency ceiling for partials: below Nyquist with margin, and nothing above 20 kHz.
     static double partialLimit (double fs) { return std::min (0.45 * fs, 20000.0); }
@@ -56,8 +56,10 @@ struct ModelBuilder
             const double amp = 0.30 * (0.7 + 0.6 * rng.uniform()) * std::sqrt (m.boardModalMassKg / mass) * m.boardModalGain;
             for (int z = 0; z < kNumZones; ++z)
                 md.zoneW[(size_t) z] = (float) (amp * std::cos (k * (z + 0.5) / kNumZones * kPi + phase));
-            // radiation: weak below the corner (dipole cancellation), decorrelated left/right
-            const double rad = f / std::sqrt (f * f + m.boardRadiationCornerHz * m.boardRadiationCornerHz);
+            // radiation: weak below the corner (the board is a poor radiator below its first modes), flat above;
+            // fourth order so the lowest fundamentals fall away as they do in the reference recordings
+            const double fr = f / m.boardRadiationCornerHz;
+            const double rad = fr * fr * fr * fr / (fr * fr * fr * fr + 1.0);
             const double a = (0.55 + 0.45 * rng.uniform()) * rad * (rng.uniform() < 0.5 ? -1.0 : 1.0);
             const double th = 0.2 + 1.17 * rng.uniform();
             md.outL = (float) (a * std::cos (th));
@@ -105,7 +107,9 @@ struct ModelBuilder
         nt.velFF = m.hammerVelFF;
         nt.hammerNoiseColour = m.hammerNoiseColour;
         const double strike = clampT (m.strikeRatio.at (note) * v[hammerPosition], 0.03, 0.5);
-        const double feltWidth = lerp (0.014, 0.005, clampT ((note - 21.0) / 87.0, 0.0, 1.0));   // contact width (m)
+        // effective felt contact length along the string (m): a compressed felt spreads over several
+        // centimetres in the bass; it is what keeps the string's kink from re-exciting the hammer
+        const double feltWidth = lerp (0.035, 0.020, clampT ((note - 21.0) / 87.0, 0.0, 1.0));
 
         // damper
         nt.hasDamper = midiNote <= m.lastDamperNote;

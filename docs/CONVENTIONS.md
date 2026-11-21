@@ -72,8 +72,8 @@ user presets `Documents\Resonique\Presets` (`.rqpreset`), favourites `Documents\
 
 Rules:
 - `juce::ScopedNoDenormals` in `processBlock`. Nothing in the engine allocates, locks or does I/O after `prepare()`.
-- **Control rate `kChunk = 32` samples.** Smoothing, damper pressure, partial trimming and the soundboard -> string
-  feedback run once per chunk; modal states run per sample.
+- **Control rate `kChunk = 32` samples.** Smoothing, damper pressure and partial trimming run once per chunk; modal states
+  and the soundboard <-> string exchange run per sample.
 - Master gain is smoothed per chunk; the output safety clipper is exactly linear below −1.9 dBFS.
 - Parameter changes made by presets go through `beginChangeGesture / setValueNotifyingHost / endChangeGesture`.
   `master` is never stored in presets.
@@ -89,7 +89,7 @@ Rules:
 - **Float, structure-of-arrays modal banks** rotated per sample with plain loops the compiler vectorises; partials
   that have died are dropped from the top (`VoiceString::active`).
 - **Two coupling levels:** the local bridge inside a voice (unison beating, two-stage decay) is per sample; the
-  soundboard -> string feedback (sympathetic resonance) is per chunk through eight bridge zones.
+  soundboard -> string feedback (sympathetic resonance) runs every sample through eight bridge zones (an 8-sample step pumped near-lossless strings).
 
 ## 4. Parameters
 

@@ -98,7 +98,7 @@ target_link_libraries(ResoniqueVST
 juce_add_console_app(ResoniqueTests PRODUCT_NAME "ResoniqueTests")
 target_sources(ResoniqueTests PRIVATE
     tests/TestMain.cpp tests/DSPTests.cpp tests/AcousticTests.cpp tests/PerformanceTests.cpp
-    tests/PresetTests.cpp tests/HostCheck.cpp tests/EngineTools.cpp
+    tests/PresetTests.cpp tests/HostCheck.cpp tests/EngineTools.cpp tests/CompareTool.cpp
     Source/PresetManager.cpp Source/TableStore.cpp)
 target_include_directories(ResoniqueTests PRIVATE Source)
 target_compile_definitions(ResoniqueTests PRIVATE JUCE_USE_CURL=0 JUCE_WEB_BROWSER=0 JUCE_PLUGINHOST_VST3=1)

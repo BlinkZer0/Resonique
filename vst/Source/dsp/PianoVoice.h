@@ -86,7 +86,7 @@ public:
 
     // ---- lifecycle -------------------------------------------------------------
     void start (const NoteTable& nt, double vel01, double sampleRate, double dynamics, double velCurve,
-                double soft, double bridgeCouplingParam)
+                double soft, double bridgeCouplingParam, double decayParam = 1.0)
     {
         fs = sampleRate;
         dt = 1.0 / fs;
@@ -109,8 +109,9 @@ public:
         damper.prepare (fs, nt.damperDropMs);
         damper.pressure = damper.target = 0;
         bridge.u = bridge.v = 0;
-        // local admittance: 0.5 = the instrument's own, 0 = ten times stiffer, 1 = twice as mobile
-        bridge.r = nt.bridgeR / (0.1 + 1.8 * clampT (bridgeCouplingParam, 0.0, 1.0));
+        // local admittance: 0.5 = the instrument's own, 0 = ten times stiffer, 1 = twice as mobile.
+        // The String Decay parameter also scales the bridge's loss, so it reaches the live part of the decay.
+        bridge.r = nt.bridgeR * clampT (decayParam, 0.25, 4.0) / (0.1 + 1.8 * clampT (bridgeCouplingParam, 0.0, 1.0));
         bridge.mass = std::max (nt.bridgeMass, 0.4 * sumMuL);   // keeps the coupled kinetic energy positive definite
         bridge.decay = std::exp (-bridge.r / bridge.mass * dt);
         bridge.invR = 1.0 / bridge.r;

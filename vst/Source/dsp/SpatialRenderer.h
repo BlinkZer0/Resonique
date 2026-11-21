@@ -46,9 +46,12 @@ public:
         erSm.setTime (0.05, fs); erSm.reset (0.3);
         distSm.setTime (0.08, fs); distSm.reset (1.2);
         updateEr (0.5);
+        micsPrimed = false;
+        gainsPrimed = false;
     }
 
     void reset() { reverb.reset(); std::fill (erBufL.begin(), erBufL.end(), 0.0f); std::fill (erBufR.begin(), erBufR.end(), 0.0f); }
+    void setMaster (double g, bool snap) { masterSm.target = g; if (snap) masterSm.reset (g); }
 
     void setMics (const MicSettings& m)
     {
@@ -57,17 +60,22 @@ public:
         widthSm.target = m.width;
         hfSm.target = m.hfLevel;
         erSm.target = m.erLevel;
+        if (! micsPrimed)   // the first configuration after prepare(): no need to glide there
+        {
+            distSm.reset (m.distance); widthSm.reset (m.width); hfSm.reset (m.hfLevel); erSm.reset (m.erLevel);
+            micsPrimed = true;
+        }
         const double bright = m.brightness;
         hpL.highPass (fs, 2200.0 * std::pow (2.0, -bright), 0.6);
-        hpR = hpL;
+        hpR.copyCoefficients (hpL);
         // air absorption with distance
         const double air = clampT (18000.0 / (1.0 + 0.35 * m.distance), 5000.0, 18000.0);
-        airL.lowPass (fs, air); airR = airL;
+        airL.lowPass (fs, air); airR.copyCoefficients (airL);
     }
     void setTone (double bassDb, double trebleDb)
     {
-        bassL.lowShelf (fs, 220.0, bassDb); bassR = bassL;
-        trebL.highShelf (fs, 3800.0, trebleDb); trebR = trebL;
+        bassL.lowShelf (fs, 220.0, bassDb); bassR.copyCoefficients (bassL);
+        trebL.highShelf (fs, 3800.0, trebleDb); trebR.copyCoefficients (trebL);
     }
     void setMaster (double g) { masterSm.target = g; }
     void setReverb (int type, double size, double damp, double mix, double predelayMs)
@@ -99,18 +107,27 @@ public:
         const double sideGain = width * 1.6;
         const float flipL = mics.flip ? 1.0f : 0.0f;
 
+        // every gain ramps linearly across the chunk from its previous value: a per-chunk staircase
+        // would modulate the signal at the chunk rate and smear broadband sidebands over the spectrum
+        if (! gainsPrimed) { gDirect = directGain; gHf = hfGain; gSide = sideGain; gEr = er * roomGain * 0.5; gRoom = roomGain; gMaster = master; gMix = mix; gainsPrimed = true; }
+        const float invN = 1.0f / (float) n;
+        const float dDirect = (float) (directGain - gDirect) * invN, dHf = (float) (hfGain - gHf) * invN, dSide = (float) (sideGain - gSide) * invN;
+        const float dEr = (float) (er * roomGain * 0.5 - gEr) * invN, dRoom = (float) (roomGain - gRoom) * invN;
+        float gd = (float) gDirect, gh = (float) gHf, gs = (float) gSide, ge = (float) gEr, gr = (float) gRoom;
+
         float dry[2][kChunk];
         for (int i = 0; i < n; ++i)
         {
+            gd += dDirect; gh += dHf; gs += dSide; ge += dEr; gr += dRoom;
             // board radiation + the direct (dense high-mode) path
             float dl = directL[i], dr = directR[i];
             if (flipL > 0.5f) std::swap (dl, dr);
-            float l = boardL[i] * (float) directGain + hpL.process (dl) * (float) hfGain;
-            float r = boardR[i] * (float) directGain + hpR.process (dr) * (float) hfGain;
+            float l = boardL[i] * gd + hpL.process (dl) * gh;
+            float r = boardR[i] * gd + hpR.process (dr) * gh;
             // mid/side width
             const float mid = 0.5f * (l + r), side = 0.5f * (l - r);
-            l = mid + side * (float) sideGain;
-            r = mid - side * (float) sideGain;
+            l = mid + side * gs;
+            r = mid - side * gs;
             l *= outputScale; r *= outputScale;
             // early reflections (cross-fed taps)
             erBufL[(size_t) erPos] = l; erBufR[(size_t) erPos] = r;
@@ -122,12 +139,13 @@ public:
                 erR += (k & 1 ? erBufL : erBufR)[(size_t) pos] * tapGain[k];
             }
             erPos = (erPos + 1) % (int) erBufL.size();
-            l += el * (float) (er * roomGain * 0.5);
-            r += erR * (float) (er * roomGain * 0.5);
+            l += el * ge;
+            r += erR * ge;
             dry[0][i] = l; dry[1][i] = r;
-            sendL[i] = l * (float) roomGain;
-            sendR[i] = r * (float) roomGain;
+            sendL[i] = l * gr;
+            sendR[i] = r * gr;
         }
+        gDirect = directGain; gHf = hfGain; gSide = sideGain; gEr = er * roomGain * 0.5; gRoom = roomGain;
 
         float wet[2][kChunk];
         if (! usesExternalReverb())
@@ -135,18 +153,22 @@ public:
         else
             for (int i = 0; i < n; ++i) wet[0][i] = wet[1][i] = 0;
 
-        const float wetG = (float) (mix * 0.9), dryG = (float) (1.0 - 0.35 * mix);
+        const float dMaster = (float) (master - gMaster) * invN, dMix = (float) (mix - gMix) * invN;
+        float gm = (float) gMaster, gx = (float) gMix;
         for (int i = 0; i < n; ++i)
         {
+            gm += dMaster; gx += dMix;
+            const float wetG = gx * 0.9f, dryG = 1.0f - 0.35f * gx;
             float l = dry[0][i] * dryG + wet[0][i] * wetG;
             float r = dry[1][i] * dryG + wet[1][i] * wetG;
             l = trebL.process (bassL.process (airL.process (l)));
             r = trebR.process (bassR.process (airR.process (r)));
-            l = dcL.process (l) * (float) master;
-            r = dcR.process (r) * (float) master;
+            l = dcL.process (l) * gm;
+            r = dcR.process (r) * gm;
             outL[i] = softClip (l);
             outR[i] = softClip (r);
         }
+        gMaster = master; gMix = mix;
     }
 
     // External (convolution) reverb returns here: mixes wet into the already-rendered output.
@@ -179,5 +201,7 @@ private:
     Biquad hpL, hpR, bassL, bassR, trebL, trebR, airL, airR;
     DcBlocker dcL, dcR;
     Smoother masterSm, mixSm, widthSm, hfSm, erSm, distSm;
+    bool micsPrimed = false, gainsPrimed = false;
+    double gDirect = 1, gHf = 0, gSide = 1, gEr = 0, gRoom = 1, gMaster = 0.8, gMix = 0;
 };
 } // namespace resonique

@@ -148,6 +148,39 @@ stress render with every coupling at maximum, and the MIDI edge cases (note-off 
 CC120 / CC123, pitch bend ratio and return). `--render <dir>` writes the same kind of material as WAV files with
 spectrum CSVs for inspection in any editor; `docs/PLAN.md` records the measured numbers of each build.
 
-What is **not** claimed: no comparison against measured piano recordings has been run yet (none with a licence
-that allows redistribution are bundled), and the instrument has not been tuned by ear against Pianoteq or an
-acoustic instrument. The model is a physically derived starting point with the knobs to calibrate it.
+## 10. Comparison with reference recordings
+
+`ResoniqueTests --compare <folder>` measures the same features on reference recordings of single notes and on
+renders of the same notes at a matching velocity: the inharmonicity *B* fitted from the measured partials, the
+levels of partials 2–12 relative to the fundamental 30–230 ms after the onset, the T60 of partials 1–3, the spectral
+centroid and the band energy shares of the first 300 ms, and the broadband decay 1, 2 and 4 s after the onset.
+`--set id=value` overrides parameters for calibration experiments; `--set bands=1` prints the band shares.
+
+The references used in phase 9 are the University of Iowa Musical Instrument Samples (Lawrence Fritts, "freely
+available ... for any projects, without restrictions"): the piano at pp / mf / ff on C1, C2, C3, C4, A4, C5, C6 and
+C7, a single Neumann KM 84 at 16/44.1 in a room. They are not bundled; the folder is the user's. The pp takes have
+too little signal above the room for the measurements, so the calibration used mf and ff (16 notes).
+
+What the references showed, and what changed:
+- **Decay.** The recordings' fundamentals ring far longer than the first model (T60 of the fundamental: C2 21 s,
+  C4 15–23 s, A4 16–25 s, C5 10–12 s, C6 7 s, C7 2.7 s against the model's 6.6 / 5.6 / 5.9 / 6.4 / 2.4 / 1.2 s).
+  The string losses, the background admittance (1.0e-4 m/s/N) and the local bridge resistance (12 000 N·s/m)
+  were recalibrated to the reference decays; the broadband decay 1 and 2 s after the onset now agrees within
+  4 and 7 dB on average.
+- **Brightness.** The recordings carry almost nothing above 4 kHz in the first 300 ms (−40 to −65 dB of the
+  total), the model had a flat floor at −25 dB in every band. The raw bridge force of a voice was clean, so the
+  floor was traced to the renderer: it re-applied its filters every block by assigning whole `Biquad` objects,
+  copying the left channel's state into the right every block (a click train with a 1/f spectrum). With that fixed
+  the spectral centroid of the first 300 ms agrees within 2.6 dB on average (recordings 600–2000 Hz).
+- **Inharmonicity.** The recordings' *B* at C6–C7 is 1.5–5e-3; the model had 4e-3–2e-2. The treble core
+  diameters were lowered (0.85 / 0.72 mm). *B* now agrees within 5 dB over the compass.
+- **Partial balance.** The recordings' lowest fundamentals are very weak (C1: partials 2–6 are 18–35 dB above the
+  fundamental): the board's radiation now rolls off with a fourth-order curve below 150 Hz. The treble felt law
+  was softened (force at 0.5 mm compression 7.5 N at A0, 17 N at C4, 25 N at C6, 60 N at C8) and the felt
+  hysteresis reduced, giving contact times of 5.2 / 2.6 / 2.1 / 1.3 / 0.9 ms at C1 / C3 / C4 / C6 / G#7 at velocity 64.
+  Partials 2 and 3 agree within 7–8 dB on average; the sixth partial within 15 dB.
+
+What is **not** claimed: the comparison is against one instrument in one room through one microphone, so the
+model's room, mic and radiation are being fitted to that chain as much as to the piano; no listening tests have
+been done; velocity 28 / 76 / 118 for pp / mf / ff is an assumption. The model is a physically derived
+instrument calibrated to public measurements, not a copy of any recording.

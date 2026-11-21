@@ -89,12 +89,19 @@ void decayTests()
             auto m = render (p, 5.0, { on (0.0, n, 90) }).mono();
             std::printf (" %.1f", t60At (m, noteFrequency (n, p.tuning), 0.3, 5.0));
         }
+        std::printf (" s; unison 0 / 0.5 / 1 ct:");
+        for (float c : { 0.0f, 0.5f, 1.0f })
+        {
+            Patch p; p.set ("unisonDetune", c);
+            auto m = render (p, 5.0, { on (0.0, n, 90) }).mono();
+            std::printf (" %.1f", t60At (m, noteFrequency (n, p.tuning), 0.3, 5.0));
+        }
         std::printf (" s\n");
     }
 
-    // the String Decay parameter scales it
-    Patch a; a.set ("stringDecay", 0.5f);
-    Patch b; b.set ("stringDecay", 2.0f);
+    // the String Decay parameter scales it (single strings: the beating of a unison also shapes the envelope)
+    Patch a; a.set ("stringDecay", 0.5f).set ("unisonDetune", 0.0f);
+    Patch b; b.set ("stringDecay", 2.0f).set ("unisonDetune", 0.0f);
     const double f0 = noteFrequency (60, a.tuning);
     auto ra = render (a, 3.0, { on (0.0, 60, 90) }), rb = render (b, 3.0, { on (0.0, 60, 90) });
     auto ma = ra.mono(), mb = rb.mono();

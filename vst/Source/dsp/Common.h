@@ -130,6 +130,8 @@ struct Biquad
         return y;
     }
     void reset() { z1 = z2 = 0; }
+    // coefficients only: the filter keeps its own state (assigning a whole Biquad would copy the other's state too)
+    void copyCoefficients (const Biquad& o) { b0 = o.b0; b1 = o.b1; b2 = o.b2; a1 = o.a1; a2 = o.a2; }
     void lowShelf (double fs, double f, double dbGain, double q = 0.707)
     {
         const double A = std::pow (10.0, dbGain / 40.0), w = kTwoPi * f / fs, cw = std::cos (w), sw = std::sin (w);

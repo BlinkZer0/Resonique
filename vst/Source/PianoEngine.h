@@ -3,14 +3,14 @@
 //  PianoEngine: the whole instrument, JUCE-free.
 //    prepare(fs) -> setTables(t) at block boundaries -> setParamValues(v) ->
 //    noteOn / noteOff / controller / pitchBend -> render(L, R, n)
-//  Signal flow per 32-sample chunk (in 8-sample coupling steps):
+//  Signal flow per 32-sample chunk (the soundboard exchange runs every sample):
 //    voices (strings + hammer + local bridge + damper)  -> bridge force per zone
 //    sympathetic bank (undamped light strings)           -> bridge force per zone
 //    mechanical noises                                   -> zone forces + air bus
 //    soundboard (modal, shared)                          -> radiation L/R, zone accelerations
 //    spatial renderer (mics, ER, reverb, tone, master)   -> output
 //  The zone accelerations feed back into the strings on the next coupling step
-//  (8 samples), short enough to keep the coupling dissipative.
+//  sample, which keeps the coupling dissipative even for near-lossless strings.
 //  Nothing here allocates, locks or does I/O after prepare().
 // ============================================================================
 #include "dsp/VoiceManager.h"
@@ -27,7 +27,7 @@ class PianoEngine
 {
 public:
     static constexpr float kOutputScale = 50.0f;   // board-velocity units (m/s) -> full scale (calibrated by the tests)
-    static constexpr int kCoupleStep = 8;          // samples between soundboard -> string exchanges
+    static constexpr int kCoupleStep = 1;          // samples between soundboard -> string exchanges (1: the loop stays passive even for near-lossless strings)
 
     PianoEngine()
     {
@@ -79,7 +79,7 @@ public:
         else
         {
             v = voices.allocate (midiNote);
-            v->start (nt, vel01, fs, params[dynamics], params[velCurve], pedals.soft * params[softPedalDepth], params[bridgeCoupling]);
+            v->start (nt, vel01, fs, params[dynamics], params[velCurve], pedals.soft * params[softPedalDepth], params[bridgeCoupling], params[stringDecay]);
             v->setBend (bendRatio);
         }
         if (pedals.sostenuto) v->sostenuto = false;    // a new note is not part of the sostenuto set
@@ -217,9 +217,10 @@ private:
         pedals.switchMode = params[pedalMode] >= 0.5f;
         pedals.halfPoint = params[halfPedalPoint];
         pedals.setSustain (pedals.sustainPos);   // re-evaluate the lift with the new mapping (no event)
-        sympGain = (float) (params[stringResonance] * 2.0 * (tables != nullptr ? tables->board.sympathetic : 1.0));
+        // 0.5 = the physical coupling; the top of the range stays inside the stability margin of the one-sample loop
+        sympGain = (float) (params[stringResonance] * 1.6 * (tables != nullptr ? tables->board.sympathetic : 1.0));
         board.setResonance (params[soundboardResonance]);
-        renderer.setMaster (params[master]);
+        renderer.setMaster (params[master], force);
         renderer.setTone (params[toneBass], params[toneTreble]);
         renderer.setReverb ((int) std::lround (params[reverbType]), params[reverbSize], params[reverbDamp], params[reverbMix], params[reverbPredelay]);
         MicSettings m;

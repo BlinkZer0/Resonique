@@ -102,6 +102,8 @@ cd %LOCALAPPDATA%\ResoniqueVST\build\ResoniqueTests_artefacts\Release
 | `ResoniqueTests.exe --render <dir>` | diagnostic WAVs + spectrum CSVs: notes across the compass, a velocity ladder, chords with pedal and room, half-pedal, every instrument |
 | `ResoniqueTests.exe --loudness` | loudness of every factory preset (level matching: `make_presets.py --match`) |
 | `ResoniqueTests.exe --host-check <Resonique.vst3>` | loads the built plugin like a DAW: scan, parameters, sound, automation, state round trip, programs |
+| `ResoniqueTests.exe --compare <folder> [--instrument N] [--out file.csv] [--set id=value] [--set bands=1]` | measures reference recordings of single notes (files named like `Piano.ff.C4.aiff`) and renders of the same notes: inharmonicity, partial levels, decay, centroid, band shares; see docs/ACOUSTICS.md §10 |
+| `ResoniqueTests.exe --probe-voice <note> [vel]` | the raw bridge force of one voice without board or renderer (band shares, steps, contact time) |
 | `powershell -File tests\check-params.ps1` | the C++ parameter table against `ui/js/params.js` |
 
 ## Layout

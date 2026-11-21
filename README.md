@@ -64,19 +64,22 @@ quiet-first stealing; right-click on any control for the DAW's automation menu.
 |---|---|
 | Fundamental tuning, A0..A7 | within 1.2 cents of the target on every tested key |
 | First eight partials of C4 | within 0.4 % of the stiff-string formula |
-| Decay (T60 of the fundamental) | C2 6.8 s · C4 6.4 s · C6 2.6 s · E7 1.0 s (the bridge and the board feedback take their share of the table's 13 / 9 / 2.6 / 1.4 s) |
-| Hammer contact | 5.5 ms at C1, 2.1 ms at C4, 0.6 ms at G#7 at velocity 64; shorter at 120 |
-| Velocity 20 → 127 at C4 | level −46 → −21 dBFS (25 dB), spectral centroid 860 → 1590 Hz, both monotonic |
+| Decay (T60 of the fundamental) | C2 15 s · C4 10 s · C6 5.7 s · E7 1.7 s (reference recordings: 21 / 15–23 / 7 / 2.7 s) |
+| Hammer contact | 5.2 ms at C1, 2.1 ms at C4, 1.3 ms at C6, 0.9 ms at G#7 at velocity 64; shorter at 120 |
+| Velocity 20 → 127 at C4 | level −43 → −19 dBFS (24 dB), spectral centroid 485 → 1050 Hz, both monotonic (reference ff ≈ 1030 Hz) |
+| Against 16 reference notes (University of Iowa piano, mf and ff, C1–C7) | mean differences: spectral centroid 2.5 dB · inharmonicity 5.6 dB · partials 2 / 3 7.1 / 8.1 dB · broadband decay at 1 / 2 s 3.9 / 6.2 dB |
+| Compass balance at velocity 90 | peaks within 3 dB from C1 to C8 |
 | Sympathetic resonance | C4 with the pedal down makes the C3 copy ring 40× more than C#3 |
 | Pedal, 1.1 s after release | up −138 dB · half −74 dB · down −46 dB |
-| Coupled-network stability | 88 keys at ff with every coupling at maximum: −155 dB 11 s later |
-| Sample rates 44.1 / 48 / 88.2 / 96 / 192 kHz | same pitch within 0.03 %, same level within 0.5 dB, same spectral centroid within 0.5 % |
-| CPU (48 kHz, Release, vectorised modal loops) | 16 voices 6 % · 32 voices + pedal 10 % · 64 + pedal 17 % · 88 + pedal 36 % of one core; tables rebuild in 2.7 ms |
+| Coupled-network stability | 88 keys at ff with every coupling, resonance and decay at maximum settles in every combination (`--probe-stability`) |
+| Sample rates 44.1 / 48 / 88.2 / 96 / 192 kHz | same pitch within 0.01 %, same level within 0.2 dB, same spectral centroid within 3 % |
+| CPU (48 kHz, Release, vectorised modal loops) | 16 voices 7 % · 32 voices + pedal 11 % · 64 + pedal 20 % · 88 + pedal 25 % of one core; tables rebuild in 2.6 ms |
 | Host check | loads like a DAW, 48 + MIDI parameters, programs, state round trip |
 
-What is **not** claimed: no comparison against measured piano recordings has been run (none with a redistributable
-licence are bundled), and the instrument has not been voiced by ear against an acoustic instrument or Pianoteq;
-`ResoniqueTests --render` writes the WAVs and spectra to listen to and compare.
+The comparison (`ResoniqueTests --compare`, [docs/ACOUSTICS.md §10](docs/ACOUSTICS.md)) is against one piano in
+one room through one microphone; the references are not bundled. What is **not** claimed: the instrument has not
+been voiced by ear against an acoustic instrument or Pianoteq; `ResoniqueTests --render` writes the WAVs and
+spectra to listen to and compare.
 
 ## VST3 plugin (`vst/`)
 
@@ -101,6 +104,9 @@ measurements per phase in [docs/PLAN.md](docs/PLAN.md).
   the five-page family console, 190 presets, the tests and the packaging.
 - Phase 8: the modal loops vectorise (about 40 % less CPU per partial), decay recalibrated against the live
   coupling, sample-rate-independent measurements.
+- Phase 9: calibrated against openly licensed reference recordings (decay, brightness, inharmonicity, partial
+  balance); a renderer defect that brightened every note by 10 dB fixed; the soundboard exchange runs every
+  sample so the coupled network settles at every setting.
 - Known limitations: Windows only; the voicing is physically derived, not yet calibrated against recordings; the
   88-voice worst case costs about a third of a core; no web / Android build yet (the DSP core is JUCE-free, so one
   can be added the Eight Ball way).
