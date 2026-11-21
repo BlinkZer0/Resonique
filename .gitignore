@@ -1,0 +1,8 @@
+.vs/
+build/
+*.user
+dist/
+__pycache__/
+
+# diagnostic renders (ResoniqueTests --render): keep the spectra, not the audio
+renders/*.wav

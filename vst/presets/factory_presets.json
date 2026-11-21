@@ -1,0 +1,3556 @@
+{
+ "format": "Resonique Factory Presets",
+ "version": 1,
+ "categories": [
+  {
+   "name": "Concert Grands",
+   "presets": [
+    {
+     "name": "Concert Grand",
+     "description": "The reference instrument: a 2.7 m grand from the player's seat",
+     "params": {
+      "instrument": 0,
+      "micPerspective": 0,
+      "reverbMix": 0.16,
+      "reverbSize": 0.55,
+      "reverbType": 2,
+      "presetGain": -3.59
+     }
+    },
+    {
+     "name": "Concert Grand Stage",
+     "description": "The same grand from the first rows of a hall, lid fully up",
+     "params": {
+      "bridgeCoupling": 0.6,
+      "instrument": 0,
+      "micPerspective": 2,
+      "reverbDamp": 0.45,
+      "reverbMix": 0.3,
+      "reverbPredelay": 20,
+      "reverbSize": 0.7,
+      "reverbType": 2,
+      "soundboardResonance": 0.55,
+      "stringDecay": 1.1,
+      "presetGain": 0.01
+     }
+    },
+    {
+     "name": "Concert Grand Close",
+     "description": "Spot mics under the lid: more hammer, less hall",
+     "params": {
+      "instrument": 0,
+      "micPerspective": 1,
+      "noiseHammer": 0.7,
+      "noiseMaster": 0.6,
+      "reverbMix": 0.1,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "soundboardBrightness": 0.2,
+      "presetGain": -4.93
+     }
+    },
+    {
+     "name": "Concert Grand Wide",
+     "description": "A wide pair across the full keyboard, a little more unison shimmer",
+     "params": {
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbMix": 0.2,
+      "reverbSize": 0.6,
+      "reverbType": 2,
+      "soundboardResonance": 0.55,
+      "stereoWidth": 0.95,
+      "stringResonance": 0.65,
+      "unisonDetune": 1.3,
+      "presetGain": -2.08
+     }
+    },
+    {
+     "name": "Concert Grand Dark",
+     "description": "Needled hammers, the lid on the short stick",
+     "params": {
+      "feltStiffness": 0.7,
+      "hammerHardness": 0.32,
+      "instrument": 0,
+      "micPerspective": 0,
+      "reverbMix": 0.18,
+      "reverbSize": 0.5,
+      "reverbType": 2,
+      "soundboardBrightness": -0.35,
+      "toneTreble": -2,
+      "presetGain": -2.99
+     }
+    },
+    {
+     "name": "Concert Grand Brilliant",
+     "description": "Voiced bright for a big hall",
+     "params": {
+      "feltExponent": 0.2,
+      "feltStiffness": 1.5,
+      "hammerHardness": 0.7,
+      "instrument": 0,
+      "micPerspective": 0,
+      "reverbMix": 0.22,
+      "reverbSize": 0.65,
+      "reverbType": 2,
+      "soundboardBrightness": 0.3,
+      "soundboardResonance": 0.55,
+      "stringStiffness": 0.8,
+      "presetGain": -4.32
+     }
+    },
+    {
+     "name": "Concert Grand Warm Hall",
+     "description": "Softer felt and a large, damped hall",
+     "params": {
+      "hammerHardness": 0.42,
+      "instrument": 0,
+      "micPerspective": 2,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.32,
+      "reverbPredelay": 24,
+      "reverbSize": 0.8,
+      "reverbType": 2,
+      "soundboardDamping": 0.85,
+      "soundboardResonance": 0.6,
+      "stereoWidth": 0.8,
+      "presetGain": -0.49
+     }
+    },
+    {
+     "name": "Concert Grand Pure",
+     "description": "Equal temperament, no stretch, dry: for sampling and tuning work",
+     "params": {
+      "instrument": 0,
+      "micPerspective": 4,
+      "noiseMaster": 0.3,
+      "reverbMix": 0.04,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "stretch": 0,
+      "presetGain": -2.79
+     }
+    },
+    {
+     "name": "Concert Grand Recital",
+     "description": "A recital hall with a close, present image; slightly heavier hammers",
+     "params": {
+      "earlyReflections": 0.4,
+      "hammerHardness": 0.47,
+      "hammerMass": 1.1,
+      "instrument": 0,
+      "micDistance": 1.6,
+      "micPerspective": 5,
+      "micSpread": 0.75,
+      "reverbDamp": 0.45,
+      "reverbMix": 0.24,
+      "reverbPredelay": 15,
+      "reverbSize": 0.6,
+      "reverbType": 1,
+      "soundboardResonance": 0.58,
+      "stringDecay": 0.95,
+      "presetGain": -2.81
+     }
+    },
+    {
+     "name": "Concert Grand Stretch 442",
+     "description": "Orchestral pitch and a strong stretch, as a concert tuner leaves it",
+     "params": {
+      "concertPitch": 442,
+      "instrument": 0,
+      "micPerspective": 0,
+      "reverbMix": 0.18,
+      "reverbSize": 0.6,
+      "reverbType": 2,
+      "stretch": 0.85,
+      "unisonDetune": 0.7,
+      "presetGain": -3.25
+     }
+    },
+    {
+     "name": "Concert Grand Open Lid",
+     "description": "Full lid, lively board, lots of sympathetic bloom",
+     "params": {
+      "bridgeCoupling": 0.65,
+      "instrument": 0,
+      "micPerspective": 0,
+      "reverbMix": 0.2,
+      "reverbSize": 0.6,
+      "reverbType": 2,
+      "soundboardResonance": 0.72,
+      "stringResonance": 0.8,
+      "presetGain": -5.24
+     }
+    },
+    {
+     "name": "Concert Grand Soft Felt",
+     "description": "A pianissimo-friendly voicing with a wide dynamic range",
+     "params": {
+      "dynamics": 0.7,
+      "feltExponent": -0.2,
+      "feltStiffness": 0.6,
+      "hammerHardness": 0.38,
+      "instrument": 0,
+      "micPerspective": 0,
+      "reverbMix": 0.2,
+      "reverbSize": 0.6,
+      "reverbType": 2,
+      "presetGain": -1.92
+     }
+    },
+    {
+     "name": "Concert Grand Heavy Hammers",
+     "description": "Heavier hammers: slower contact, fatter attack",
+     "params": {
+      "hammerHardness": 0.5,
+      "hammerMass": 1.5,
+      "instrument": 0,
+      "micPerspective": 0,
+      "reverbMix": 0.18,
+      "reverbSize": 0.55,
+      "reverbType": 2,
+      "stringDecay": 1.15,
+      "presetGain": -5.43
+     }
+    },
+    {
+     "name": "Concert Grand Bass Bloom",
+     "description": "More bridge coupling and a bigger board for the low end",
+     "params": {
+      "bridgeCoupling": 0.75,
+      "instrument": 0,
+      "micPerspective": 0,
+      "reverbMix": 0.2,
+      "reverbSize": 0.65,
+      "reverbType": 2,
+      "soundboardResonance": 0.6,
+      "soundboardSize": 1.2,
+      "stringDecay": 1.2,
+      "toneBass": 1.5,
+      "presetGain": -2.39
+     }
+    },
+    {
+     "name": "Concert Grand Crisp",
+     "description": "Strike point nearer the end of the string, cleaner partials",
+     "params": {
+      "hammerHardness": 0.58,
+      "hammerPosition": 0.85,
+      "inharmonicity": 0.9,
+      "instrument": 0,
+      "micPerspective": 0,
+      "reverbMix": 0.16,
+      "reverbSize": 0.5,
+      "reverbType": 2,
+      "presetGain": -3.16
+     }
+    },
+    {
+     "name": "Concert Grand Mono Broadcast",
+     "description": "A single distant mono microphone, as on an old broadcast",
+     "params": {
+      "instrument": 0,
+      "micPerspective": 4,
+      "noiseMaster": 0.4,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.2,
+      "reverbSize": 0.5,
+      "reverbType": 1,
+      "toneBass": -1,
+      "toneTreble": -1.5,
+      "presetGain": -2.3
+     }
+    }
+   ]
+  },
+  {
+   "name": "Classical",
+   "presets": [
+    {
+     "name": "Classical Hall",
+     "description": "Audience perspective, long hall, moderate stretch",
+     "params": {
+      "instrument": 0,
+      "micPerspective": 2,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.34,
+      "reverbPredelay": 26,
+      "reverbSize": 0.85,
+      "reverbType": 2,
+      "stretch": 0.7,
+      "presetGain": 1.6
+     }
+    },
+    {
+     "name": "Chamber Music",
+     "description": "A small hall, close enough to hear the dampers",
+     "params": {
+      "instrument": 0,
+      "micPerspective": 0,
+      "noiseDamper": 0.6,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.45,
+      "reverbMix": 0.24,
+      "reverbPredelay": 14,
+      "reverbSize": 0.55,
+      "reverbType": 1,
+      "soundboardResonance": 0.55,
+      "stretch": 0.7,
+      "presetGain": -4.04
+     }
+    },
+    {
+     "name": "Lieder Accompanist",
+     "description": "Lid on the short stick, singer in front",
+     "params": {
+      "earlyReflections": 0.35,
+      "hammerHardness": 0.4,
+      "instrument": 0,
+      "micDistance": 2.2,
+      "micPerspective": 5,
+      "micSpread": 0.5,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.26,
+      "reverbPredelay": 26,
+      "reverbSize": 0.6,
+      "reverbType": 1,
+      "soundboardBrightness": -0.25,
+      "stretch": 0.7,
+      "presetGain": -0.43
+     }
+    },
+    {
+     "name": "Baroque Werckmeister",
+     "description": "Werckmeister III at 415 Hz on a lighter, clearer instrument",
+     "params": {
+      "concertPitch": 415,
+      "hammerHardness": 0.55,
+      "hammerMass": 0.8,
+      "instrument": 1,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.22,
+      "reverbSize": 0.5,
+      "reverbType": 1,
+      "stretch": 0.3,
+      "stringDecay": 0.8,
+      "temperament": 4,
+      "temperamentRoot": 0,
+      "unisonDetune": 0.5,
+      "presetGain": -0.88
+     }
+    },
+    {
+     "name": "Meantone Fortepiano",
+     "description": "Quarter-comma meantone, light hammers, fast decay: a fortepiano flavour",
+     "params": {
+      "concertPitch": 430,
+      "damperEfficiency": 1.6,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.6,
+      "hammerHardness": 0.6,
+      "hammerMass": 0.6,
+      "inharmonicity": 1.4,
+      "instrument": 1,
+      "reverbMix": 0.16,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "soundboardDamping": 1.5,
+      "soundboardResonance": 0.4,
+      "soundboardSize": 0.85,
+      "stretch": 0.2,
+      "stringDecay": 0.55,
+      "temperament": 3,
+      "temperamentRoot": 0,
+      "unisonDetune": 0.6,
+      "presetGain": 0.93
+     }
+    },
+    {
+     "name": "Kirnberger Chapel",
+     "description": "Kirnberger III in a stone chapel",
+     "params": {
+      "concertPitch": 440,
+      "instrument": 0,
+      "micPerspective": 2,
+      "reverbDamp": 0.35,
+      "reverbMix": 0.42,
+      "reverbPredelay": 35,
+      "reverbSize": 0.95,
+      "reverbType": 2,
+      "soundboardResonance": 0.6,
+      "stretch": 0.5,
+      "temperament": 5,
+      "temperamentRoot": 0,
+      "presetGain": -0.77
+     }
+    },
+    {
+     "name": "Vallotti Salon",
+     "description": "Vallotti well temperament, warm salon piano",
+     "params": {
+      "concertPitch": 440,
+      "hammerHardness": 0.45,
+      "instrument": 5,
+      "micPerspective": 0,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.26,
+      "reverbSize": 0.55,
+      "reverbType": 1,
+      "stereoWidth": 0.6,
+      "stretch": 0.5,
+      "temperament": 6,
+      "temperamentRoot": 0,
+      "presetGain": 1.43
+     }
+    },
+    {
+     "name": "Young Temperament Study",
+     "description": "Young's temperament, dry practice room",
+     "params": {
+      "concertPitch": 440,
+      "instrument": 1,
+      "noiseMaster": 0.6,
+      "reverbMix": 0.1,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "stretch": 0.6,
+      "temperament": 7,
+      "temperamentRoot": 0,
+      "presetGain": -1.94
+     }
+    },
+    {
+     "name": "Pythagorean Early",
+     "description": "Pythagorean tuning for early music lines, light touch",
+     "params": {
+      "concertPitch": 440,
+      "hammerHardness": 0.52,
+      "hammerMass": 0.75,
+      "instrument": 1,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.3,
+      "reverbSize": 0.6,
+      "reverbType": 1,
+      "stretch": 0.2,
+      "stringDecay": 0.75,
+      "temperament": 1,
+      "temperamentRoot": 0,
+      "presetGain": -0.45
+     }
+    },
+    {
+     "name": "Just Intonation Drone",
+     "description": "Just intonation on the long-string grand: pure fifths that bloom",
+     "params": {
+      "bridgeCoupling": 0.7,
+      "concertPitch": 440,
+      "instrument": 9,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.35,
+      "reverbPredelay": 30,
+      "reverbSize": 0.9,
+      "reverbType": 2,
+      "soundboardResonance": 0.7,
+      "stretch": 0,
+      "stringDecay": 1.6,
+      "stringResonance": 0.9,
+      "temperament": 2,
+      "temperamentRoot": 0,
+      "presetGain": 1.66
+     }
+    },
+    {
+     "name": "Romantic Concert",
+     "description": "Big, singing tone for the late-Romantic repertoire",
+     "params": {
+      "bridgeCoupling": 0.6,
+      "hammerHardness": 0.5,
+      "hammerMass": 1.2,
+      "instrument": 0,
+      "micPerspective": 2,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.36,
+      "reverbPredelay": 30,
+      "reverbSize": 0.9,
+      "reverbType": 2,
+      "soundboardResonance": 0.65,
+      "soundboardSize": 1.1,
+      "stringDecay": 1.3,
+      "presetGain": -1.13
+     }
+    },
+    {
+     "name": "Impressionist Haze",
+     "description": "Soft hammers, lots of pedal resonance and a wash of hall",
+     "params": {
+      "damperEfficiency": 0.7,
+      "feltStiffness": 0.6,
+      "halfPedalPoint": 0.6,
+      "hammerHardness": 0.33,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.45,
+      "reverbPredelay": 40,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardBrightness": -0.2,
+      "soundboardResonance": 0.7,
+      "stringResonance": 0.9,
+      "presetGain": -2.45
+     }
+    },
+    {
+     "name": "\u00c9tudes Dry",
+     "description": "A practice room: dry, clear, honest",
+     "params": {
+      "hammerHardness": 0.55,
+      "instrument": 1,
+      "micPerspective": 0,
+      "noiseMaster": 0.55,
+      "reverbMix": 0.07,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "presetGain": -2.94
+     }
+    },
+    {
+     "name": "Period Studio Grand",
+     "description": "A 19th-century parlour grand: thinner strings, quicker decay",
+     "params": {
+      "hammerHardness": 0.45,
+      "hammerMass": 0.8,
+      "inharmonicity": 1.3,
+      "instrument": 1,
+      "reverbMix": 0.24,
+      "reverbSize": 0.5,
+      "reverbType": 1,
+      "soundboardDamping": 1.3,
+      "soundboardSize": 0.9,
+      "stretch": 0.4,
+      "stringDecay": 0.7,
+      "unisonDetune": 1.4,
+      "presetGain": -3.42
+     }
+    },
+    {
+     "name": "Cathedral Organ-Piano",
+     "description": "A huge reverberant space and a board that will not stop",
+     "params": {
+      "instrument": 9,
+      "micPerspective": 2,
+      "reverbDamp": 0.3,
+      "reverbMix": 0.55,
+      "reverbPredelay": 60,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.8,
+      "soundboardSize": 1.35,
+      "stereoWidth": 0.9,
+      "stringDecay": 1.8,
+      "stringResonance": 0.9,
+      "presetGain": -0.27
+     }
+    },
+    {
+     "name": "Competition Hall",
+     "description": "Bright, projecting, from the jury's seats",
+     "params": {
+      "feltStiffness": 1.3,
+      "hammerHardness": 0.62,
+      "instrument": 0,
+      "micPerspective": 2,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.3,
+      "reverbPredelay": 22,
+      "reverbSize": 0.75,
+      "reverbType": 2,
+      "soundboardBrightness": 0.2,
+      "soundboardResonance": 0.55,
+      "presetGain": 0.0
+     }
+    },
+    {
+     "name": "Soft Pedal Nocturne",
+     "description": "Una corda flavour baked in: a brushed, intimate tone",
+     "params": {
+      "bridgeCoupling": 0.6,
+      "feltExponent": -0.3,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 5,
+      "micPerspective": 0,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.3,
+      "reverbSize": 0.6,
+      "reverbType": 1,
+      "softPedalDepth": 0.9,
+      "soundboardBrightness": -0.3,
+      "unisonDetune": 1.6,
+      "presetGain": 3.27
+     }
+    }
+   ]
+  },
+  {
+   "name": "Jazz",
+   "presets": [
+    {
+     "name": "Jazz Club Grand",
+     "description": "A warm grand on a small stage",
+     "params": {
+      "instrument": 5,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.14,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "presetGain": 1.22
+     }
+    },
+    {
+     "name": "Jazz Trio Studio",
+     "description": "Close mics, dry, present, tight unisons",
+     "params": {
+      "hammerHardness": 0.5,
+      "instrument": 5,
+      "micPerspective": 1,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.08,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "soundboardBrightness": 0.1,
+      "stereoWidth": 0.75,
+      "stringDecay": 0.85,
+      "unisonDetune": 0.7,
+      "presetGain": 0.03
+     }
+    },
+    {
+     "name": "Ballad Grand",
+     "description": "Softer felt, longer decay, a little hall",
+     "params": {
+      "feltStiffness": 0.7,
+      "hammerHardness": 0.36,
+      "instrument": 5,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.26,
+      "reverbPredelay": 18,
+      "reverbSize": 0.6,
+      "reverbType": 2,
+      "stringDecay": 1.3,
+      "stringResonance": 0.7,
+      "presetGain": 2.16
+     }
+    },
+    {
+     "name": "Bebop Bright",
+     "description": "Harder hammers for fast lines",
+     "params": {
+      "feltExponent": 0.2,
+      "feltStiffness": 1.4,
+      "hammerHardness": 0.66,
+      "instrument": 5,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.1,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "soundboardBrightness": 0.25,
+      "stringDecay": 0.9,
+      "presetGain": 0.54
+     }
+    },
+    {
+     "name": "Late Night Felt Jazz",
+     "description": "Felted hammers in a smoky room",
+     "params": {
+      "hammerHardness": 0.45,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseHammer": 0.8,
+      "noiseMaster": 0.7,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.2,
+      "reverbSize": 0.5,
+      "reverbType": 0,
+      "presetGain": -1.73
+     }
+    },
+    {
+     "name": "Stride Upright",
+     "description": "A bar upright with a bit of swing in the unisons",
+     "params": {
+      "hammerHardness": 0.6,
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.7,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "unisonDetune": 2.2,
+      "presetGain": -4.9
+     }
+    },
+    {
+     "name": "Modal Dark",
+     "description": "Very dark, lid closed, heavy sustain",
+     "params": {
+      "feltStiffness": 0.45,
+      "hammerHardness": 0.25,
+      "hammerMass": 1.3,
+      "instrument": 5,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.65,
+      "reverbMix": 0.22,
+      "reverbSize": 0.6,
+      "reverbType": 1,
+      "soundboardBrightness": -0.5,
+      "soundboardResonance": 0.6,
+      "stringDecay": 1.25,
+      "toneTreble": -3,
+      "presetGain": 1.46
+     }
+    },
+    {
+     "name": "Cocktail Piano",
+     "description": "A bright, slightly detuned lounge grand",
+     "params": {
+      "hammerHardness": 0.6,
+      "instrument": 5,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.2,
+      "reverbSize": 0.5,
+      "reverbType": 1,
+      "soundboardSize": 0.9,
+      "stringDecay": 0.85,
+      "toneTreble": 1.5,
+      "unisonDetune": 1.8,
+      "presetGain": -0.01
+     }
+    },
+    {
+     "name": "Rhythm Section Grand",
+     "description": "Punchy and controlled, sits in a band",
+     "params": {
+      "damperEfficiency": 1.4,
+      "hammerHardness": 0.58,
+      "hammerMass": 1.1,
+      "instrument": 5,
+      "micPerspective": 1,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.08,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "soundboardResonance": 0.4,
+      "stringDecay": 0.8,
+      "presetGain": 1.19
+     }
+    },
+    {
+     "name": "Vinyl Jazz",
+     "description": "Rolled-off, older recording feel",
+     "params": {
+      "hammerHardness": 0.4,
+      "instrument": 3,
+      "micPerspective": 4,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.15,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "toneBass": 1,
+      "toneTreble": -4,
+      "presetGain": -2.07
+     }
+    },
+    {
+     "name": "Solo Piano Hall",
+     "description": "A solo recital in a mid-size hall",
+     "params": {
+      "hammerHardness": 0.45,
+      "instrument": 0,
+      "micPerspective": 2,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.3,
+      "reverbPredelay": 20,
+      "reverbSize": 0.7,
+      "reverbType": 2,
+      "soundboardResonance": 0.6,
+      "presetGain": -0.51
+     }
+    },
+    {
+     "name": "Brushed Ballad",
+     "description": "A tiny unison shimmer and a close pair",
+     "params": {
+      "bridgeCoupling": 0.6,
+      "hammerHardness": 0.4,
+      "instrument": 5,
+      "micPerspective": 1,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.2,
+      "reverbSize": 0.5,
+      "reverbType": 1,
+      "stereoWidth": 0.6,
+      "unisonDetune": 1.4,
+      "presetGain": 1.12
+     }
+    },
+    {
+     "name": "Latin Bright Grand",
+     "description": "Bright, percussive, tight",
+     "params": {
+      "damperEfficiency": 1.6,
+      "hammerHardness": 0.6,
+      "instrument": 4,
+      "micPerspective": 1,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.1,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "stringDecay": 0.75,
+      "presetGain": -5.03
+     }
+    },
+    {
+     "name": "Gospel Grand",
+     "description": "Big, warm, rolling bass",
+     "params": {
+      "bridgeCoupling": 0.6,
+      "hammerHardness": 0.55,
+      "hammerMass": 1.2,
+      "instrument": 5,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.2,
+      "reverbSize": 0.55,
+      "reverbType": 1,
+      "soundboardResonance": 0.6,
+      "soundboardSize": 1.15,
+      "toneBass": 2,
+      "presetGain": -3.01
+     }
+    },
+    {
+     "name": "Quiet Standards",
+     "description": "For pp playing: wide dynamics, soft curve",
+     "params": {
+      "dynamics": 0.75,
+      "hammerHardness": 0.4,
+      "instrument": 5,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.24,
+      "reverbSize": 0.55,
+      "reverbType": 1,
+      "velCurve": -0.35,
+      "presetGain": 5.24
+     }
+    },
+    {
+     "name": "Fusion Studio Grand",
+     "description": "Tight, bright, modern",
+     "params": {
+      "feltStiffness": 1.2,
+      "hammerHardness": 0.6,
+      "instrument": 1,
+      "micPerspective": 1,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.09,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "soundboardBrightness": 0.2,
+      "presetGain": -3.94
+     }
+    }
+   ]
+  },
+  {
+   "name": "Pop",
+   "presets": [
+    {
+     "name": "Pop Grand",
+     "description": "The bright studio grand that cuts through a mix",
+     "params": {
+      "instrument": 4,
+      "micPerspective": 1,
+      "reverbMix": 0.1,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "presetGain": -4.77
+     }
+    },
+    {
+     "name": "Pop Ballad",
+     "description": "A touch softer with a plate-like chamber and longer decay",
+     "params": {
+      "dynamics": 0.6,
+      "hammerHardness": 0.5,
+      "instrument": 4,
+      "micPerspective": 1,
+      "reverbDamp": 0.45,
+      "reverbMix": 0.24,
+      "reverbPredelay": 18,
+      "reverbSize": 0.6,
+      "reverbType": 1,
+      "soundboardResonance": 0.55,
+      "stringDecay": 1.2,
+      "presetGain": -4.59
+     }
+    },
+    {
+     "name": "Radio Piano",
+     "description": "Compressed-feeling: narrow dynamics, bright",
+     "params": {
+      "dynamics": 0.3,
+      "hammerHardness": 0.65,
+      "instrument": 4,
+      "micPerspective": 1,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "toneTreble": 2,
+      "velCurve": 0.3,
+      "presetGain": -6.86
+     }
+    },
+    {
+     "name": "Singer-Songwriter Upright",
+     "description": "An upright in a living room",
+     "params": {
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.7,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.14,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "presetGain": -4.88
+     }
+    },
+    {
+     "name": "Stadium Grand",
+     "description": "Huge and bright with a long hall",
+     "params": {
+      "feltStiffness": 1.6,
+      "hammerHardness": 0.7,
+      "instrument": 4,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.35,
+      "reverbPredelay": 28,
+      "reverbSize": 0.85,
+      "reverbType": 2,
+      "soundboardResonance": 0.6,
+      "soundboardSize": 1.15,
+      "presetGain": -5.12
+     }
+    },
+    {
+     "name": "Lo-Fi Bedroom",
+     "description": "A tired upright, dull and close",
+     "params": {
+      "hammerHardness": 0.3,
+      "instrument": 3,
+      "micPerspective": 4,
+      "noiseMaster": 0.9,
+      "reverbDamp": 0.8,
+      "reverbMix": 0.08,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "toneBass": 1,
+      "toneTreble": -5,
+      "presetGain": -1.58
+     }
+    },
+    {
+     "name": "Pop Chords Dry",
+     "description": "Fast dampers, dry, for stabs",
+     "params": {
+      "damperEfficiency": 1.8,
+      "hammerHardness": 0.62,
+      "instrument": 4,
+      "micPerspective": 1,
+      "reverbMix": 0.05,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "stringDecay": 0.7,
+      "presetGain": -4.79
+     }
+    },
+    {
+     "name": "Glossy Pop Grand",
+     "description": "Wide, shiny, modern",
+     "params": {
+      "hammerHardness": 0.7,
+      "instrument": 4,
+      "micPerspective": 3,
+      "reverbDamp": 0.35,
+      "reverbMix": 0.2,
+      "reverbPredelay": 15,
+      "reverbSize": 0.55,
+      "reverbType": 1,
+      "soundboardBrightness": 0.4,
+      "soundboardResonance": 0.5,
+      "stereoWidth": 1,
+      "toneTreble": 1,
+      "presetGain": -3.31
+     }
+    },
+    {
+     "name": "Indie Felt",
+     "description": "The felt piano on an indie record: thinner felt, quicker, a little unison chorus",
+     "params": {
+      "hammerHardness": 0.58,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.2,
+      "reverbSize": 0.5,
+      "reverbType": 0,
+      "stringDecay": 0.85,
+      "unisonDetune": 1.5,
+      "presetGain": -1.57
+     }
+    },
+    {
+     "name": "Piano Pop Anthem",
+     "description": "Big hammers, long decay, hall",
+     "params": {
+      "hammerHardness": 0.6,
+      "hammerMass": 1.4,
+      "instrument": 4,
+      "micPerspective": 3,
+      "reverbDamp": 0.45,
+      "reverbMix": 0.3,
+      "reverbPredelay": 22,
+      "reverbSize": 0.75,
+      "reverbType": 2,
+      "stringDecay": 1.3,
+      "presetGain": -3.39
+     }
+    },
+    {
+     "name": "Soft Verse Grand",
+     "description": "For the quiet verse before the chorus",
+     "params": {
+      "dynamics": 0.6,
+      "feltStiffness": 0.7,
+      "hammerHardness": 0.4,
+      "instrument": 4,
+      "micPerspective": 1,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.22,
+      "reverbSize": 0.55,
+      "reverbType": 1,
+      "soundboardBrightness": -0.15,
+      "presetGain": -3.51
+     }
+    },
+    {
+     "name": "Motown Upright",
+     "description": "A punchy upright with quick dampers",
+     "params": {
+      "damperEfficiency": 1.5,
+      "hammerHardness": 0.62,
+      "instrument": 2,
+      "micPerspective": 4,
+      "reverbMix": 0.1,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "stringDecay": 0.75,
+      "toneBass": 1.5,
+      "presetGain": -4.94
+     }
+    },
+    {
+     "name": "Dream Pop Wash",
+     "description": "Soft felt and a long shimmering hall",
+     "params": {
+      "hammerHardness": 0.4,
+      "instrument": 6,
+      "micPerspective": 3,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.5,
+      "reverbPredelay": 45,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.7,
+      "stringResonance": 0.8,
+      "presetGain": -0.48
+     }
+    },
+    {
+     "name": "Synth-Pop Clean",
+     "description": "Very clean and even: low inharmonicity, tight unisons",
+     "params": {
+      "bridgeCoupling": 0.3,
+      "hammerHardness": 0.6,
+      "inharmonicity": 0.6,
+      "instrument": 4,
+      "micPerspective": 1,
+      "noiseMaster": 0.2,
+      "reverbMix": 0.1,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "unisonDetune": 0.4,
+      "presetGain": -5.27
+     }
+    },
+    {
+     "name": "Country Upright",
+     "description": "A bright honky upright, lightly detuned",
+     "params": {
+      "hammerHardness": 0.65,
+      "instrument": 2,
+      "micPerspective": 1,
+      "noiseMaster": 0.7,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "unisonDetune": 2.5,
+      "presetGain": -5.74
+     }
+    },
+    {
+     "name": "Piano and Strings Bed",
+     "description": "Soft, wide, with early reflections for a lush bed",
+     "params": {
+      "earlyReflections": 0.6,
+      "hammerHardness": 0.42,
+      "instrument": 4,
+      "micDistance": 2.5,
+      "micPerspective": 5,
+      "micSpread": 0.9,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.4,
+      "reverbPredelay": 30,
+      "reverbSize": 0.9,
+      "reverbType": 2,
+      "soundboardResonance": 0.6,
+      "presetGain": -2.21
+     }
+    }
+   ]
+  },
+  {
+   "name": "Rock",
+   "presets": [
+    {
+     "name": "Rock Grand",
+     "description": "Hard hammers, tight dampers, close mics",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.8,
+      "hammerHardness": 0.75,
+      "instrument": 4,
+      "micPerspective": 1,
+      "reverbMix": 0.08,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "presetGain": -5.78
+     }
+    },
+    {
+     "name": "Honky-Tonk Saloon",
+     "description": "The classic saloon piano with wide, uneven unisons",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.8,
+      "hammerHardness": 0.6,
+      "instrument": 8,
+      "micPerspective": 1,
+      "noiseMaster": 0.8,
+      "reverbMix": 0.15,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "presetGain": -1.24
+     }
+    },
+    {
+     "name": "Rock Upright",
+     "description": "An upright miked for a band",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.8,
+      "hammerHardness": 0.7,
+      "instrument": 2,
+      "micPerspective": 1,
+      "noiseMaster": 0.7,
+      "reverbMix": 0.1,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "toneBass": 2,
+      "presetGain": -6.24
+     }
+    },
+    {
+     "name": "Pub Piano",
+     "description": "Tired, out of tune, loud",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.8,
+      "hammerHardness": 0.6,
+      "instrument": 3,
+      "micPerspective": 4,
+      "noiseMaster": 1,
+      "reverbMix": 0.14,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "unisonDetune": 4.0,
+      "presetGain": -1.44
+     }
+    },
+    {
+     "name": "Arena Rock Grand",
+     "description": "Bright grand, stadium reverb",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.8,
+      "hammerHardness": 0.75,
+      "instrument": 4,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.3,
+      "reverbPredelay": 25,
+      "reverbSize": 0.8,
+      "reverbType": 2,
+      "soundboardBrightness": 0.3,
+      "soundboardSize": 1.1,
+      "presetGain": -5.42
+     }
+    },
+    {
+     "name": "Garage Upright",
+     "description": "Rough, short decay, lots of mechanics",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.4,
+      "hammerHardness": 0.7,
+      "instrument": 2,
+      "micPerspective": 1,
+      "noiseHammer": 1,
+      "noiseMaster": 1,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.1,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "stringDecay": 0.65,
+      "unisonDetune": 2.8,
+      "presetGain": -5.47
+     }
+    },
+    {
+     "name": "Boogie Piano",
+     "description": "Bright and bouncy with fast dampers",
+     "params": {
+      "damperEfficiency": 2.0,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.8,
+      "hammerHardness": 0.7,
+      "instrument": 4,
+      "micPerspective": 1,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "stringDecay": 0.75,
+      "unisonDetune": 1.8,
+      "presetGain": -4.89
+     }
+    },
+    {
+     "name": "Glam Grand",
+     "description": "Over-the-top bright with a plate-ish chamber",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.4,
+      "feltStiffness": 2.2,
+      "hammerHardness": 0.8,
+      "instrument": 4,
+      "micPerspective": 3,
+      "reverbDamp": 0.3,
+      "reverbMix": 0.25,
+      "reverbPredelay": 10,
+      "reverbSize": 0.6,
+      "reverbType": 1,
+      "toneTreble": 3,
+      "presetGain": -2.95
+     }
+    },
+    {
+     "name": "Power Ballad",
+     "description": "Big hammers, big hall",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.8,
+      "hammerHardness": 0.65,
+      "hammerMass": 1.5,
+      "instrument": 4,
+      "micPerspective": 3,
+      "reverbDamp": 0.45,
+      "reverbMix": 0.35,
+      "reverbPredelay": 30,
+      "reverbSize": 0.85,
+      "reverbType": 2,
+      "stringDecay": 1.2,
+      "presetGain": -3.37
+     }
+    },
+    {
+     "name": "Punk Upright",
+     "description": "Harsh, short, dry",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.5,
+      "feltStiffness": 2.5,
+      "hammerHardness": 0.85,
+      "instrument": 2,
+      "micPerspective": 4,
+      "reverbMix": 0.05,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "stringDecay": 0.6,
+      "presetGain": -4.25
+     }
+    },
+    {
+     "name": "Blues Barrelhouse",
+     "description": "Detuned, worn, dark room",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.8,
+      "hammerHardness": 0.5,
+      "instrument": 8,
+      "micPerspective": 1,
+      "noiseMaster": 0.9,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.18,
+      "reverbSize": 0.5,
+      "reverbType": 0,
+      "toneTreble": -2,
+      "unisonDetune": 3.5,
+      "presetGain": -0.35
+     }
+    },
+    {
+     "name": "Prog Grand",
+     "description": "Clean, wide, articulate",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.8,
+      "hammerHardness": 0.62,
+      "inharmonicity": 0.85,
+      "instrument": 1,
+      "micPerspective": 3,
+      "reverbMix": 0.2,
+      "reverbSize": 0.55,
+      "reverbType": 1,
+      "unisonDetune": 0.6,
+      "presetGain": -2.25
+     }
+    },
+    {
+     "name": "Tack Piano",
+     "description": "Tacks in the hammers: hard, metallic strike",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.8,
+      "feltStiffness": 3.5,
+      "hammerHardness": 0.95,
+      "hammerMass": 0.8,
+      "instrument": 8,
+      "micPerspective": 1,
+      "noiseHammer": 1,
+      "noiseMaster": 0.8,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "stringDecay": 0.7,
+      "presetGain": -0.19
+     }
+    },
+    {
+     "name": "Grunge Felt",
+     "description": "A dark felted upright played hard",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.5,
+      "hammerHardness": 0.6,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.9,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "velCurve": 0.3,
+      "presetGain": -3.06
+     }
+    },
+    {
+     "name": "Live Rock Grand",
+     "description": "From the FOH position: distant and loud, lid up",
+     "params": {
+      "bridgeCoupling": 0.65,
+      "damperEfficiency": 1.5,
+      "feltExponent": 0.3,
+      "feltStiffness": 1.8,
+      "hammerHardness": 0.7,
+      "instrument": 4,
+      "micPerspective": 2,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.3,
+      "reverbPredelay": 18,
+      "reverbSize": 0.7,
+      "reverbType": 3,
+      "soundboardResonance": 0.6,
+      "stringDecay": 1.1,
+      "presetGain": -1.98
+     }
+    }
+   ]
+  },
+  {
+   "name": "Cinematic",
+   "presets": [
+    {
+     "name": "Cinematic Grand",
+     "description": "Soft felt, lots of sympathetic bloom, a scoring-stage hall",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.38,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.45,
+      "reverbMix": 0.4,
+      "reverbPredelay": 35,
+      "reverbSize": 0.95,
+      "reverbType": 2,
+      "soundboardResonance": 0.7,
+      "stringResonance": 0.85,
+      "presetGain": -3.56
+     }
+    },
+    {
+     "name": "Scoring Stage",
+     "description": "A big stage, mics far back, heavier hammers",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.45,
+      "hammerMass": 1.15,
+      "instrument": 0,
+      "micPerspective": 2,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.45,
+      "reverbPredelay": 45,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.65,
+      "stereoWidth": 0.9,
+      "stringResonance": 0.85,
+      "presetGain": -0.33
+     }
+    },
+    {
+     "name": "Trailer Piano",
+     "description": "Hard, dark, low, with a huge tail",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.6,
+      "hammerMass": 1.6,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.35,
+      "reverbMix": 0.5,
+      "reverbPredelay": 50,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.75,
+      "soundboardSize": 1.3,
+      "stringDecay": 1.5,
+      "stringResonance": 0.85,
+      "toneBass": 4,
+      "toneTreble": -2,
+      "presetGain": -5.38
+     }
+    },
+    {
+     "name": "Intimate Score Felt",
+     "description": "Felt piano very close, a little hall",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.38,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.9,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.3,
+      "reverbPredelay": 30,
+      "reverbSize": 0.8,
+      "reverbType": 2,
+      "soundboardResonance": 0.7,
+      "stringResonance": 0.85,
+      "presetGain": -2.52
+     }
+    },
+    {
+     "name": "Dark Drone Grand",
+     "description": "Experimental grand with endless decay and resonance",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.38,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.3,
+      "reverbMix": 0.55,
+      "reverbPredelay": 60,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.85,
+      "stringDecay": 2.5,
+      "stringResonance": 1,
+      "presetGain": -7.01
+     }
+    },
+    {
+     "name": "Thriller Prepared",
+     "description": "Prepared piano in a cold hall",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.6,
+      "instrument": 7,
+      "micPerspective": 3,
+      "noiseMaster": 1,
+      "reverbDamp": 0.3,
+      "reverbMix": 0.4,
+      "reverbPredelay": 40,
+      "reverbSize": 0.9,
+      "reverbType": 2,
+      "soundboardResonance": 0.7,
+      "stringResonance": 0.85,
+      "presetGain": -0.9
+     }
+    },
+    {
+     "name": "Emotional Close Grand",
+     "description": "Close, warm, with soft early reflections",
+     "params": {
+      "earlyReflections": 0.5,
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.35,
+      "instrument": 0,
+      "micDistance": 0.9,
+      "micPerspective": 5,
+      "micSpread": 0.7,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.3,
+      "reverbPredelay": 20,
+      "reverbSize": 0.7,
+      "reverbType": 1,
+      "soundboardBrightness": -0.2,
+      "soundboardResonance": 0.7,
+      "stringResonance": 0.85,
+      "presetGain": -4.49
+     }
+    },
+    {
+     "name": "Ice Palace",
+     "description": "Bright hammers, long bright hall",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.68,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.15,
+      "reverbMix": 0.5,
+      "reverbPredelay": 55,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardBrightness": 0.35,
+      "soundboardResonance": 0.7,
+      "stringDecay": 1.4,
+      "stringResonance": 0.85,
+      "presetGain": -3.35
+     }
+    },
+    {
+     "name": "Underwater Grand",
+     "description": "Soft, dull, slow: like a piano heard through water",
+     "params": {
+      "feltStiffness": 0.35,
+      "hammerHardness": 0.2,
+      "hammerMass": 1.5,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.9,
+      "reverbMix": 0.5,
+      "reverbPredelay": 40,
+      "reverbSize": 0.95,
+      "reverbType": 2,
+      "soundboardBrightness": -0.8,
+      "soundboardResonance": 0.7,
+      "stringDecay": 1.3,
+      "stringResonance": 0.85,
+      "toneTreble": -8,
+      "presetGain": -4.33
+     }
+    },
+    {
+     "name": "Heartbeat Upright",
+     "description": "An upright with heavy pedal and hammer noise, for tension",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.4,
+      "instrument": 3,
+      "micPerspective": 1,
+      "noiseHammer": 1,
+      "noiseMaster": 1,
+      "noisePedal": 1,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.3,
+      "reverbPredelay": 35,
+      "reverbSize": 0.6,
+      "reverbType": 0,
+      "soundboardResonance": 0.7,
+      "stringResonance": 0.85,
+      "presetGain": -4.71
+     }
+    },
+    {
+     "name": "Epic Low Octaves",
+     "description": "Very large board and strong bass coupling",
+     "params": {
+      "bridgeCoupling": 0.9,
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.38,
+      "hammerMass": 1.4,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.45,
+      "reverbPredelay": 45,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.75,
+      "soundboardSize": 1.4,
+      "stringDecay": 1.6,
+      "stringResonance": 0.85,
+      "toneBass": 3,
+      "presetGain": -4.86
+     }
+    },
+    {
+     "name": "Glass Harmonics",
+     "description": "Strike point near the middle for hollow, odd-harmonic tones",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.55,
+      "hammerPosition": 1.4,
+      "inharmonicity": 0.5,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.3,
+      "reverbMix": 0.45,
+      "reverbPredelay": 40,
+      "reverbSize": 0.95,
+      "reverbType": 2,
+      "soundboardResonance": 0.7,
+      "stringResonance": 0.85,
+      "presetGain": -0.14
+     }
+    },
+    {
+     "name": "Faraway Upright",
+     "description": "A distant upright at the end of a corridor",
+     "params": {
+      "earlyReflections": 0.7,
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.38,
+      "instrument": 2,
+      "micDistance": 7.0,
+      "micPerspective": 5,
+      "micSpread": 0.4,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.5,
+      "reverbPredelay": 60,
+      "reverbSize": 0.9,
+      "reverbType": 2,
+      "soundboardResonance": 0.7,
+      "stringResonance": 0.85,
+      "toneTreble": -3,
+      "presetGain": -2.13
+     }
+    },
+    {
+     "name": "Suspense Mutes",
+     "description": "Heavily damped strings, dry, nervous",
+     "params": {
+      "damperEfficiency": 3.0,
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.55,
+      "instrument": 0,
+      "micPerspective": 3,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.15,
+      "reverbPredelay": 35,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "soundboardResonance": 0.7,
+      "stringDecay": 0.4,
+      "stringResonance": 0.85,
+      "presetGain": -2.84
+     }
+    },
+    {
+     "name": "Nostalgia Vintage",
+     "description": "Vintage upright with a warm long hall",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.35,
+      "instrument": 3,
+      "micPerspective": 3,
+      "reverbDamp": 0.65,
+      "reverbMix": 0.4,
+      "reverbPredelay": 30,
+      "reverbSize": 0.85,
+      "reverbType": 2,
+      "soundboardResonance": 0.7,
+      "stringResonance": 0.85,
+      "toneTreble": -2,
+      "presetGain": -2.14
+     }
+    },
+    {
+     "name": "Minimalist Pulse",
+     "description": "Even, clear, fast dampers for repeated figures",
+     "params": {
+      "damperEfficiency": 1.5,
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.5,
+      "instrument": 1,
+      "micPerspective": 3,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.3,
+      "reverbPredelay": 20,
+      "reverbSize": 0.7,
+      "reverbType": 1,
+      "soundboardResonance": 0.7,
+      "stringDecay": 0.8,
+      "stringResonance": 0.85,
+      "unisonDetune": 0.5,
+      "presetGain": -2.65
+     }
+    }
+   ]
+  },
+  {
+   "name": "Intimate",
+   "presets": [
+    {
+     "name": "Intimate Grand",
+     "description": "Close, soft, every mechanical detail audible",
+     "params": {
+      "hammerHardness": 0.38,
+      "instrument": 5,
+      "micPerspective": 1,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.9,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "presetGain": 0.67
+     }
+    },
+    {
+     "name": "Bedroom Upright",
+     "description": "A small upright, lid closed, very close",
+     "params": {
+      "hammerHardness": 0.35,
+      "instrument": 2,
+      "micPerspective": 1,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.9,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.08,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "toneTreble": -2,
+      "presetGain": -5.71
+     }
+    },
+    {
+     "name": "Whisper Felt",
+     "description": "Felt piano at a whisper",
+     "params": {
+      "dynamics": 0.4,
+      "hammerHardness": 0.38,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 1,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.15,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "velCurve": -0.4,
+      "presetGain": -0.11
+     }
+    },
+    {
+     "name": "Night Practice",
+     "description": "Soft pedal engaged, dampers lazy",
+     "params": {
+      "damperEfficiency": 0.6,
+      "hammerHardness": 0.3,
+      "instrument": 5,
+      "micPerspective": 1,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.9,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.1,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "softPedalDepth": 1,
+      "presetGain": 0.59
+     }
+    },
+    {
+     "name": "Living Room Grand",
+     "description": "A home grand with the lid down",
+     "params": {
+      "hammerHardness": 0.42,
+      "instrument": 5,
+      "micPerspective": 0,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.7,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.14,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "soundboardBrightness": -0.3,
+      "presetGain": 1.62
+     }
+    },
+    {
+     "name": "Candlelight",
+     "description": "Warm, slow, a little hall",
+     "params": {
+      "feltStiffness": 0.55,
+      "hammerHardness": 0.32,
+      "instrument": 5,
+      "micPerspective": 1,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.9,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.65,
+      "reverbMix": 0.3,
+      "reverbPredelay": 18,
+      "reverbSize": 0.65,
+      "reverbType": 1,
+      "stringDecay": 1.2,
+      "stringResonance": 0.7,
+      "presetGain": 1.72
+     }
+    },
+    {
+     "name": "Soft Stretch Study",
+     "description": "Light stretch, equal, honest for study",
+     "params": {
+      "hammerHardness": 0.38,
+      "instrument": 5,
+      "micPerspective": 0,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.6,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.08,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "stretch": 0.3,
+      "presetGain": 1.74
+     }
+    },
+    {
+     "name": "Close Mono Upright",
+     "description": "One mic inside an upright, medium hammers",
+     "params": {
+      "hammerHardness": 0.5,
+      "instrument": 2,
+      "micPerspective": 4,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.9,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.06,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "stringDecay": 0.9,
+      "toneBass": 1,
+      "presetGain": -4.4
+     }
+    },
+    {
+     "name": "Rainy Window",
+     "description": "Felt, slow decay, soft reflections",
+     "params": {
+      "earlyReflections": 0.5,
+      "hammerHardness": 0.38,
+      "instrument": 6,
+      "micDistance": 0.6,
+      "micPerspective": 5,
+      "micSpread": 0.6,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.9,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.3,
+      "reverbPredelay": 25,
+      "reverbSize": 0.6,
+      "reverbType": 1,
+      "stringDecay": 1.3,
+      "presetGain": -0.84
+     }
+    },
+    {
+     "name": "Lullaby Grand",
+     "description": "Narrow dynamics, soft curve, warm",
+     "params": {
+      "dynamics": 0.35,
+      "hammerHardness": 0.33,
+      "instrument": 5,
+      "micPerspective": 1,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.9,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.24,
+      "reverbSize": 0.55,
+      "reverbType": 1,
+      "soundboardBrightness": -0.2,
+      "velCurve": -0.5,
+      "presetGain": 3.14
+     }
+    },
+    {
+     "name": "Hushed Hall",
+     "description": "Soft playing in an empty hall",
+     "params": {
+      "hammerHardness": 0.36,
+      "instrument": 5,
+      "micPerspective": 2,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.9,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.4,
+      "reverbPredelay": 35,
+      "reverbSize": 0.9,
+      "reverbType": 2,
+      "soundboardResonance": 0.6,
+      "presetGain": 3.53
+     }
+    },
+    {
+     "name": "Journal Upright",
+     "description": "A warm old upright for sketching",
+     "params": {
+      "hammerHardness": 0.38,
+      "instrument": 3,
+      "micPerspective": 1,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.8,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.65,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "unisonDetune": 1.8,
+      "presetGain": -3.09
+     }
+    },
+    {
+     "name": "Thin Walls",
+     "description": "Dry, a bit boxy, close",
+     "params": {
+      "hammerHardness": 0.38,
+      "instrument": 5,
+      "micPerspective": 1,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.9,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.05,
+      "reverbSize": 0.25,
+      "reverbType": 0,
+      "soundboardDamping": 1.6,
+      "soundboardResonance": 0.35,
+      "soundboardSize": 0.8,
+      "toneBass": -2,
+      "presetGain": 3.24
+     }
+    },
+    {
+     "name": "Breath Felt Mono",
+     "description": "Felt piano, mono, breathing mechanics",
+     "params": {
+      "hammerHardness": 0.38,
+      "instrument": 6,
+      "micPerspective": 4,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 1,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.8,
+      "reverbMix": 0.1,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "presetGain": 0.24
+     }
+    },
+    {
+     "name": "Morning Light",
+     "description": "Gentle, clear, small room",
+     "params": {
+      "hammerHardness": 0.45,
+      "instrument": 1,
+      "micPerspective": 0,
+      "noiseDamper": 0.8,
+      "noiseHammer": 0.9,
+      "noiseKeyRelease": 0.8,
+      "noiseMaster": 0.9,
+      "noisePedal": 0.8,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.14,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "soundboardBrightness": 0.1,
+      "presetGain": -2.75
+     }
+    }
+   ]
+  },
+  {
+   "name": "Felt",
+   "presets": [
+    {
+     "name": "Felt Piano",
+     "description": "The felt strip down: soft, close, mechanical",
+     "params": {
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.18,
+      "reverbSize": 0.5,
+      "reverbType": 0,
+      "presetGain": -1.81
+     }
+    },
+    {
+     "name": "Felt Grand Hall",
+     "description": "Felted hammers on a grand in a hall",
+     "params": {
+      "instrument": 6,
+      "micPerspective": 3,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.4,
+      "reverbPredelay": 35,
+      "reverbSize": 0.9,
+      "reverbType": 2,
+      "soundboardResonance": 0.65,
+      "presetGain": -0.95
+     }
+    },
+    {
+     "name": "Felt Dark",
+     "description": "Thick felt: almost no high partials",
+     "params": {
+      "feltStiffness": 0.4,
+      "hammerHardness": 0.2,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.75,
+      "reverbMix": 0.2,
+      "reverbSize": 0.5,
+      "reverbType": 0,
+      "soundboardBrightness": -0.5,
+      "stringStiffness": 2.0,
+      "toneTreble": -4,
+      "presetGain": -0.35
+     }
+    },
+    {
+     "name": "Felt Bright",
+     "description": "Thin felt, more definition",
+     "params": {
+      "feltStiffness": 2.0,
+      "hammerHardness": 0.7,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.15,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "soundboardBrightness": 0.2,
+      "stringStiffness": 0.7,
+      "presetGain": -2.39
+     }
+    },
+    {
+     "name": "Felt Pedal Wash",
+     "description": "Lazy dampers and a huge pedal halo",
+     "params": {
+      "damperEfficiency": 0.5,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.45,
+      "reverbPredelay": 40,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.8,
+      "stringResonance": 1,
+      "presetGain": -3.32
+     }
+    },
+    {
+     "name": "Felt Upright",
+     "description": "The felt strip on an upright",
+     "params": {
+      "feltExponent": -0.5,
+      "feltStiffness": 0.3,
+      "hammerHardness": 0.25,
+      "instrument": 2,
+      "micPerspective": 1,
+      "noiseMaster": 1,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.15,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "stringStiffness": 1.8,
+      "presetGain": -3.38
+     }
+    },
+    {
+     "name": "Felt Tape",
+     "description": "Dull, mono, old tape",
+     "params": {
+      "instrument": 6,
+      "micPerspective": 4,
+      "noiseMaster": 0.9,
+      "reverbDamp": 0.8,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "toneBass": 2,
+      "toneTreble": -6,
+      "presetGain": -0.16
+     }
+    },
+    {
+     "name": "Felt Wide Dream",
+     "description": "Wide, slow, long reverb",
+     "params": {
+      "instrument": 6,
+      "micPerspective": 3,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.5,
+      "reverbPredelay": 50,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "stereoWidth": 1,
+      "stringDecay": 1.4,
+      "presetGain": 0.98
+     }
+    },
+    {
+     "name": "Felt Rhythmic",
+     "description": "Quick dampers for pulsing figures",
+     "params": {
+      "damperEfficiency": 2.0,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.1,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "stringDecay": 0.7,
+      "velCurve": 0.2,
+      "presetGain": -2.17
+     }
+    },
+    {
+     "name": "Felt Detuned",
+     "description": "Slightly sour unisons",
+     "params": {
+      "bridgeCoupling": 0.6,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.18,
+      "reverbSize": 0.5,
+      "reverbType": 0,
+      "unisonDetune": 3.0,
+      "presetGain": -1.31
+     }
+    },
+    {
+     "name": "Felt Heavy Hammers",
+     "description": "Heavy hammers through the felt: thuddy attacks",
+     "params": {
+      "hammerHardness": 0.4,
+      "hammerMass": 1.8,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseHammer": 1,
+      "noiseMaster": 1,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.15,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "presetGain": -4.49
+     }
+    },
+    {
+     "name": "Felt Chamber",
+     "description": "A felt piano in a small chamber, softer felt, livelier board",
+     "params": {
+      "feltStiffness": 0.8,
+      "hammerHardness": 0.42,
+      "instrument": 6,
+      "micPerspective": 0,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.3,
+      "reverbPredelay": 15,
+      "reverbSize": 0.6,
+      "reverbType": 1,
+      "soundboardResonance": 0.6,
+      "presetGain": -1.39
+     }
+    },
+    {
+     "name": "Felt Low Register",
+     "description": "Big board for the low end, dark top",
+     "params": {
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.35,
+      "reverbPredelay": 30,
+      "reverbSize": 0.8,
+      "reverbType": 2,
+      "soundboardResonance": 0.65,
+      "soundboardSize": 1.3,
+      "toneBass": 3,
+      "toneTreble": -3,
+      "presetGain": -1.47
+     }
+    },
+    {
+     "name": "Felt Quiet Keys",
+     "description": "Narrow dynamics, every key noise",
+     "params": {
+      "dynamics": 0.3,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseDamper": 1,
+      "noiseKeyRelease": 1,
+      "noiseMaster": 1,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "presetGain": -2.24
+     }
+    },
+    {
+     "name": "Felt Meantone",
+     "description": "Felt piano in meantone, for old tunes",
+     "params": {
+      "concertPitch": 440,
+      "instrument": 6,
+      "micPerspective": 1,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.25,
+      "reverbSize": 0.55,
+      "reverbType": 1,
+      "stretch": 0.2,
+      "temperament": 3,
+      "temperamentRoot": 0,
+      "presetGain": -1.63
+     }
+    }
+   ]
+  },
+  {
+   "name": "Uprights",
+   "presets": [
+    {
+     "name": "Upright",
+     "description": "A 1.2 m upright, player perspective",
+     "params": {
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "presetGain": -4.92
+     }
+    },
+    {
+     "name": "Upright Close",
+     "description": "Mics right at the hammers",
+     "params": {
+      "instrument": 2,
+      "micPerspective": 1,
+      "noiseMaster": 0.75,
+      "reverbMix": 0.08,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "soundboardBrightness": 0.1,
+      "presetGain": -6.25
+     }
+    },
+    {
+     "name": "Upright Bright",
+     "description": "Hard-voiced upright",
+     "params": {
+      "feltStiffness": 1.5,
+      "hammerHardness": 0.7,
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbMix": 0.1,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "soundboardBrightness": 0.25,
+      "presetGain": -5.25
+     }
+    },
+    {
+     "name": "Upright Mellow",
+     "description": "Needled hammers, soft top",
+     "params": {
+      "feltStiffness": 0.65,
+      "hammerHardness": 0.35,
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.14,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "soundboardBrightness": -0.3,
+      "toneTreble": -1.5,
+      "presetGain": -4.84
+     }
+    },
+    {
+     "name": "School Upright",
+     "description": "A worn school piano with uneven unisons",
+     "params": {
+      "hammerHardness": 0.5,
+      "instrument": 3,
+      "micPerspective": 0,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.15,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "unisonDetune": 2.5,
+      "presetGain": -2.37
+     }
+    },
+    {
+     "name": "Upright Hall",
+     "description": "An upright on a concert stage, singing a little longer",
+     "params": {
+      "instrument": 2,
+      "micPerspective": 2,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.32,
+      "reverbPredelay": 25,
+      "reverbSize": 0.75,
+      "reverbType": 2,
+      "soundboardResonance": 0.6,
+      "stringDecay": 1.15,
+      "stringResonance": 0.65,
+      "presetGain": -2.67
+     }
+    },
+    {
+     "name": "Upright Studio",
+     "description": "A well-regulated studio upright, tight and clean",
+     "params": {
+      "damperEfficiency": 1.3,
+      "hammerHardness": 0.55,
+      "instrument": 2,
+      "micPerspective": 1,
+      "noiseMaster": 0.6,
+      "reverbMix": 0.1,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "stringDecay": 0.9,
+      "unisonDetune": 0.7,
+      "presetGain": -6.2
+     }
+    },
+    {
+     "name": "Upright Tall",
+     "description": "A taller upright: longer bass strings, bigger board",
+     "params": {
+      "inharmonicity": 0.8,
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbMix": 0.14,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "soundboardResonance": 0.6,
+      "soundboardSize": 1.2,
+      "stringDecay": 1.15,
+      "toneBass": 1.5,
+      "presetGain": -8.18
+     }
+    },
+    {
+     "name": "Upright Spinet",
+     "description": "A tiny spinet: short strings, high inharmonicity",
+     "params": {
+      "hammerMass": 0.8,
+      "inharmonicity": 1.8,
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbMix": 0.1,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "soundboardDamping": 1.4,
+      "soundboardResonance": 0.4,
+      "soundboardSize": 0.75,
+      "stringDecay": 0.75,
+      "presetGain": -0.38
+     }
+    },
+    {
+     "name": "Upright Pedal Halo",
+     "description": "Lazy dampers and strong sympathetic ring",
+     "params": {
+      "damperEfficiency": 0.6,
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.18,
+      "reverbSize": 0.5,
+      "reverbType": 0,
+      "stringResonance": 0.85,
+      "presetGain": -4.19
+     }
+    },
+    {
+     "name": "Upright Dry Mono",
+     "description": "A single mic, no room, a well-regulated action",
+     "params": {
+      "hammerHardness": 0.56,
+      "instrument": 2,
+      "micPerspective": 4,
+      "noiseMaster": 0.7,
+      "reverbMix": 0.03,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "stringDecay": 0.9,
+      "unisonDetune": 0.8,
+      "presetGain": -4.42
+     }
+    },
+    {
+     "name": "Upright Worn Felt",
+     "description": "Grooved, hard-packed felt",
+     "params": {
+      "feltExponent": 0.3,
+      "feltStiffness": 1.3,
+      "hammerHardness": 0.65,
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseHammer": 0.9,
+      "noiseMaster": 0.8,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "stringStiffness": 1.3,
+      "presetGain": -5.05
+     }
+    },
+    {
+     "name": "Upright Kirnberger",
+     "description": "An upright in Kirnberger III",
+     "params": {
+      "concertPitch": 440,
+      "hammerHardness": 0.48,
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.15,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "stretch": 0.5,
+      "temperament": 5,
+      "temperamentRoot": 0,
+      "presetGain": -5.22
+     }
+    },
+    {
+     "name": "Upright Living Room",
+     "description": "Lid closed, carpet, curtains",
+     "params": {
+      "earlyReflections": 0.25,
+      "instrument": 2,
+      "micDistance": 1.5,
+      "micPerspective": 5,
+      "micSpread": 0.5,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.16,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "soundboardBrightness": -0.2,
+      "toneTreble": -1,
+      "presetGain": -4.21
+     }
+    },
+    {
+     "name": "Upright Jazz Bar",
+     "description": "Slightly detuned, warm, late",
+     "params": {
+      "hammerHardness": 0.42,
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.7,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.14,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "unisonDetune": 1.9,
+      "presetGain": -5.1
+     }
+    },
+    {
+     "name": "Upright Practice",
+     "description": "Dry, neutral, honest",
+     "params": {
+      "instrument": 2,
+      "micPerspective": 0,
+      "noiseMaster": 0.5,
+      "reverbMix": 0.06,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "stretch": 0.5,
+      "presetGain": -5.05
+     }
+    }
+   ]
+  },
+  {
+   "name": "Vintage",
+   "presets": [
+    {
+     "name": "Vintage Upright",
+     "description": "An old upright: worn hammers, uneven unisons, noisy action",
+     "params": {
+      "instrument": 3,
+      "micPerspective": 0,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.14,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "presetGain": -2.71
+     }
+    },
+    {
+     "name": "Vintage Saloon",
+     "description": "Honky-tonk unisons on the vintage upright",
+     "params": {
+      "hammerHardness": 0.6,
+      "instrument": 3,
+      "micPerspective": 0,
+      "noiseMaster": 0.9,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.15,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "unisonDetune": 4.5,
+      "presetGain": -1.94
+     }
+    },
+    {
+     "name": "Vintage Parlour Grand",
+     "description": "A 1900s parlour grand",
+     "params": {
+      "hammerHardness": 0.42,
+      "hammerMass": 0.85,
+      "inharmonicity": 1.25,
+      "instrument": 1,
+      "micPerspective": 0,
+      "noiseMaster": 0.7,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.22,
+      "reverbSize": 0.5,
+      "reverbType": 1,
+      "soundboardDamping": 1.3,
+      "soundboardSize": 0.9,
+      "stringDecay": 0.8,
+      "unisonDetune": 2.0,
+      "presetGain": -4.39
+     }
+    },
+    {
+     "name": "Vintage 78rpm",
+     "description": "Narrow band, mono, hiss-free but dull",
+     "params": {
+      "hammerHardness": 0.55,
+      "instrument": 3,
+      "micPerspective": 4,
+      "noiseMaster": 0.6,
+      "reverbDamp": 0.85,
+      "reverbMix": 0.1,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "toneBass": -4,
+      "toneTreble": -7,
+      "presetGain": -2.05
+     }
+    },
+    {
+     "name": "Vintage Silent Film",
+     "description": "A hard-worked cinema upright",
+     "params": {
+      "damperEfficiency": 0.8,
+      "feltStiffness": 1.5,
+      "hammerHardness": 0.7,
+      "instrument": 3,
+      "micPerspective": 0,
+      "noiseMaster": 1,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.25,
+      "reverbPredelay": 20,
+      "reverbSize": 0.6,
+      "reverbType": 2,
+      "stringDecay": 0.7,
+      "unisonDetune": 3.5,
+      "presetGain": -1.55
+     }
+    },
+    {
+     "name": "Vintage Music Hall",
+     "description": "The grand in a Victorian music hall",
+     "params": {
+      "hammerHardness": 0.45,
+      "hammerMass": 0.9,
+      "instrument": 0,
+      "micPerspective": 2,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.3,
+      "reverbPredelay": 22,
+      "reverbSize": 0.7,
+      "reverbType": 2,
+      "stringDecay": 0.85,
+      "unisonDetune": 1.8,
+      "presetGain": 1.18
+     }
+    },
+    {
+     "name": "Vintage Dusty",
+     "description": "Dull hammers, heavy damping, a lot of mechanics",
+     "params": {
+      "damperEfficiency": 1.4,
+      "feltStiffness": 0.45,
+      "hammerHardness": 0.28,
+      "instrument": 3,
+      "micPerspective": 0,
+      "noiseMaster": 1,
+      "reverbDamp": 0.75,
+      "reverbMix": 0.1,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "stringStiffness": 1.8,
+      "presetGain": -1.87
+     }
+    },
+    {
+     "name": "Vintage Ragtime",
+     "description": "Bright and bouncy, detuned",
+     "params": {
+      "damperEfficiency": 1.6,
+      "feltStiffness": 1.4,
+      "hammerHardness": 0.68,
+      "instrument": 3,
+      "micPerspective": 0,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.12,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "stringDecay": 0.75,
+      "toneTreble": 1,
+      "unisonDetune": 3.0,
+      "presetGain": -2.11
+     }
+    },
+    {
+     "name": "Vintage Tango",
+     "description": "Hard felt, dry, tight dampers, slightly flat pitch",
+     "params": {
+      "concertPitch": 435,
+      "damperEfficiency": 1.8,
+      "hammerHardness": 0.7,
+      "instrument": 3,
+      "micPerspective": 4,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.08,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "stringDecay": 0.7,
+      "presetGain": -1.63
+     }
+    },
+    {
+     "name": "Vintage Church Hall",
+     "description": "An old upright in a wooden hall that rings along",
+     "params": {
+      "bridgeCoupling": 0.6,
+      "hammerHardness": 0.4,
+      "instrument": 3,
+      "micPerspective": 3,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.35,
+      "reverbPredelay": 30,
+      "reverbSize": 0.8,
+      "reverbType": 2,
+      "stringDecay": 1.2,
+      "stringResonance": 0.65,
+      "presetGain": -0.91
+     }
+    },
+    {
+     "name": "Vintage Prepared",
+     "description": "Objects left on the strings of a vintage upright",
+     "params": {
+      "hammerHardness": 0.45,
+      "instrument": 7,
+      "micPerspective": 0,
+      "noiseMaster": 1,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.15,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "unisonDetune": 3.0,
+      "presetGain": -0.56
+     }
+    },
+    {
+     "name": "Vintage Warm Grand",
+     "description": "A dark, well-loved grand",
+     "params": {
+      "hammerHardness": 0.36,
+      "instrument": 5,
+      "micPerspective": 0,
+      "noiseMaster": 0.7,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.24,
+      "reverbSize": 0.55,
+      "reverbType": 1,
+      "stringDecay": 1.1,
+      "unisonDetune": 1.6,
+      "presetGain": 1.63
+     }
+    },
+    {
+     "name": "Vintage Toy-Like",
+     "description": "Tiny board, short strings, bright hammers",
+     "params": {
+      "hammerHardness": 0.75,
+      "hammerMass": 0.6,
+      "inharmonicity": 2.5,
+      "instrument": 3,
+      "micPerspective": 0,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.1,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "soundboardDamping": 2.0,
+      "soundboardResonance": 0.35,
+      "soundboardSize": 0.7,
+      "stringDecay": 0.5,
+      "presetGain": 7.45
+     }
+    },
+    {
+     "name": "Vintage Radio Hour",
+     "description": "Mono, mid-forward, a little room, unisons drifting",
+     "params": {
+      "damperEfficiency": 1.3,
+      "hammerHardness": 0.5,
+      "instrument": 3,
+      "micPerspective": 4,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.18,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "stringDecay": 0.85,
+      "toneBass": -2,
+      "toneTreble": -3,
+      "unisonDetune": 2.2,
+      "presetGain": -1.48
+     }
+    },
+    {
+     "name": "Vintage Cabaret",
+     "description": "Wide, detuned, bright, with stage reverb",
+     "params": {
+      "hammerHardness": 0.62,
+      "instrument": 3,
+      "micPerspective": 3,
+      "noiseMaster": 0.8,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.3,
+      "reverbPredelay": 18,
+      "reverbSize": 0.65,
+      "reverbType": 3,
+      "unisonDetune": 3.8,
+      "presetGain": -0.73
+     }
+    }
+   ]
+  },
+  {
+   "name": "Ambient",
+   "presets": [
+    {
+     "name": "Ambient Grand",
+     "description": "Soft hammers, endless sustain, a cavernous hall",
+     "params": {
+      "damperEfficiency": 0.5,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.6,
+      "reverbPredelay": 60,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.8,
+      "stringDecay": 2.0,
+      "stringResonance": 0.9,
+      "presetGain": -3.23
+     }
+    },
+    {
+     "name": "Ambient Felt Drift",
+     "description": "Felt piano dissolving into reverb",
+     "params": {
+      "damperEfficiency": 0.5,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 6,
+      "micPerspective": 3,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.7,
+      "reverbPredelay": 80,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.8,
+      "stringDecay": 1.8,
+      "stringResonance": 0.9,
+      "presetGain": -0.63
+     }
+    },
+    {
+     "name": "Ambient Glass",
+     "description": "Bright, bell-like, long",
+     "params": {
+      "damperEfficiency": 0.5,
+      "feltStiffness": 1.6,
+      "hammerHardness": 0.7,
+      "inharmonicity": 0.6,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.2,
+      "reverbMix": 0.6,
+      "reverbPredelay": 60,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardBrightness": 0.3,
+      "soundboardResonance": 0.75,
+      "stringDecay": 2.5,
+      "stringResonance": 0.9,
+      "presetGain": -3.89
+     }
+    },
+    {
+     "name": "Ambient Deep",
+     "description": "Huge board, strong bass, slow dark hall",
+     "params": {
+      "damperEfficiency": 0.5,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.65,
+      "reverbPredelay": 70,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.85,
+      "soundboardSize": 1.4,
+      "stringDecay": 2.0,
+      "stringResonance": 0.9,
+      "toneBass": 3,
+      "toneTreble": -3,
+      "presetGain": -0.02
+     }
+    },
+    {
+     "name": "Ambient Mutes",
+     "description": "Prepared strings, soft hammers, long room",
+     "params": {
+      "damperEfficiency": 0.5,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 7,
+      "micPerspective": 3,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.55,
+      "reverbPredelay": 50,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.8,
+      "stringDecay": 1.5,
+      "stringResonance": 0.9,
+      "presetGain": -1.17
+     }
+    },
+    {
+     "name": "Ambient Pedal Cloud",
+     "description": "Sympathetic bank at maximum: every note wakes the others",
+     "params": {
+      "bridgeCoupling": 0.9,
+      "damperEfficiency": 0.4,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.5,
+      "reverbPredelay": 45,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.85,
+      "stringDecay": 2.0,
+      "stringResonance": 1,
+      "presetGain": -3.57
+     }
+    },
+    {
+     "name": "Ambient Upright Haze",
+     "description": "Vintage upright washed out",
+     "params": {
+      "damperEfficiency": 0.5,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 3,
+      "micPerspective": 3,
+      "reverbDamp": 0.65,
+      "reverbMix": 0.65,
+      "reverbPredelay": 60,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.8,
+      "stringDecay": 2.0,
+      "stringResonance": 0.9,
+      "toneTreble": -3,
+      "presetGain": -3.26
+     }
+    },
+    {
+     "name": "Ambient Pure Fifths",
+     "description": "Just intonation and long decay for drones",
+     "params": {
+      "concertPitch": 440,
+      "damperEfficiency": 0.5,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.55,
+      "reverbPredelay": 55,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.8,
+      "stretch": 0,
+      "stringDecay": 2.5,
+      "stringResonance": 0.9,
+      "temperament": 2,
+      "temperamentRoot": 0,
+      "presetGain": -3.39
+     }
+    },
+    {
+     "name": "Ambient Still Water",
+     "description": "Soft, dark, barely moving",
+     "params": {
+      "damperEfficiency": 0.5,
+      "dynamics": 0.4,
+      "feltStiffness": 0.4,
+      "hammerHardness": 0.22,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.75,
+      "reverbMix": 0.6,
+      "reverbPredelay": 70,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardBrightness": -0.5,
+      "soundboardResonance": 0.8,
+      "stringDecay": 2.0,
+      "stringResonance": 0.9,
+      "presetGain": -3.16
+     }
+    },
+    {
+     "name": "Ambient Shimmer Hall",
+     "description": "Bright hall, bright hammers, soft felt exponent",
+     "params": {
+      "damperEfficiency": 0.5,
+      "feltExponent": -0.4,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.6,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.1,
+      "reverbMix": 0.6,
+      "reverbPredelay": 65,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardBrightness": 0.4,
+      "soundboardResonance": 0.8,
+      "stereoWidth": 1,
+      "stringDecay": 2.0,
+      "stringResonance": 0.9,
+      "presetGain": -3.88
+     }
+    },
+    {
+     "name": "Ambient Distant Grand",
+     "description": "Very far mics in an enormous space, the softest hammers",
+     "params": {
+      "damperEfficiency": 0.5,
+      "earlyReflections": 0.8,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.26,
+      "instrument": 0,
+      "micDistance": 8,
+      "micPerspective": 5,
+      "micSpread": 0.6,
+      "reverbDamp": 0.55,
+      "reverbMix": 0.7,
+      "reverbPredelay": 90,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.85,
+      "stringDecay": 2.6,
+      "stringResonance": 0.9,
+      "presetGain": 1.34
+     }
+    },
+    {
+     "name": "Ambient Felt Low",
+     "description": "Low felt tones with a big board",
+     "params": {
+      "damperEfficiency": 0.5,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 6,
+      "micPerspective": 3,
+      "reverbDamp": 0.6,
+      "reverbMix": 0.6,
+      "reverbPredelay": 60,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.8,
+      "soundboardSize": 1.35,
+      "stringDecay": 2.0,
+      "stringResonance": 0.9,
+      "toneBass": 4,
+      "presetGain": 2.05
+     }
+    },
+    {
+     "name": "Ambient Music Box",
+     "description": "Tiny bright strings on a long, sparkling hall",
+     "params": {
+      "damperEfficiency": 0.5,
+      "feltStiffness": 2.5,
+      "hammerHardness": 0.8,
+      "hammerMass": 0.6,
+      "inharmonicity": 2.0,
+      "instrument": 1,
+      "micPerspective": 3,
+      "reverbDamp": 0.15,
+      "reverbMix": 0.55,
+      "reverbPredelay": 50,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardBrightness": 0.4,
+      "soundboardResonance": 0.8,
+      "soundboardSize": 0.75,
+      "stringDecay": 1.5,
+      "stringResonance": 0.9,
+      "presetGain": -4.71
+     }
+    },
+    {
+     "name": "Ambient Slow Dampers",
+     "description": "Dampers that take seconds to settle",
+     "params": {
+      "damperEfficiency": 0.25,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 0,
+      "micPerspective": 3,
+      "reverbDamp": 0.5,
+      "reverbMix": 0.5,
+      "reverbPredelay": 45,
+      "reverbSize": 0.95,
+      "reverbType": 2,
+      "soundboardResonance": 0.8,
+      "stringDecay": 1.6,
+      "stringResonance": 0.9,
+      "presetGain": -4.19
+     }
+    },
+    {
+     "name": "Ambient Night Choir",
+     "description": "Soft hall with strong sympathetic chords",
+     "params": {
+      "bridgeCoupling": 0.8,
+      "damperEfficiency": 0.5,
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.35,
+      "instrument": 0,
+      "micPerspective": 2,
+      "reverbDamp": 0.45,
+      "reverbMix": 0.55,
+      "reverbPredelay": 55,
+      "reverbSize": 1,
+      "reverbType": 2,
+      "soundboardResonance": 0.8,
+      "stringDecay": 2.0,
+      "stringResonance": 1,
+      "presetGain": -0.56
+     }
+    }
+   ]
+  },
+  {
+   "name": "Experimental",
+   "presets": [
+    {
+     "name": "Experimental Grand",
+     "description": "Four-metre strings, almost no stiffness, a board that sings",
+     "params": {
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.3,
+      "reverbPredelay": 30,
+      "reverbSize": 0.8,
+      "reverbType": 2,
+      "presetGain": 3.04
+     }
+    },
+    {
+     "name": "Prepared Piano",
+     "description": "Objects on the strings: detuned partials, buzzes, odd losses",
+     "params": {
+      "instrument": 7,
+      "micPerspective": 1,
+      "noiseMaster": 0.9,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.15,
+      "reverbPredelay": 30,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "presetGain": -1.62
+     }
+    },
+    {
+     "name": "Prepared Bolts",
+     "description": "Harder objects: more inharmonic, brighter strike",
+     "params": {
+      "feltStiffness": 2.5,
+      "hammerHardness": 0.8,
+      "inharmonicity": 3.0,
+      "instrument": 7,
+      "micPerspective": 3,
+      "noiseMaster": 1,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.12,
+      "reverbPredelay": 30,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "presetGain": -0.81
+     }
+    },
+    {
+     "name": "Prepared Rubber",
+     "description": "Soft mutes: short, thuddy, dark",
+     "params": {
+      "feltStiffness": 0.5,
+      "hammerHardness": 0.3,
+      "instrument": 7,
+      "micPerspective": 3,
+      "noiseMaster": 1,
+      "reverbDamp": 0.8,
+      "reverbMix": 0.1,
+      "reverbPredelay": 30,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "stringDecay": 0.3,
+      "toneTreble": -4,
+      "presetGain": 1.5
+     }
+    },
+    {
+     "name": "Middle Strike",
+     "description": "Hammer at the string centre: only odd partials",
+     "params": {
+      "hammerHardness": 0.5,
+      "hammerPosition": 2,
+      "inharmonicity": 0.4,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.3,
+      "reverbPredelay": 30,
+      "reverbSize": 0.7,
+      "reverbType": 2,
+      "presetGain": 1.34
+     }
+    },
+    {
+     "name": "Edge Strike",
+     "description": "Hammer at the very end: thin, nasal, all partials",
+     "params": {
+      "hammerHardness": 0.6,
+      "hammerPosition": 0.5,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.12,
+      "reverbPredelay": 30,
+      "reverbSize": 0.4,
+      "reverbType": 0,
+      "presetGain": -2.25
+     }
+    },
+    {
+     "name": "No Stiffness",
+     "description": "Perfectly harmonic strings",
+     "params": {
+      "hammerHardness": 0.55,
+      "inharmonicity": 0.25,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.3,
+      "reverbPredelay": 30,
+      "reverbSize": 0.75,
+      "reverbType": 2,
+      "stringStiffness": 0.5,
+      "presetGain": 2.74
+     }
+    },
+    {
+     "name": "Maximum Stiffness",
+     "description": "Four times the inharmonicity: bell-like upper partials",
+     "params": {
+      "hammerHardness": 0.6,
+      "inharmonicity": 4,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.3,
+      "reverbPredelay": 30,
+      "reverbSize": 0.7,
+      "reverbType": 2,
+      "presetGain": 2.74
+     }
+    },
+    {
+     "name": "Giant Board",
+     "description": "The largest soundboard, maximum resonance",
+     "params": {
+      "bridgeCoupling": 1,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.4,
+      "reverbPredelay": 40,
+      "reverbSize": 0.9,
+      "reverbType": 2,
+      "soundboardResonance": 1,
+      "soundboardSize": 1.4,
+      "stringDecay": 2.0,
+      "stringResonance": 1,
+      "presetGain": -12.81
+     }
+    },
+    {
+     "name": "Dead Board",
+     "description": "A tiny, heavily damped board: strings almost alone",
+     "params": {
+      "bridgeCoupling": 0,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.05,
+      "reverbPredelay": 30,
+      "reverbSize": 0.3,
+      "reverbType": 0,
+      "soundboardDamping": 3,
+      "soundboardResonance": 0,
+      "soundboardSize": 0.7,
+      "stringResonance": 0,
+      "presetGain": 7.95
+     }
+    },
+    {
+     "name": "Wide Unisons",
+     "description": "Six cents between strings: chorus-like",
+     "params": {
+      "bridgeCoupling": 0.8,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.3,
+      "reverbPredelay": 30,
+      "reverbSize": 0.7,
+      "reverbType": 2,
+      "unisonDetune": 6,
+      "presetGain": 4.39
+     }
+    },
+    {
+     "name": "Hammer of Lead",
+     "description": "Double-mass hammers, very soft felt",
+     "params": {
+      "feltExponent": -0.8,
+      "feltStiffness": 0.3,
+      "hammerHardness": 0.2,
+      "hammerMass": 2,
+      "instrument": 9,
+      "micPerspective": 3,
+      "noiseHammer": 1,
+      "noiseMaster": 1,
+      "reverbDamp": 0.7,
+      "reverbMix": 0.15,
+      "reverbPredelay": 30,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "presetGain": 2.37
+     }
+    },
+    {
+     "name": "Hammer of Glass",
+     "description": "Light, very hard hammers",
+     "params": {
+      "feltExponent": 1,
+      "feltStiffness": 4,
+      "hammerHardness": 1,
+      "hammerMass": 0.5,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.2,
+      "reverbMix": 0.3,
+      "reverbPredelay": 30,
+      "reverbSize": 0.7,
+      "reverbType": 2,
+      "presetGain": 2.22
+     }
+    },
+    {
+     "name": "Quarter-Tone Experiment",
+     "description": "Equal temperament stretched hard and pitched high",
+     "params": {
+      "concertPitch": 466,
+      "inharmonicity": 1.5,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.3,
+      "reverbPredelay": 30,
+      "reverbSize": 0.7,
+      "reverbType": 2,
+      "stretch": 1,
+      "temperament": 0,
+      "temperamentRoot": 0,
+      "presetGain": 2.97
+     }
+    },
+    {
+     "name": "Reverse Dynamics",
+     "description": "Harder playing gets duller: an inverted velocity curve feel",
+     "params": {
+      "dynamics": 1,
+      "hammerHardness": 0.6,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.15,
+      "reverbPredelay": 30,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "velCurve": -1,
+      "presetGain": 12.0
+     }
+    },
+    {
+     "name": "Infinite Sustain",
+     "description": "Decay times four times longer, no dampers to speak of",
+     "params": {
+      "damperEfficiency": 0.25,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.4,
+      "reverbPredelay": 40,
+      "reverbSize": 0.9,
+      "reverbType": 2,
+      "stringDecay": 4,
+      "stringResonance": 1,
+      "presetGain": 2.21
+     }
+    },
+    {
+     "name": "Honky-Tonk Hell",
+     "description": "Everything out of tune, bright and loud",
+     "params": {
+      "feltStiffness": 3.0,
+      "hammerHardness": 0.9,
+      "instrument": 8,
+      "micPerspective": 3,
+      "noiseMaster": 1,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.15,
+      "reverbPredelay": 30,
+      "reverbSize": 0.45,
+      "reverbType": 0,
+      "unisonDetune": 6,
+      "presetGain": 1.0
+     }
+    },
+    {
+     "name": "Bridge Only",
+     "description": "Maximum bridge coupling for two-stage decays",
+     "params": {
+      "bridgeCoupling": 1,
+      "instrument": 9,
+      "micPerspective": 3,
+      "reverbDamp": 0.4,
+      "reverbMix": 0.1,
+      "reverbPredelay": 30,
+      "reverbSize": 0.35,
+      "reverbType": 0,
+      "soundboardResonance": 0.5,
+      "unisonDetune": 2.0,
+      "presetGain": 3.73
+     }
+    }
+   ]
+  }
+ ]
+}
