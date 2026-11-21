@@ -9,6 +9,7 @@
 // ============================================================================
 #include "HammerModel.h"
 #include "DamperModel.h"
+#include "Kernels.h"
 
 namespace resonique
 {
@@ -199,6 +200,7 @@ public:
     {
         const bool damping = damper.resting();
         const double bdt = dt;
+        const auto tick = kernels().stringTick;
 
         for (int i = 0; i < n; ++i)
         {
@@ -262,52 +264,10 @@ public:
                 hammer.endSample (contact);
             }
 
-            // ---- strings: inject, rotate, sum, damp (restrict pointers so the loops vectorise)
+            // ---- strings: inject, rotate, sum, damp (the kernel runs on the selected instruction set)
             float out = 0.0f;
             for (int s = 0; s < numStrings; ++s)
-            {
-                auto& st = strings[s];
-                const int a = st.active;
-                const int lim = std::min (kCouplePartials, a);
-                float* __restrict p = st.p;
-                float* __restrict q = st.q;
-                const float* __restrict rc = st.rc;
-                const float* __restrict rs = st.rs;
-                const float* __restrict bw = st.bridgeW;
-                const float* __restrict ci = st.coupleInj;
-                for (int k = 0; k < lim; ++k) q[k] += ci[k] * aTotal;
-                if (hammerForce[s] > 0.0f)
-                {
-                    const float f = hammerForce[s];
-                    const float* __restrict hi = st.hammerInj;
-                    for (int k = 0; k < a; ++k) q[k] += hi[k] * f;
-                }
-                float acc = 0.0f;
-                if (damping)
-                {
-                    const float* __restrict dm = st.damp;
-                    for (int k = 0; k < a; ++k)
-                    {
-                        const float pk = p[k], qk = q[k], c = rc[k], sn = rs[k], d = dm[k];
-                        const float np = (c * pk + sn * qk) * d;
-                        q[k] = (c * qk - sn * pk) * d;
-                        p[k] = np;
-                        acc += bw[k] * np;
-                    }
-                }
-                else
-                {
-                    for (int k = 0; k < a; ++k)
-                    {
-                        const float pk = p[k], qk = q[k], c = rc[k], sn = rs[k];
-                        const float np = c * pk + sn * qk;
-                        q[k] = c * qk - sn * pk;
-                        p[k] = np;
-                        acc += bw[k] * np;
-                    }
-                }
-                out += acc;
-            }
+                out += tick (strings[s], aTotal, hammerForce[s], damping);
             outF[i] = out;
         }
     }

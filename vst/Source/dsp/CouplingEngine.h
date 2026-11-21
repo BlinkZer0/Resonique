@@ -11,6 +11,7 @@
 //  thing is a few vectorisable loops per sample.
 // ============================================================================
 #include "StringModel.h"
+#include "Kernels.h"
 
 namespace resonique
 {
@@ -105,35 +106,13 @@ public:
         if (! haveTable) return;
         if (asleep && ! undamped) return;
         asleep = false;
-        float* __restrict pp = p;
-        float* __restrict qq = q;
-        const float* __restrict crc = rc;
-        const float* __restrict crs = rs;
-        const float* __restrict cinj = inj;
-        const float* __restrict cout = outW;
-        const float* __restrict cd = damp;
+        const auto tick = kernels().sympTick;
         for (int i = 0; i < c; ++i)
         {
-            for (int z = 0; z < kNumZones; ++z)
-            {
-                const float a = zoneAccel[z][i] * sympGain;
-                if (a == 0.0f) continue;
-                const int from = zoneStart[z], to = zoneStart[z + 1];
-                for (int j = from; j < to; ++j) qq[j] += cinj[j] * a;
-            }
-            for (int j = 0; j < N; ++j)
-            {
-                const float pj = pp[j], qj = qq[j], cc = crc[j], s = crs[j], d = cd[j];
-                pp[j] = (cc * pj + s * qj) * d;
-                qq[j] = (cc * qj - s * pj) * d;
-            }
-            for (int z = 0; z < kNumZones; ++z)
-            {
-                const int from = zoneStart[z], to = zoneStart[z + 1];
-                float f = 0;
-                for (int j = from; j < to; ++j) f += cout[j] * pp[j];
-                zoneForce[z][pos + i] += f;
-            }
+            float accel[kNumZones], force[kNumZones];
+            for (int z = 0; z < kNumZones; ++z) { accel[z] = zoneAccel[z][i]; force[z] = 0.0f; }
+            tick (p, q, rc, rs, damp, inj, outW, zoneStart, accel, sympGain, force);
+            for (int z = 0; z < kNumZones; ++z) zoneForce[z][pos + i] += force[z];
         }
     }
 

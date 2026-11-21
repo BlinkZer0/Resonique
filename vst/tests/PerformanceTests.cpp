@@ -6,7 +6,8 @@ using namespace resonique::test;
 
 int runBench()
 {
-    std::printf ("== Benchmark (48 kHz, %d-sample blocks) ==\n", kBlock);
+    std::printf ("== Benchmark (48 kHz, %d-sample blocks, %s kernels%s) ==\n", kBlock, PianoEngine::kernelName(),
+                 cpuSupportsAvx2() ? "" : ", no AVX2 on this CPU");
     {
         Patch p;
         const auto t0 = juce::Time::getHighResolutionTicks();

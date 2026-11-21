@@ -56,11 +56,23 @@ file(GLOB_RECURSE RESONIQUE_UI_FILES CONFIGURE_DEPENDS
 juce_add_binary_data(ResoniqueUI SOURCES ${RESONIQUE_UI_FILES} presets/factory_presets.json)
 
 # The DSP core is JUCE-free (Source/dsp, Source/instruments, PianoEngine.h): plain C++20.
+# The per-sample kernels are compiled twice (baseline and AVX2) and selected at run time.
+set(RESONIQUE_KERNEL_SOURCES
+    Source/dsp/Kernels.cpp
+    Source/dsp/Kernels_sse.cpp
+    Source/dsp/Kernels_avx2.cpp)
+if(MSVC)
+    set_source_files_properties(Source/dsp/Kernels_avx2.cpp PROPERTIES COMPILE_OPTIONS "/arch:AVX2")
+else()
+    set_source_files_properties(Source/dsp/Kernels_avx2.cpp PROPERTIES COMPILE_OPTIONS "-mavx2;-mfma")
+endif()
+
 set(RESONIQUE_PLUGIN_SOURCES
     Source/PluginProcessor.cpp
     Source/PluginEditor.cpp
     Source/PresetManager.cpp
-    Source/TableStore.cpp)
+    Source/TableStore.cpp
+    ${RESONIQUE_KERNEL_SOURCES})
 
 target_sources(ResoniqueVST PRIVATE ${RESONIQUE_PLUGIN_SOURCES})
 target_include_directories(ResoniqueVST PRIVATE Source)
@@ -99,7 +111,7 @@ juce_add_console_app(ResoniqueTests PRODUCT_NAME "ResoniqueTests")
 target_sources(ResoniqueTests PRIVATE
     tests/TestMain.cpp tests/DSPTests.cpp tests/AcousticTests.cpp tests/PerformanceTests.cpp
     tests/PresetTests.cpp tests/HostCheck.cpp tests/EngineTools.cpp tests/CompareTool.cpp tests/InstrumentTests.cpp tests/RobustnessTests.cpp
-    Source/PresetManager.cpp Source/TableStore.cpp)
+    Source/PresetManager.cpp Source/TableStore.cpp ${RESONIQUE_KERNEL_SOURCES})
 target_include_directories(ResoniqueTests PRIVATE Source)
 target_compile_definitions(ResoniqueTests PRIVATE JUCE_USE_CURL=0 JUCE_WEB_BROWSER=0 JUCE_PLUGINHOST_VST3=1)
 if(MSVC)

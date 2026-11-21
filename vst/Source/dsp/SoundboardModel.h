@@ -8,6 +8,7 @@
 //  ModelBuilder evaluates). Modes live as (p, q) rotation pairs like strings.
 // ============================================================================
 #include "StringModel.h"
+#include "Kernels.h"
 
 namespace resonique
 {
@@ -77,42 +78,16 @@ public:
             asleep = false;
         }
         const float fsF = (float) fs;
-        float* __restrict pp = p;
-        float* __restrict qq = q;
-        const float* __restrict crc = rc;
-        const float* __restrict crs = rs;
-        const float* __restrict cinj = inj;
-        const float* __restrict ol = outLv;
-        const float* __restrict orr = outRv;
+        const auto tick = kernels().boardTick;
         for (int i = 0; i < c; ++i)
         {
+            float force[kNumZones], vel[kNumZones];
+            for (int z = 0; z < kNumZones; ++z) force[z] = zoneForce[z][pos + i];
+            tick (p, q, rc, rs, inj, &zoneW[0][0], &zoneWv[0][0], outLv, outRv, force, gain, outL + i, outR + i, vel);
             for (int z = 0; z < kNumZones; ++z)
             {
-                // zoneForce is T y'(L), the string's end slope; the force on the board is its negative
-                const float f = -zoneForce[z][pos + i];
-                if (f == 0.0f) continue;
-                const float* __restrict w = zoneW[z];
-                for (int m = 0; m < M; ++m) qq[m] += cinj[m] * w[m] * f;
-            }
-            float l = 0, r = 0;
-            for (int m = 0; m < M; ++m)
-            {
-                const float pm = pp[m], qm = qq[m], cc = crc[m], s = crs[m];
-                pp[m] = cc * pm + s * qm;
-                const float nq = cc * qm - s * pm;
-                qq[m] = nq;
-                l += ol[m] * nq;
-                r += orr[m] * nq;
-            }
-            outL[i] = l * gain;
-            outR[i] = r * gain;
-            for (int z = 0; z < kNumZones; ++z)
-            {
-                const float* __restrict w = zoneWv[z];
-                float v = 0;
-                for (int m = 0; m < M; ++m) v += w[m] * qq[m];
-                zoneAccel[z][i] = (v - zoneVelPrev[z]) * fsF;
-                zoneVelPrev[z] = v;
+                zoneAccel[z][i] = (vel[z] - zoneVelPrev[z]) * fsF;
+                zoneVelPrev[z] = vel[z];
             }
         }
     }

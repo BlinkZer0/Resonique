@@ -149,4 +149,6 @@ tests/            TestMain, TestRender.h, DSPTests, AcousticTests, PerformanceTe
 - **Blank window:** the WebView2 runtime is missing or blocked. Its data folder is `%TEMP%\ResoniqueVST-WebView2`;
   deleting it is safe.
 - **CPU:** the PERFORMANCE page shows the callback's load. Lower Polyphony, or play with the pedal up less often:
-  the sympathetic bank only runs while some damper is off.
+  the sympathetic bank only runs while some damper is off. The modal loops run as AVX2 code on CPUs that have it
+  (SSE2 otherwise); set the environment variable `RESONIQUE_NO_AVX2=1` before starting the host to force the
+  baseline if you suspect a difference.

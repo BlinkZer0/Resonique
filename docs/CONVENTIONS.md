@@ -62,6 +62,7 @@ user presets `Documents\Resonique\Presets` (`.rqpreset`), favourites `Documents\
 | `dsp/CouplingEngine.h` | The sympathetic bank (light copies of every string, grouped by zone). |
 | `dsp/PedalModel.h`, `MechanicalNoise.h`, `Reverb.h`, `SpatialRenderer.h` | Pedals, synthesised noises, the FDN, mics / room / tone / master. |
 | `dsp/VoiceManager.h` | Allocation and stealing. |
+| `dsp/Kernels.h`, `KernelsImpl.h`, `Kernels_sse.cpp`, `Kernels_avx2.cpp`, `Kernels.cpp` | The per-sample hot loops, compiled for the baseline and for AVX2, selected at run time (`kernels()`, called from `prepare()`; `RESONIQUE_NO_AVX2=1` forces the baseline). |
 | `PianoEngine.h` | The engine: `prepare / setTables / setParamValues / noteOn / noteOff / controller / pitchBend / render`. |
 | `Params.h` | JUCE side: `formatValue`, `logRange`, `createParameterLayout()` with `ParameterID{id, 1}`, `paramTableToJson()`. |
 | `TableStore.*` | Message-thread owner of the tables: worker thread, lock-free hand-off, the tuning state (detune, Scala). |

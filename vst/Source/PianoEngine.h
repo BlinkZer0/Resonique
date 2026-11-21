@@ -37,6 +37,7 @@ public:
     // Off the audio thread.
     void prepare (double sampleRate)
     {
+        (void) kernels();   // select the instruction set here, not on the audio thread
         fs = sampleRate;
         board.prepare (fs);
         symp.prepare (fs);
@@ -217,6 +218,7 @@ public:
     const SympatheticBank& sympatheticBank() const { return symp; }
     const Pedals& pedalState() const { return pedals; }
     double sampleRate() const { return fs; }
+    static const char* kernelName() { return kernels().name; }
 
 private:
     void applyLiveParams (bool force)

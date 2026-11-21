@@ -24,6 +24,8 @@ phased roadmap. This file tracks what each phase delivered and what was measured
 
 | **11 Robustness and real-time safety** | `tests/RobustnessTests.cpp` (part of the default run, `--robustness`): a global `operator new` counter proves **zero heap allocations** across 200 rendered blocks with notes, pedals, parameter changes, a panic and a table hand-off; the output is **bit-identical for block sizes 1, 7 / 13 / 64 / 100, 512 and 2048** (the engine's 32-sample control chunks now keep a fixed phase across calls instead of restarting with every block, and the renderer's gain ramps are chunk-based); a 44.1 → 96 kHz change mid-session rebuilds and retunes; a table swap under five sounding notes and every live parameter swept across its range at block rate stay click-free (worst sample step 0.07); 5000 note-ons in 100 blocks never exceed the polyphony and the engine returns to silence; and the idle cost after the notes have died is checked (the soundboard and the reverb now sleep when they have rung down). Also found: a 2 MB `PianoEngine` on the stack overflows (tests allocate it on the heap; the plugin always did). |
 
+| **12 AVX2 dispatch** | The three per-sample hot loops (string rotation with coupling / hammer injection and damping, the sympathetic bank, the soundboard) live in `dsp/KernelsImpl.h` with internal linkage and are compiled twice, `Kernels_sse.cpp` (x64 baseline) and `Kernels_avx2.cpp` (`/arch:AVX2`); `Kernels.cpp` picks a set once (CPUID + XGETBV for OS support), from `PianoEngine::prepare`, never on the audio thread; `RESONIQUE_NO_AVX2=1` forces the baseline. Both sets pass the acoustic and robustness suites (block-size invariance included). Gain on this machine: 16 voices 7.6 → 6.6 %, 64 + pedal 20.1 → 18.7 %, idle with the pedal 2.4 → 1.5 % of a core; the modal loops are memory-bound enough that eight-wide math buys 10–15 %, not 2×. |
+
 ## Instrument metrics (phase 10, velocity 76)
 
 | Instrument | C2: contact ms · B · T60 s · centroid Hz | C4 | C6 |
@@ -122,7 +124,7 @@ during playback, state round trip (50 parameters restored, 0 differ).
 - Listen. The model is now calibrated to public measurements of one piano (phase 9); the remaining differences
   (partial 6 and the treble's upper partials, the bass hammers at ff) and everything the measurements do not
   capture need ears.
-- CPU: the 88-voice worst case is 25 % of a core after phase 9; AVX2 with runtime dispatch would bring it down
-  further.
+- CPU: the 88-voice worst case is about 24 % of a core with the AVX2 kernels (phase 12). The next step would be
+  restructuring the string banks so several strings share one vector loop (the treble's short banks waste lanes).
 - A web / Android build the Eight Ball way (the core is JUCE-free).
 - Aftertouch is accepted and ignored (nothing physical for it to do on a piano).
