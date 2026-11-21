@@ -130,9 +130,10 @@ during playback, state round trip (50 parameters restored, 0 differ).
   capture need ears.
 - CPU: the 88-voice worst case is about 24 % of a core with the AVX2 kernels (phase 12). The next step would be
   restructuring the string banks so several strings share one vector loop (the treble's short banks waste lanes).
-- The Android app (phase 14) needs a hand test on a phone: touch keys, a USB MIDI keyboard under MIDI IN, rotation,
-  EXPORT / IMPORT through the system dialogs. The automated check ran on a Quest 3 headset (audio in an
-  AudioWorklet, the MIDI shim present), which is not a phone.
+- The Android app (phase 14) was checked on a Samsung SM-S948U1 (Android 17, 1080 x 2340) over DevTools: the
+  portrait layout (15 white keys) and landscape (22) render, audio runs in an AudioWorklet at 48 kHz with the
+  clock advancing, a note sounds (1 voice, peak 0.048), and the MIDI bridge lists the phone's USB MIDI port.
+  Still to do by hand: play the touch keys and a USB MIDI keyboard, EXPORT / IMPORT through the system dialogs.
 - The web build needs a hand test with a real MIDI keyboard in Chrome / Edge (Web MIDI) and in Firefox / Safari
   (AudioWorklet only; no headless check covers them here).
 - Aftertouch is accepted and ignored (nothing physical for it to do on a piano).

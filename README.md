@@ -169,8 +169,9 @@ Play links to are [`docs/privacy.html`](docs/privacy.html) and [`docs/terms.html
 - Phase 14: the Android app (WebView + native MIDI bridge, signed App Bundle and APK, the phone layouts in the
   shared UI, the grand-piano icon, the Play Console kit: listing, screenshots, privacy policy, terms, data safety).
 - Known limitations: the plugin is Windows only; the voicing is calibrated against measurements of one piano, not
-  yet by ear; the 88-voice worst case costs about a quarter of a core; the Android app has been checked on one
-  device over DevTools, not yet by hand on a phone.
+  yet by ear; the 88-voice worst case costs about a quarter of a core; the Android app has been checked on a
+  Samsung phone and a Quest 3 over DevTools (layout, AudioWorklet audio, a sounding note, MIDI ports), not yet
+  played by hand.
 
 ## Repository layout
 

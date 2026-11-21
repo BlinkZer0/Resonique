@@ -20,8 +20,9 @@ const check = (ok, text) => { console.log((ok ? 'ok   ' : 'FAIL ') + text); if (
 
 (async () => {
   if (!fs.existsSync(apk)) { console.error('FAIL: no debug apk; run gradlew assembleDebug'); process.exit(2); }
-  const devices = run('devices').split('\n').slice(1).filter(l => l.endsWith('\tdevice'));
+  const devices = run('devices').split('\n').map(l => l.trim()).slice(1).filter(l => l.endsWith('\tdevice'));
   if (!devices.length) { console.error('FAIL: no device connected'); process.exit(2); }
+  if (devices.length > 1 && !process.env.ANDROID_SERIAL) { console.error('FAIL: several devices connected; set ANDROID_SERIAL=<serial> (see adb devices)'); process.exit(2); }
   const model = run('shell', 'getprop', 'ro.product.model'), release = run('shell', 'getprop', 'ro.build.version.release');
   console.log(`device: ${model}, Android ${release}`);
   // a release build (another signature) may be installed: replace it
