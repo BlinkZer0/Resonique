@@ -1,4 +1,4 @@
-# Resonique — v0.2
+# Resonique — v1.0
 
 Resonique is a physically modelled acoustic piano: no samples, every note is computed from a stiff-string modal
 model struck by a nonlinear felt hammer, coupled through a modal soundboard that carries sympathetic resonance back
@@ -145,7 +145,7 @@ Play links to are [`docs/privacy.html`](docs/privacy.html) and [`docs/terms.html
 
 ## Release history
 
-**v0.2: the complete instrument (first release)**
+**v1.0: the complete instrument (first release)**
 - Phases 1–7: the JUCE/CMake project, the modal string engine with inharmonicity and losses, the nonlinear hammer,
   unisons with bridge coupling, the modal soundboard with sympathetic resonance and pedals, ten instruments, tuning,
   the five-page family console, 190 presets, the tests and the packaging.
