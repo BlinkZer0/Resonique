@@ -9,7 +9,7 @@ Eight Ball: same console, same preset system, same build.
 | Build | Where | Status |
 |---|---|---|
 | **VST3 plugin** + Standalone | [`vst/`](vst/README.md) | phases 1–12 of the plan built and tested: the engine, ten instruments, 190 presets, the five-page console, automated DSP / acoustic / preset / instrument / robustness / host tests, benchmark, release packaging |
-| **Web** (browser) | [`web/index.html`](web/index.html), [`docs/index.html`](docs/index.html) for GitHub Pages | the same engine compiled to WebAssembly (phase 13): one self-contained page, the same UI and factory presets, Web MIDI, presets in the browser plus `.rqpreset` import / export; `start.bat` serves it locally |
+| **Web** (browser) | [`web/index.html`](https://blinkzer0.github.io/Resonique/), | the same engine compiled to WebAssembly (phase 13): one self-contained page, the same UI and factory presets, Web MIDI, presets in the browser plus `.rqpreset` import / export; `start.bat` serves it locally |
 
 ![Resonique: the MAIN page with the instrument bank, output and character controls, the preset browser and the 88-key keybed](vst/tests/screenshots/ui-main.png)
 
